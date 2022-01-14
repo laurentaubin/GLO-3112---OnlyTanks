@@ -1,14 +1,16 @@
 const express = require("express");
 const app = express();
-const port = 8080; // default port to listen
+const cors = require("cors");
 
-// define a route handler for the default home page
+const DEFAULT_PORT = 8080;
+
+app.use(cors());
+
 app.get("/", (_res: any, res: any) => {
   res.send("Hello world!");
 });
 
-// start the Express server
-app.listen(port, () => {
+app.listen(DEFAULT_PORT, () => {
   // tslint:disable-next-line:no-console
-  console.log(`server started at http://localhost:${port}`);
+  console.log(`server started at http://localhost:${DEFAULT_PORT}`);
 });
