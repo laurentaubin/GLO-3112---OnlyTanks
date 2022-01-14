@@ -6,7 +6,7 @@ export const useHelloWord = () => {
   const { data, fetchData, state } = useAxios();
 
   useEffect(() => {
-    fetchData({ url: "/", method: "GET" });
+    fetchData({ url: "/hello-world", method: "GET" });
   }, []);
 
   useEffect(() => {

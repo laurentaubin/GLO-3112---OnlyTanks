@@ -1,16 +1,17 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const mongoose = require("mongoose");
+const helloWorldRouter = require("./helloWorld/api/helloWorld");
 
 const DEFAULT_PORT = 8080;
 
+mongoose.connect("mongodb://localhost:27017/tankstagram");
+
 app.use(cors());
 
-app.get("/", (_res: any, res: any) => {
-  res.send("Hello world!");
-});
+app.use("/hello-world", helloWorldRouter);
 
 app.listen(DEFAULT_PORT, () => {
-  // tslint:disable-next-line:no-console
   console.log(`server started at http://localhost:${DEFAULT_PORT}`);
 });
