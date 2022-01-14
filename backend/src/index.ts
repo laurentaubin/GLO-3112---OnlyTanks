@@ -6,7 +6,7 @@ const helloWorldRouter = require("./helloWorld/api/helloWorld");
 
 const DEFAULT_PORT = 8080;
 
-mongoose.connect("mongodb://localhost:27017/tankstagram");
+mongoose.connect("mongodb://tankstagram-mongo:27017/tankstagram");
 
 app.use(cors());
 
