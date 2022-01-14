@@ -4,16 +4,16 @@
   "main": "dist/index.js",
   "license": "MIT",
   "dependencies": {
-    "@typegoose/typegoose": "^9.4.0",
+    "@typegoose/typegoose": "8.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.2",
-    "mongoose": "^6.1.6"
+    "mongoose": "5.13.13"
   },
   "scripts": {
-    "prebuild": "eslint src/*",
+    "prebuild": "eslint src/",
     "build": "tsc",
     "dev": "nodemon src/index.ts",
-    "prestart": "npm run build",
+    "prestart": "yarn build",
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
