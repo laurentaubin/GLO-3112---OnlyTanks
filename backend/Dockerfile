@@ -1,5 +1,7 @@
 FROM node:alpine
 
+ARG NODE_ENV
+
 WORKDIR /app
 
 COPY . .

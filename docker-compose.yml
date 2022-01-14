@@ -4,7 +4,7 @@ services:
     restart: unless-stopped
     build: ./backend
     environment:
-      DB_HOST: db
+      NODE_ENV: docker
     volumes:
       - ./backend/src:/app/src
     ports:

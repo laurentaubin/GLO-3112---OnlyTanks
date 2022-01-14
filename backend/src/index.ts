@@ -4,14 +4,16 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const helloWorldRouter = require("./helloWorld/api/helloWorld");
 
-const DEFAULT_PORT = 8080;
+import { getConfigForEnvironment } from "./config";
 
-mongoose.connect("mongodb://tankstagram-mongo:27017/tankstagram");
+const config = getConfigForEnvironment(process.env.NODE_ENV || "local");
+
+mongoose.connect(`mongodb://${config.mongo.address}:${config.mongo.port}/${config.mongo.databaseName}`);
 
 app.use(cors());
 
 app.use("/hello-world", helloWorldRouter);
 
-app.listen(DEFAULT_PORT, () => {
-  console.log(`server started at http://localhost:${DEFAULT_PORT}`);
+app.listen(config.http.port, () => {
+  console.log(`server started at http://localhost:${config.http.port}`);
 });
