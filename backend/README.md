@@ -4,7 +4,7 @@
 
 Make sure you have [Node](https://nodejs.org/en/download/) and [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable) installed.
 
-Then, to run the frontend locally run
+Then, to run the backend locally run
 
 ```bash
 yarn dev
@@ -22,4 +22,4 @@ yarn start
 
 For docker, refer to the [project's global README](../)
 
-Either way, the app will be served at `http://localhost:3000`.
+If you run the app manually, the backend will be served at `http://localhost:8888`. If you choose to go the Docker way, it will be avalaible at `http://localhost:8080`.
