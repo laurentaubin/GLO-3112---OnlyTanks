@@ -20,6 +20,6 @@ yarn build
 yarn start
 ```
 
-For docker, refer to the [project's global README](../)
+For docker, refer to the [project's global README](../README.md)
 
 Either way, the app will be served at `http://localhost:3000`.

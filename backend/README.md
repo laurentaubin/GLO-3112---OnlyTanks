@@ -20,6 +20,6 @@ yarn build
 yarn start
 ```
 
-For docker, refer to the [project's global README](../)
+For docker, refer to the [project's global README](../README.md)
 
 If you run the app manually, the backend will be served at `http://localhost:8888`. If you choose to go the Docker way, it will be avalaible at `http://localhost:8080`.
