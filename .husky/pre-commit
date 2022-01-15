@@ -6,5 +6,3 @@ yarn lint
 
 cd ../backend
 yarn lint
-
-exit 1
