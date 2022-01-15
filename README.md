@@ -38,7 +38,7 @@ Our CI/CD processes are run using [GitHub Actions](https://github.com/features/a
 
 TODO
 
-## Local development
+## 👨‍🔬 Local development
 
 ### 🐳 Using docker
 
