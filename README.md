@@ -1,6 +1,6 @@
 <h1 align="center">
   <img src="https://raw.githubusercontent.com/laurentaubin/web2-temp/master/.github/images/Tankstagram-Logo.png" width="115px"/><br/>
-  Thankstagram
+  Tankstagram
 </h1>
 <p align="center">Share your tank <b>pictures</b> around the world, <b>follow</b> other tank enthousiasts and <b>much more</b> with Tankstagram.</p>
 
@@ -30,7 +30,7 @@ TODO
 
 ## 👨🏼‍💻 Development process
 
-### 🔄 CI/|CD
+### 🔄 CI/CD
 
 Our CI/CD processes are run using [GitHub Actions](https://github.com/features/actions) and can be found in the [.github/workflows](./.github/workflows) directory.
 
