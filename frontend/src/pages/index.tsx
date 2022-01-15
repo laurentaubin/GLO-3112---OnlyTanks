@@ -6,7 +6,7 @@ const Home: NextPage = () => {
   const { helloWorld, state } = useHelloWord();
 
   return (
-    <div className={styles.container}>
+    <div className="text-3xl text-green-300">
       {state === "loading" && <p>loading...</p>}
       {state === "error" && <p>Whoops, there was an error reaching the server</p>}
       {state === "success" && <p>{helloWorld}</p>}
