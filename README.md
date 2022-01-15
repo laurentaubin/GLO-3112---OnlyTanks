@@ -8,25 +8,25 @@
 
 ## 🧰 Development Stack
 
-### Frontend
+### 🎨 Frontend
 
 TODO
 
-### Backend
+### 👾 Backend
 
 TODO
 
-### Database
+### 💾 Database
 
 TODO
 
-## Development process
+## 👨🏼‍💻 Development process
 
-### CI/|CD
+### 🔄 CI/|CD
 
 TODO
 
-### Deployments
+### ☁️ Deployments
 
 TODO
 
