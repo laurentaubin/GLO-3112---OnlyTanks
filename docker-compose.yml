@@ -4,7 +4,7 @@ services:
     restart: unless-stopped
     build: ./backend
     environment:
-      NODE_ENV: docker
+      ENVIRONMENT: docker
     volumes:
       - ./backend/src:/app/src
     ports:
@@ -16,11 +16,13 @@ services:
     container_name: tankstagram-frontend
     restart: unless-stopped
     build: ./frontend
+    environment:
+      NEXT_PUBLIC_ENVIRONMENT: docker
     ports:
       - 3000:3000
     volumes:
       - ./frontend/src:/app/src
-      - /usr/src/app/node_modules
+      - /app/node_modules
 
   mongo:
     image: mongo:latest

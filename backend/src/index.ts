@@ -6,7 +6,7 @@ const helloWorldRouter = require("./helloWorld/api/helloWorld");
 
 import { getConfigForEnvironment } from "./config";
 
-const config = getConfigForEnvironment(process.env.NODE_ENV || "local");
+const config = getConfigForEnvironment();
 
 mongoose.connect(`mongodb://${config.mongo.address}:${config.mongo.port}/${config.mongo.databaseName}`);
 

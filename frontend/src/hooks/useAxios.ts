@@ -1,8 +1,10 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { useState } from "react";
+import { getConfigForEnvironment } from "../config";
 
-// TODO Replace with env config
-axios.defaults.baseURL = "http://localhost:8080";
+const config = getConfigForEnvironment();
+
+axios.defaults.baseURL = `http://${config.server.address}:${config.server.port}`;
 
 type State = "idle" | "loading" | "success" | "error";
 

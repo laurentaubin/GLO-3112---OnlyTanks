@@ -1,6 +1,6 @@
 FROM node:alpine
 
-ARG NODE_ENV
+ARG ENVIRONMENT
 
 WORKDIR /app
 
