@@ -1,8 +1,8 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/laurentaubin/web2-temp/master/.github/images/Tankstagram-Logo.png" width="224px"/><br/>
+  <img src="https://raw.githubusercontent.com/laurentaubin/web2-temp/master/.github/images/Tankstagram-Logo.png" width="115px"/><br/>
   Thankstagram
 </h1>
-<p align="center">Share your tank pictures around the world, follow other tank enthousiasts and much more with Tankstagram.</p>
+<p align="center">Share your tank <b>pictures</b> around the world, <b>follow</b> other tank enthousiasts and <b>much more</b> with Tankstagram.</p>
 
 ## Setup TODOs
 
