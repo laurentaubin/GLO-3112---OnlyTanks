@@ -4,7 +4,7 @@
 </h1>
 <p align="center">Share your tank <b>pictures</b> around the world, <b>follow</b> other tank enthousiasts and <b>much more</b> with Tankstagram.</p>
 
-## Setup TODOs
+## 📋 Setup TODOs
 
 - Write CI/CD and deploy on aws
 - Use env based configs
@@ -14,13 +14,17 @@
 
 ### 🎨 Frontend
 
-TODO
+Tankstagram's frontend is built using [NestJs](https://nextjs.org/) paired with [Typescript](https://www.typescriptlang.org/). We are using [Jest](https://jestjs.io/) for functional testing and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for testing our components. Finally, we make use of [Tailwind CSS](https://tailwindcss.com/) when it comes to styling.
 
 ### 👾 Backend
 
-TODO
+Tankstagram's backend is built using [NodeJs](https://nodejs.org/en/) paired with Typescript. The web API portion of the app is built using [ExpressJs](https://expressjs.com/). Similarly to the frontend, we are using Jest for our backend testing.
 
 ### 💾 Database
+
+All of Tankstagram's data is stored in a [MongoDB](https://www.mongodb.com/) database, which is accessed in the backend code using the [Mongoose](https://mongoosejs.com/) ORM.
+
+### 📓 Logging
 
 TODO
 
@@ -28,7 +32,7 @@ TODO
 
 ### 🔄 CI/|CD
 
-TODO
+Our CI/CD processes are run using [GitHub Actions](https://github.com/features/actions) and can be found in the [.github/workflows](./.github/workflows) directory.
 
 ### ☁️ Deployments
 
