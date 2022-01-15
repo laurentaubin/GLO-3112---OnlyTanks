@@ -32,7 +32,7 @@ FROM node:16-alpine as archive-target
 ENV NODE_ENV=production
 ENV PATH $PATH:/app/node_modules/.bin
 
-ARG NEXT_PUBLIC_ENVIRONMENT
+ENV NEXT_PUBLIC_ENVIRONMENT=docker
 
 WORKDIR /app
 

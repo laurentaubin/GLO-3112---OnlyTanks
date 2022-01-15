@@ -1,3 +1,4 @@
+import getConfig from "next/config";
 import { dockerConfig } from "./config.docker";
 import { localConfig } from "./config.local";
 
@@ -9,8 +10,8 @@ export interface Config {
 }
 
 export const getConfigForEnvironment = () => {
-  console.log(process.env);
-  const environment = process.env.NEXT_PUBLIC_ENVIRONMENT || "local";
+  const { publicRuntimeConfig } = getConfig();
+  const environment = publicRuntimeConfig?.environment || "local";
 
   switch (environment) {
     case "local":
