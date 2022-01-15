@@ -10,6 +10,8 @@
     "mongoose": "5.13.13"
   },
   "scripts": {
+    "lint": "lint-staged",
+    "format": "prettier --write src/",
     "prebuild": "eslint src/",
     "build": "tsc",
     "dev": "nodemon src/index.ts",
@@ -17,13 +19,24 @@
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "lint-staged": {
+    "*.{js,ts,tsx, jsx}": [
+      "eslint --quiet --fix"
+    ],
+    "*.{json,md,html,js,jsx,ts,tsx}": [
+      "prettier --write"
+    ]
+  },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
     "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
+    "lint-staged": "^12.1.7",
     "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
   }
