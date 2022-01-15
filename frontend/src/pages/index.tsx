@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import { useHelloWord } from "../hooks/useHelloWorld";
-import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   const { helloWorld, state } = useHelloWord();
