@@ -1,4 +1,8 @@
-# Tankstagram
+<h1 align="center">
+  <img src="https://raw.githubusercontent.com/laurentaubin/web2-temp/master/.github/images/Tankstagram-Logo.png" width="224px"/><br/>
+  Thankstagram
+</h1>
+<p align="center">Share your tank pictures around the world, follow other tank enthousiasts and much more with Tankstagram.</p>
 
 ## Setup TODOs
 
