@@ -7,7 +7,6 @@
 ## 📋 Setup TODOs
 
 - Write CI/CD and deploy on aws
-- Use env based configs (works in backend for now, frontend still has problems with Docker)
 - Add logging
 
 ## 🧰 Development Stack

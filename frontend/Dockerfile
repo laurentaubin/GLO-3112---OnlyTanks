@@ -3,7 +3,7 @@ FROM node:16-alpine as test-target
 ENV NODE_ENV=development
 ENV PATH $PATH:/app/node_modules/.bin
 
-ARG NEXT_PUBLIC_ENVIRONMENT
+ENV NEXT_PUBLIC_ENVIRONMENT=docker
 
 WORKDIR /app
 
@@ -19,7 +19,7 @@ COPY . .
 FROM test-target as build-target
 ENV NODE_ENV=production
 
-ARG NEXT_PUBLIC_ENVIRONMENT
+ENV NEXT_PUBLIC_ENVIRONMENT=docker
 
 # Use build tools, installed as development packages, to produce a release build.
 RUN npm run build
