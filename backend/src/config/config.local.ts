@@ -5,8 +5,7 @@ export const localConfig: Config = {
     port: 8888
   },
   mongo: {
-    address: "localhost",
-    port: 27017,
+    connectionString: "mongodb://localhost:27017",
     databaseName: "tankstagram"
   }
 };

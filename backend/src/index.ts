@@ -2,13 +2,13 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const helloWorldRouter = require("./helloWorld/api/helloWorld");
+const helloWorldRouter = require("./hello-world/api/helloWorld");
 
 import { getConfigForEnvironment } from "./config";
 
 const config = getConfigForEnvironment();
 
-mongoose.connect(`mongodb://${config.mongo.address}:${config.mongo.port}/${config.mongo.databaseName}`);
+mongoose.connect(`${config.mongo.connectionString}/${config.mongo.databaseName}?retryWrites=true&w=majority`);
 
 app.use(cors());
 

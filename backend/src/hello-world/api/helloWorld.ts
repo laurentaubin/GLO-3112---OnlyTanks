@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import HelloWorldModel from "../infra/HelloWorldModel";
+import HelloWorldModel from "../models/HelloWorldModel";
 
 const router = express.Router();
 

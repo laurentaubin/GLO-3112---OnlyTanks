@@ -12,10 +12,8 @@
   "scripts": {
     "lint": "lint-staged",
     "format": "prettier --write src/",
-    "prebuild": "eslint src/",
     "build": "tsc",
     "dev": "nodemon src/index.ts",
-    "prestart": "yarn build",
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

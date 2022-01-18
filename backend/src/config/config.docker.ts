@@ -5,8 +5,7 @@ export const dockerConfig: Config = {
     port: 8080
   },
   mongo: {
-    address: "tankstagram-mongo",
-    port: 27017,
+    connectionString: "mongodb://tankstagram-mongo:27017",
     databaseName: "tankstagram"
   }
 };

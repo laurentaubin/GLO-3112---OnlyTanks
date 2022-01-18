@@ -1,5 +1,6 @@
 import { dockerConfig } from "./config.docker";
 import { localConfig } from "./config.local";
+import { productionConfig } from "./config.production";
 
 export interface Config {
   http: {
@@ -7,9 +8,8 @@ export interface Config {
   };
 
   mongo: {
-    address: string;
+    connectionString: string;
     databaseName: string;
-    port: number;
   };
 }
 
@@ -22,6 +22,9 @@ export const getConfigForEnvironment = () => {
 
     case "docker":
       return dockerConfig;
+
+    case "production":
+      return productionConfig;
 
     default:
       throw "Unknown environement name";
