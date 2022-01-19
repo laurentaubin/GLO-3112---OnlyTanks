@@ -2,6 +2,10 @@ name: Backend Production CD
 
 on:
   push:
+    branches:
+      - "master"
+    paths:
+      - "backend/**"
 
 defaults:
   run:
