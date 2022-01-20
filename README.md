@@ -2,7 +2,11 @@
   <img src="https://raw.githubusercontent.com/laurentaubin/web2-temp/master/.github/images/Tankstagram-Logo.png" width="115px"/><br/>
   Tankstagram
 </h1>
-<p align="center">Share your tank <b>pictures</b> around the world, <b>follow</b> other tank enthousiasts and <b>much more</b> with Tankstagram.</p>
+<p align="center"> 
+  <p>Share your tank <b>pictures</b> around the world, <b>follow</b> other tank enthousiasts and <b>much more</b> with Tankstagram. </p>
+  <p> http://tankstagram-frontend-static.s3-website-us-east-1.amazonaws.com/ </p> 
+</p>
+
 
 ## 📋 Setup TODOs
 

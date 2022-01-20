@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:prod": "next build && next export",
     "start": "next start",
     "start:docker": "NEXT_PUBLIC_ENVIRONMENT=docker next start",
     "lint": "lint-staged"
