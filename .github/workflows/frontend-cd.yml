@@ -37,4 +37,4 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy static site to S3 bucket
-        run: aws s3 sync ./out/ s3://tankstagram-frontend-static --delete
+        run: aws s3 sync ./out/ s3://onlytanks-frontend-static --delete

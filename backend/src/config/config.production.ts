@@ -6,6 +6,6 @@ export const productionConfig: Config = {
   },
   mongo: {
     connectionString: `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.gerps.mongodb.net`,
-    databaseName: "tankstagram"
+    databaseName: "onlytanks"
   }
 };

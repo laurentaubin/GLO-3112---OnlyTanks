@@ -1,6 +1,6 @@
 services:
   backend:
-    container_name: tankstagram-backend
+    container_name: onlytanks-backend
     restart: unless-stopped
     build: ./backend
     environment:
@@ -13,7 +13,7 @@ services:
       - mongo
 
   frontend:
-    container_name: tankstagram-frontend
+    container_name: onlytanks-frontend
     restart: unless-stopped
     build: ./frontend
     environment:
@@ -26,9 +26,9 @@ services:
 
   mongo:
     image: mongo:latest
-    container_name: tankstagram-mongo
+    container_name: onlytanks-mongo
     environment:
-      MONGO_INITDB_DATABASE: tankstagram
+      MONGO_INITDB_DATABASE: onlytanks
       MONGODB_DATA_DIR: /data/db
     volumes:
       - ./data/mongo/db:/data/db

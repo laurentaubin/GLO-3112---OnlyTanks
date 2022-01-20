@@ -6,6 +6,6 @@ export const localConfig: Config = {
   },
   mongo: {
     connectionString: "mongodb://localhost:27017",
-    databaseName: "tankstagram"
+    databaseName: "onlytanks"
   }
 };

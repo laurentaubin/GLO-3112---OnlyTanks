@@ -1,4 +1,4 @@
-# Tankstagram Frontend
+# OnlyTanks Frontend
 
 ## ⚡️ Quick start
 

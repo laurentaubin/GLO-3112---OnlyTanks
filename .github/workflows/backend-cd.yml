@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
-        run: docker build -t tankstragram-backend -f Dockerfile .
+        run: docker build -t onlytanks-backend -f Dockerfile .
 
       - name: Restore node_modules cache
         uses: actions/cache@v2
@@ -52,8 +52,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: Tankstagram-backend
-          environment_name: Tankstagrambackend-env
-          version_label: "tankstagram-backend-${{ steps.format-time.outputs.replaced }}"
+          application_name: Onlytanks-backend
+          environment_name: Onlytanksbackend-env
+          version_label: "onlytanks-backend-${{ steps.format-time.outputs.replaced }}"
           region: us-east-1
           deployment_package: backend/deploy.zip
