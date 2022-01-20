@@ -25,11 +25,11 @@ Tankstagram's backend is built using [NodeJs](https://nodejs.org/en/) paired wit
 
 ### 💾 Database
 
-All of Tankstagram's data is stored in a [MongoDB](https://www.mongodb.com/) database, which is accessed in the backend code using the [Mongoose](https://mongoosejs.com/) ORM.
+All of Tankstagram's data is stored in a [MongoDB](https://www.mongodb.com/) database, which is accessed in the backend code using the [Mongoose](https://mongoosejs.com/) ORM. The database is hosted on [MongoDB Atlas](https://www.mongodb.com/atlas/database).
 
 ### 📓 Logging
 
-TODO
+We plan to use [Winston](https://github.com/winstonjs/winston) paired with [Sentry](https://sentry.io/welcome/) to access the logs. This part is not completely decided yet, it is subject to change.
 
 ## 👨🏼‍💻 Development process
 
@@ -39,7 +39,7 @@ Our CI/CD processes are run using [GitHub Actions](https://github.com/features/a
 
 ### ☁️ Deployments
 
-TODO
+Deployments follow the methods demonstrated in the course. The frontend is deployed on Amazon S3 as a static website and the backend is deployed on Amazon Elastic Beanstalk.
 
 ## 👨‍🔬 Local development
 
