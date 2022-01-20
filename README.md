@@ -1,6 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/laurentaubin/web2-temp/master/.github/images/Onlytanks-Logo.png" width="115px"/><br/>
-  onlytanks
+  <img src=".github/images/Onlytanks-Logo.png" width="400px"/><br/>
 </h1>
 <p align="center"> 
   <p>Share your tank <b>pictures</b> around the world, <b>follow</b> other tank enthousiasts and <b>much more</b> with OnlyTanks. </p>
