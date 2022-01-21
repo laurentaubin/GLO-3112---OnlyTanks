@@ -1,11 +1,12 @@
 import getConfig from "next/config";
 import { dockerConfig } from "./config.docker";
 import { localConfig } from "./config.local";
+import { productionConfig } from "./config.production";
 
 export interface Config {
   server: {
     address: string;
-    port: number;
+    port?: number;
   };
 }
 
@@ -19,6 +20,9 @@ export const getConfigForEnvironment = () => {
 
     case "docker":
       return dockerConfig;
+
+    case "production":
+      return productionConfig;
 
     default:
       throw "Unknown environement name";

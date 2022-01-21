@@ -2,7 +2,7 @@ import { Config } from ".";
 
 export const localConfig: Config = {
   server: {
-    address: "localhost",
+    address: "http://localhost",
     port: 8888
   }
 };

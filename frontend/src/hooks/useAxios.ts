@@ -4,7 +4,7 @@ import { getConfigForEnvironment } from "../config";
 
 const config = getConfigForEnvironment();
 
-axios.defaults.baseURL = `http://${config.server.address}:${config.server.port}`;
+axios.defaults.baseURL = config.server.address + (config.server.port ? `:${config.server.port}` : "");
 
 type State = "idle" | "loading" | "success" | "error";
 
