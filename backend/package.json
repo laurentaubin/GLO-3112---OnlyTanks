@@ -10,12 +10,13 @@
     "mongoose": "5.13.13"
   },
   "scripts": {
-    "lint": "lint-staged",
+    "lint": "eslint --ext .ts src/",
+    "lint:staged": "lint-staged",
     "format": "prettier --write src/",
     "build": "tsc",
     "dev": "nodemon src/index.ts",
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --passWithNoTests"
   },
   "lint-staged": {
     "*.{js,ts,tsx, jsx}": [
@@ -32,6 +33,7 @@
     "@typescript-eslint/parser": "^5.9.1",
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
+    "jest": "^27.4.7",
     "lint-staged": "^12.1.7",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1",

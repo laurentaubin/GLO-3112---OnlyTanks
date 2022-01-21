@@ -7,7 +7,9 @@
     "build:prod": "NEXT_PUBLIC_ENVIRONMENT=production next build && next export",
     "start": "next start",
     "start:docker": "NEXT_PUBLIC_ENVIRONMENT=docker next start",
-    "lint": "lint-staged"
+    "lint": "eslint --ext .tsx --ext .ts src/",
+    "lint:staged": "lint-staged",
+    "test": "jest --passWithNoTests"
   },
   "lint-staged": {
     "*.{js,ts,tsx, jsx}": [
@@ -24,17 +26,23 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@testing-library/react": "^12.1.2",
     "@types/node": "^17.0.8",
     "@types/react": "17.0.38",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
     "autoprefixer": "^10.4.2",
+    "babel-jest": "^27.4.6",
     "eslint": "8.6.0",
     "eslint-config-next": "12.0.8",
     "eslint-config-prettier": "^8.3.0",
+    "jest": "^27.4.7",
     "lint-staged": "^12.1.7",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",
+    "react-test-renderer": "^17.0.2",
     "tailwindcss": "^3.0.15",
     "typescript": "4.5.4"
   }
