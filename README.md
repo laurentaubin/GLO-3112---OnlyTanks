@@ -8,7 +8,6 @@
 
 ## 📋 Setup TODOs
 
-- Write CI/CD and deploy on aws
 - Add logging
 
 ## 🧰 Development Stack
