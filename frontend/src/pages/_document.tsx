@@ -5,7 +5,6 @@ export default class Document extends NextDocument {
     return (
       <Html>
         <Head>
-          <title>onlytanks</title>
           <link rel="icon" type="image/svg+xml" sizes="any" href="/images/OnlyTanks-Logo.svg" />
         </Head>
         <body>

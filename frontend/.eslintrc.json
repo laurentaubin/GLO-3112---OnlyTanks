@@ -9,7 +9,7 @@
   "rules": {
     "semi": ["error", "always"],
     "quotes": ["error", "double"],
-    "@typescript-eslint/no-var-requires": 0
+    "no-empty-pattern": "off"
   },
   "extends": [
     "eslint:recommended",
