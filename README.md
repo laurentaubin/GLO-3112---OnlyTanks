@@ -40,14 +40,16 @@ Deployments follow the methods demonstrated in the course. The frontend is deplo
 
 ## 👨‍🔬 Local development
 
-### 🐳 Using docker
-
-With [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed,
-first build the app with `docker-compose build`, then run it with `docker-compose up`. Additionally, you can do both at the same time with `docker-compose up --build`.
-
-### 💻 Running the components directly
+### 💻 Running the components manually
 
 To manually run both the frontend and backend of the app, refer to each project's README found in their respective directories ([frontend](frontend), [backend](backend)).
+
+### 🐳 Using docker
+
+A dev Docker setup is available using `docker-compose.dev.yml` and the projects' `Dockerfile.dev`.
+
+With [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed,
+first build the app with `docker-compose -f docker-compose.dev.yaml build`, then run it with `docker-compose -f docker-compose.dev.yaml up -d`. Additionally, you can do both at the same time with `docker-compose -f docker-compose.dev.yaml up --build -d `.
 
 ### 🌐 Access the app
 
@@ -58,6 +60,6 @@ After running the app with Docker, the frontend will be served at `http://localh
 - [Laurent Aubin](https://github.com/laurentaubin)
 - [Francis Boulianne](https://github.com/francisboulianne)
 - [Toma Gagné](https://github.com/tomagagne)
-- [Maxime Miville-Deschênes]()
-- [Julien Suppiger]()
+- [Maxime Miville-Deschênes](https://github.com/maximemvd)
+- [Julien Suppiger](https://github.com/JulSupp)
 - [Philippe Vincent](https://github.com/Philrobots)

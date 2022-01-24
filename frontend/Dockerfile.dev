@@ -1,0 +1,11 @@
+FROM node:16
+
+ARG NEXT_PUBLIC_ENVIRONMENT
+
+WORKDIR /app
+
+COPY . .
+
+RUN yarn
+
+CMD ["yarn", "dev" ]
