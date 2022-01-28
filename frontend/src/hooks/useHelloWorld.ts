@@ -3,10 +3,10 @@ import { useAxios } from "./useAxios";
 
 export const useHelloWord = () => {
   const [helloWorld, setHelloWord] = useState("");
-  const { data, fetchData, state } = useAxios();
+  const { data, sendRequest, state } = useAxios();
 
   useEffect(() => {
-    fetchData({ url: "/hello-world", method: "GET" });
+    sendRequest({ url: "/hello-world", method: "GET" });
   }, []);
 
   useEffect(() => {
