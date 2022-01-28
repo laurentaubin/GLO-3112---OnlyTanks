@@ -13,8 +13,6 @@ export const FormikField = ({ name, placeholder, isError }: Props) => {
 
   const [field, _, { setTouched }] = useField<User>(name);
 
-  console.log(name, isError);
-
   return (
     <>
       <div className={["relative border rounded mb-2 bg-slate-100", isError ? "border-red-500" : ""].join(" ")}>
