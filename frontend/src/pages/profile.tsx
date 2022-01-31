@@ -1,18 +1,18 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { SignUpMenu } from "../authentication/SignUpMenu";
+import UserProfile from "../profile/UserInformation";
 
-const Signup: NextPage = () => {
+const Profile: NextPage = () => {
   return (
     <>
       <Head>
-        <title>OnlyTanks - Signup</title>
+        <title>OnlyTanks - Profile</title>
       </Head>
       <div className="md:bg-slate-100 h-screen w-screen flex justify-center text-center md:items-center">
-        <SignUpMenu />
+        <UserProfile />
       </div>
     </>
   );
 };
 
-export default Signup;
+export default Profile;
