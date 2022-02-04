@@ -3,7 +3,7 @@
 </h1>
 <p align="center"> 
   <p>Share your tank <b>pictures</b> around the world, <b>follow</b> other tank enthousiasts and <b>much more</b> with OnlyTanks. </p>
-  <p> http://onlytanks-frontend-static.s3-website-us-east-1.amazonaws.com/ </p> 
+  <p> https://d2w3pepxe2h8ho.cloudfront.net/ </p> 
 </p>
 
 ## 📋 Setup TODOs
