@@ -9,6 +9,7 @@ import { FormikField } from "../../../main/components/FormikField";
 import User from "../../../main/domain/User";
 import { setErrors } from "../../utils/setErrors";
 import { SubmitButton } from "../SubmitButton";
+import {FormikPhoneNumberField} from "../../../main/components/FormikPhoneNumberField";
 
 interface InternalSignUpFormProps {
   state: State;
@@ -43,7 +44,7 @@ const InternalSignUpForm = ({ state, error }: InternalSignUpFormProps) => {
 
       <FormikField name="email" placeholder="Email" isError={!!(formErrors.email && touched.email)} isDisabled={!!initialValues.email} />
 
-      <FormikField name="phoneNumber" placeholder="Phone number" isError={!!(formErrors.phoneNumber && touched.phoneNumber)} />
+      <FormikPhoneNumberField name="phoneNumber" placeholder="Phone number" isError={!!(formErrors.phoneNumber && touched.phoneNumber)} />
 
       <SubmitButton label={"Submit"} formErrors={formErrors} touched={touched} initialValues={initialValues} state={state} />
     </Form>
@@ -72,7 +73,19 @@ export const SignUpForm = () => {
   });
 
   const onSubmit = (values: User) => {
-    signUpUser(values);
+    const normalizedInputs = normalizeInputs(values);
+    signUpUser(normalizedInputs);
+  };
+
+  const normalizeInputs = (values: User): User => {
+    return {
+      ...values,
+      phoneNumber: normalizePhoneNumberInput(values.phoneNumber)
+    };
+  };
+
+  const normalizePhoneNumberInput = (phoneNumber: string): string => {
+    return phoneNumber.replace(/[ ()+-]/g, () => "");
   };
 
   return (

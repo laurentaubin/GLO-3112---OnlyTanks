@@ -1,19 +1,19 @@
 import { ErrorMessage, Field, useField } from "formik";
-import React, { useEffect, useState } from "react";
-import User from "../domain/User";
+import React, {ChangeEvent, useEffect, useState} from "react";
 
 interface Props {
   name: string;
   placeholder: string;
   isError?: boolean;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   isDisabled?: boolean;
   onTouched?: () => void;
 }
 
-export const FormikField = ({ name, placeholder, isError, isDisabled, onTouched }: Props) => {
+export const FormikField = ({ name, placeholder, isError, onChange, isDisabled, onTouched }: Props) => {
   const [isActive, setIsActive] = useState(false);
 
-  const [field, _, { setTouched }] = useField<User>(name);
+  const [field, _, { setTouched }] = useField<string>(name);
 
   useEffect(() => {
     setIsActive(!!field.value);
@@ -43,6 +43,7 @@ export const FormikField = ({ name, placeholder, isError, isDisabled, onTouched 
             setTouched(true, true);
             setIsActive(!!field.value);
           }}
+          {...(onChange && { onChange: onChange })}
           disabled={isDisabled}
         />
         <label
