@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Layout } from "../layout/Layout";
-import {MainFeed} from "../feed/MainFeed";
+import { MainFeed } from "../feed/MainFeed";
 
 // TODO This page will be included in the home page and conditionally rendered if the user is logged it.
 // For now we placed it in a separate page

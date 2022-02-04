@@ -5,13 +5,16 @@ import { instance, mock, when, deepEqual } from "ts-mockito";
 import AuthService from "../AuthService";
 import { UserRequest } from "../../../user/service/UserRequest";
 import { UserResponse } from "../../../user/service/UserResponse";
+import AuthProviderSelector from "../AuthProviderSelector";
 
 describe("AuthService", () => {
   const mockedUserRepository = mock<UserRepository>();
   const userRepository = instance(mockedUserRepository);
   const mockedUserAssembler = mock<UserAssembler>();
   const userAssembler = instance(mockedUserAssembler);
-  const authService = new AuthService(userAssembler, userRepository);
+  const mockedAuthProviderSelector = mock<AuthProviderSelector>();
+  const authProviderSelector = instance(mockedAuthProviderSelector);
+  const authService = new AuthService(userAssembler, userRepository, authProviderSelector);
 
   describe("given UserRepository creates and returns a user", () => {
     const aSignUpRequest: UserRequest = {

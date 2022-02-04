@@ -8,6 +8,10 @@ export interface Config {
     address: string;
     port?: number;
   };
+
+  google: {
+    clientId: string;
+  };
 }
 
 export const getConfigForEnvironment = () => {

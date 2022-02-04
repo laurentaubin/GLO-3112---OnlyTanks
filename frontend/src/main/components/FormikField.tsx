@@ -1,17 +1,31 @@
 import { ErrorMessage, Field, useField } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import User from "../domain/User";
 
 interface Props {
   name: string;
   placeholder: string;
   isError?: boolean;
+  isDisabled?: boolean;
+  onTouched?: () => void;
 }
 
-export const FormikField = ({ name, placeholder, isError }: Props) => {
+export const FormikField = ({ name, placeholder, isError, isDisabled, onTouched }: Props) => {
   const [isActive, setIsActive] = useState(false);
 
   const [field, _, { setTouched }] = useField<User>(name);
+
+  useEffect(() => {
+    setIsActive(!!field.value);
+    setTouched(!!field.value);
+  }, []);
+
+  const handleOnTouched = () => {
+    setIsActive(true);
+    if (onTouched) {
+      onTouched();
+    }
+  };
 
   return (
     <>
@@ -19,15 +33,17 @@ export const FormikField = ({ name, placeholder, isError }: Props) => {
         <Field
           className={[
             "outline-none w-full rounded bg-transparent text-sm transition-all duration-200 ease-in-out p-2",
-            isActive ? "pt-6" : ""
+            isActive ? "pt-6" : "",
+            isDisabled ? "text-gray-400" : ""
           ].join(" ")}
           id={name}
           name={name}
-          onFocus={() => setIsActive(true)}
+          onFocus={handleOnTouched}
           onBlur={() => {
             setTouched(true, true);
             setIsActive(!!field.value);
           }}
+          disabled={isDisabled}
         />
         <label
           className={[

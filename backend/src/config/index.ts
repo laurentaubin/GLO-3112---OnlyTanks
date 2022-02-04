@@ -11,6 +11,10 @@ export interface Config {
     connectionString: string;
     databaseName: string;
   };
+
+  google: {
+    clientId: string;
+  };
 }
 
 export const getConfigForEnvironment = () => {

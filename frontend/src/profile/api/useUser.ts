@@ -1,7 +1,6 @@
 import { useAxios } from "../../main/hooks/useAxios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import UserAssembler from "./UserAssembler";
-import User from "../../main/domain/User";
 import UserResponse from "./UserResponse";
 
 export const useUser = (username: string) => {

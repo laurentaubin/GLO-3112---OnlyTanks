@@ -11,6 +11,9 @@ defaults:
   run:
     working-directory: frontend
 
+env:
+  GOOGLE_CLIENT_ID: `${{ secrets.GOOGLE_CLIENT_ID }}`
+
 jobs:
   build:
     runs-on: ubuntu-latest

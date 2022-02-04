@@ -1,9 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import { FormHeader } from "../../main/components/FormHeader";
-import { FormLayout } from "../../main/components/FormLayout";
-import { MenuItem } from "../../main/components/MenuItem";
+import { FormHeader } from "../../../main/components/FormHeader";
+import { FormLayout } from "../../../main/components/FormLayout";
+import { MenuItem } from "../../../main/components/MenuItem";
 import { LoginForm } from "./LoginForm";
+import { GoogleLoginButton } from "./GoogleLoginButton";
 
 export const LoginMenu = () => {
   return (
@@ -13,6 +14,7 @@ export const LoginMenu = () => {
           <FormHeader />
           <LoginForm />
         </FormLayout>
+        <GoogleLoginButton />
       </MenuItem>
 
       <MenuItem variant="sm">

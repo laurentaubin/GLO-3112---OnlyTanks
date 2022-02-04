@@ -23,4 +23,14 @@ export default class MongoDbUserRepository implements UserRepository {
 
     return this.userAssembler.assembleUser(userDto);
   }
+
+  public async findByEmail(email: string): Promise<User> {
+    const userDto = (await UserModel.findOne({ email: email })) as unknown as UserDto;
+
+    if (!userDto) {
+      throw new UserNotFoundException();
+    }
+
+    return this.userAssembler.assembleUser(userDto);
+  }
 }

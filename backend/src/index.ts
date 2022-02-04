@@ -1,10 +1,10 @@
+import { getConfigForEnvironment } from "./config";
+
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const userResource = require("./user/api/UserResource");
 const authResource = require("./authentication/api/AuthResource");
-
-import { getConfigForEnvironment } from "./config";
 
 const app = express();
 const config = getConfigForEnvironment();

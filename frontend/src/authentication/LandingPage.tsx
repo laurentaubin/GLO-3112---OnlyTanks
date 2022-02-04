@@ -1,5 +1,5 @@
 import React from "react";
-import { LoginMenu } from "./components/LoginMenu";
+import { LoginMenu } from "./components/login/LoginMenu";
 
 export const LandingPage = () => {
   return (
