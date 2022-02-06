@@ -7,12 +7,14 @@ export const useUser = (username: string) => {
   const { data, sendRequest, state, error } = useAxios();
 
   useEffect(() => {
-    const getByUsername = async () => {
-      await sendRequest({ url: `/user/${username}`, method: "GET" });
-    };
+    if (username) {
+      const getByUsername = async () => {
+        await sendRequest({ url: `/user/${username}`, method: "GET" });
+      };
 
-    getByUsername();
-  }, []);
+      getByUsername();
+    }
+  }, [username]);
 
   return { user: UserAssembler.assembleToUser(data?.data as UserResponse), state, error };
 };

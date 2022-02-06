@@ -21,5 +21,5 @@ const googleAuthProvider = new GoogleAuthProvider(getConfigForEnvironment().goog
 const localAuthProvider = new LocalAuthProvider(userRepository, userAssembler);
 const authProviderSelector = new AuthProviderSelector(localAuthProvider, googleAuthProvider);
 
-export const userService = new UserService(userRepository);
+export const userService = new UserService(userAssembler, userRepository);
 export const authService = new AuthService(userAssembler, userRepository, authProviderSelector);

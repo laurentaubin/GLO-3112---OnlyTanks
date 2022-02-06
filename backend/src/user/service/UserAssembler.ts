@@ -1,6 +1,6 @@
-import User from "../domain/User";
 import { UserRequest } from "./UserRequest";
 import { UserResponse } from "./UserResponse";
+import User from "../domain/User";
 
 export default class UserAssembler {
   assembleUser(signUpRequest: UserRequest): User {
@@ -13,7 +13,7 @@ export default class UserAssembler {
     };
   }
 
-  assembleSignUpResponse(user: User): UserResponse {
+  assembleUserResponse(user: User): UserResponse {
     return {
       username: user.username,
       firstName: user.firstName,

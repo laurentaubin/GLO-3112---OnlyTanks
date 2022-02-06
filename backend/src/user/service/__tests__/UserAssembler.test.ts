@@ -1,7 +1,7 @@
 import User from "src/user/domain/User";
-import UserAssembler from "../UserAssembler";
 import { UserRequest } from "../UserRequest";
 import { UserResponse } from "../UserResponse";
+import UserAssembler from "../UserAssembler";
 
 describe("UserAssembler", () => {
   const userAssembler = new UserAssembler();
@@ -11,7 +11,7 @@ describe("UserAssembler", () => {
   const anEmail = "franky@email.com";
   const aPhoneNumber = "418-123-4567";
 
-  describe("given a SignUpRequest", () => {
+  describe("given a UserRequest", () => {
     const aSignUpRequest: UserRequest = {
       username: aUsername,
       firstName: aFirstName,
@@ -45,9 +45,9 @@ describe("UserAssembler", () => {
       phoneNumber: aPhoneNumber
     };
 
-    describe("when assembling sign up response", () => {
+    describe("when assembling UserResponse", () => {
       it("should assemble with corresponding parameters", () => {
-        const actual = userAssembler.assembleSignUpResponse(aUser);
+        const actual = userAssembler.assembleUserResponse(aUser);
 
         const expected: UserResponse = {
           username: aUsername,

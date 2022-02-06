@@ -16,13 +16,13 @@ export default class AuthService {
   public async signup(userRequest: UserRequest): Promise<UserResponse> {
     const user = this.userAssembler.assembleUser(userRequest);
     const newUser = await this.userRepository.save(user);
-    return this.userAssembler.assembleSignUpResponse(newUser);
+    return this.userAssembler.assembleUserResponse(newUser);
   }
 
   public async login(loginRequest: LoginRequest): Promise<UserResponse> {
     const authProvider: AuthProvider = this.authProviderSelector.select(loginRequest.authProvider);
     const user = await authProvider.login(loginRequest);
 
-    return this.userAssembler.assembleSignUpResponse(user);
+    return this.userAssembler.assembleUserResponse(user);
   }
 }

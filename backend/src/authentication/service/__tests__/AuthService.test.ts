@@ -2,10 +2,10 @@ import User from "src/user/domain/User";
 import UserRepository from "src/user/domain/UserRepository";
 import UserAssembler from "src/user/service/UserAssembler";
 import { instance, mock, when, deepEqual } from "ts-mockito";
-import AuthService from "../AuthService";
 import { UserRequest } from "../../../user/service/UserRequest";
 import { UserResponse } from "../../../user/service/UserResponse";
 import AuthProviderSelector from "../AuthProviderSelector";
+import AuthService from "../AuthService";
 
 describe("AuthService", () => {
   const mockedUserRepository = mock<UserRepository>();
@@ -43,7 +43,7 @@ describe("AuthService", () => {
 
     when(mockedUserAssembler.assembleUser(deepEqual(aSignUpRequest))).thenReturn(aUser);
     when(mockedUserRepository.save(aUser)).thenResolve(aUser);
-    when(mockedUserAssembler.assembleSignUpResponse(aUser)).thenReturn(aSignUpResponse);
+    when(mockedUserAssembler.assembleUserResponse(aUser)).thenReturn(aSignUpResponse);
 
     describe("when signup", () => {
       it("should return new user", async () => {

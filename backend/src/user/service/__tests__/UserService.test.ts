@@ -2,11 +2,13 @@ import { mock, instance, when } from "ts-mockito";
 import UserBuilder from "../../../__tests__/utils/UserBuilder";
 import UserRepository from "../../domain/UserRepository";
 import UserService from "../UserService";
+import UserAssembler from "../UserAssembler";
 
 describe("UserService", () => {
   const mockedUserRepository: UserRepository = mock<UserRepository>();
   const userRepository = instance(mockedUserRepository);
-  const userService = new UserService(userRepository);
+  const userAssembler = new UserAssembler();
+  const userService = new UserService(userAssembler, userRepository);
 
   describe("given a username", () => {
     const aUsername = "pablo";
