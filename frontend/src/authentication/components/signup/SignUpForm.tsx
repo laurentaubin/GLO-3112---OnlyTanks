@@ -9,7 +9,7 @@ import { FormikField } from "../../../main/components/FormikField";
 import User from "../../../main/domain/User";
 import { setErrors } from "../../utils/setErrors";
 import { SubmitButton } from "../SubmitButton";
-import {FormikPhoneNumberField} from "../../../main/components/FormikPhoneNumberField";
+import { FormikPhoneNumberField } from "../../../main/components/FormikPhoneNumberField";
 
 interface InternalSignUpFormProps {
   state: State;

@@ -1,6 +1,7 @@
 import { dockerConfig } from "./config.docker";
 import { localConfig } from "./config.local";
 import { productionConfig } from "./config.production";
+import { S3Config } from "./config.S3";
 
 export interface Config {
   http: {
@@ -33,4 +34,8 @@ export const getConfigForEnvironment = () => {
     default:
       throw "Unknown environement name";
   }
+};
+
+export const getS3Config = () => {
+  return S3Config;
 };

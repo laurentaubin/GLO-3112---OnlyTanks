@@ -1,5 +1,5 @@
 import { userService } from "../../AppContext";
-import { status } from "../../api/status";
+import { status } from "../../api/Status";
 import express, { Response, Request } from "express";
 
 const router = express.Router();

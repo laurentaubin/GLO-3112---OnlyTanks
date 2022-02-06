@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, useField } from "formik";
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 interface Props {
   name: string;

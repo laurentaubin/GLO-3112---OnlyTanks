@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { status } from "../../api/status";
+import { status } from "../../api/Status";
 import { authService } from "../../AppContext";
 import { UserRequest } from "../../user/service/UserRequest";
 import { isUnusedEmail } from "./validators/isUnusedEmail";
