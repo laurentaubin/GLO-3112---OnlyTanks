@@ -12,6 +12,8 @@ import LocalAuthProvider from "./authentication/infra/local/LocalAuthProvider";
 import AuthProviderSelector from "./authentication/service/AuthProviderSelector";
 import { OAuth2Client } from "google-auth-library";
 import { getConfigForEnvironment } from "./config";
+import MongoDbSessionAssembler from "./authentication/infra/MongoDbSessionAssembler";
+import MongoDbSessionRepository from "./authentication/infra/MongoDbSessionRepository";
 import S3PictureStorage from "./storage/infra/S3PictureStorage";
 import PostService from "./post/service/PostService";
 import PostAssemblerRequest from "./post/api/PostAssemblerRequest";
@@ -24,11 +26,13 @@ export const postAssemblerRequest = new PostAssemblerRequest();
 const postAssembler = new PostAssembler();
 const userAssembler = new UserAssembler();
 const mongoDbUserAssembler = new MongoDbUserAssembler();
+const mongoDbSessionAssembler = new MongoDbSessionAssembler();
 const mongoPostAssembler = new MongoPostAssembler();
 
 // repository
 const postRepository = new MongoPostRepository(mongoPostAssembler);
 const userRepository = new MongoDbUserRepository(mongoDbUserAssembler);
+const sessionRepository = new MongoDbSessionRepository(mongoDbSessionAssembler);
 
 // service
 export const storageService = new S3PictureStorage(storageInformation);
@@ -36,9 +40,17 @@ export const postService = new PostService(postAssembler, postRepository, storag
 const googleClient = new OAuth2Client({
   clientId: `${getConfigForEnvironment().google.clientId}`
 });
-const googleAuthProvider = new GoogleAuthProvider(getConfigForEnvironment().google.clientId, googleClient, userRepository, userAssembler);
-const localAuthProvider = new LocalAuthProvider(userRepository, userAssembler);
+
+const googleAuthProvider = new GoogleAuthProvider(
+  getConfigForEnvironment().google.clientId,
+  googleClient,
+  userRepository,
+  userAssembler,
+  sessionRepository
+);
+
+const localAuthProvider = new LocalAuthProvider(userRepository, userAssembler, sessionRepository);
 const authProviderSelector = new AuthProviderSelector(localAuthProvider, googleAuthProvider);
 
 export const userService = new UserService(userAssembler, userRepository);
-export const authService = new AuthService(userAssembler, userRepository, authProviderSelector);
+export const authService = new AuthService(userAssembler, userRepository, authProviderSelector, sessionRepository);

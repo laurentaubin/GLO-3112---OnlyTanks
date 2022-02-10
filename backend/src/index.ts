@@ -1,8 +1,10 @@
 import { getConfigForEnvironment } from "./config";
+import { authMiddleware } from "./middleware/AuthMiddleware";
 
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+
 const userResource = require("./user/api/UserResource");
 const authResource = require("./authentication/api/AuthResource");
 const postResource = require("./post/api/PostResource");
@@ -17,6 +19,8 @@ mongoose.connect(`${config.mongo.connectionString}/${config.mongo.databaseName}?
 app.use(limiter);
 app.use(express.json());
 app.use(cors());
+
+app.use(authMiddleware);
 
 app.use("/", authResource);
 app.use("/", userResource);

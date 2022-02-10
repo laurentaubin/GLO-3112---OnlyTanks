@@ -9,6 +9,7 @@ import LoginRequest from "../service/LoginRequest";
 import LoginRequestAssembler from "./LoginRequestAssembler";
 import LoginRequestDto from "./dto/LoginRequestDto";
 import UserNotFoundException from "../../user/domain/exceptions/UserNotFoundException";
+import { constants } from "../../constants/constants";
 
 const loginRequestAssembler = new LoginRequestAssembler();
 
@@ -27,16 +28,16 @@ router.post(
       return res.status(status.BAD_REQUEST).json({ errors: errors.array() });
     }
 
-    const newUser = await authService.signup(req.body);
-    return res.status(status.CREATED).setHeader("LOCATION", `/users/${newUser.username}`).json(newUser);
+    const signUpResponse = await authService.signup(req.body, req.header(constants.AUTH_PROVIDER_HEADER) as string);
+    return res.status(status.CREATED).setHeader("LOCATION", `/users/${signUpResponse.username}`).json(signUpResponse);
   }
 );
 
 router.post("/login", async (req: Request<Record<string, unknown>, Record<string, unknown>, LoginRequestDto>, res: Response) => {
   const loginRequest: LoginRequest = loginRequestAssembler.assemble(req.body);
   try {
-    const user = await authService.login(loginRequest);
-    return res.status(status.OK).json(user);
+    const loginResponse = await authService.login(loginRequest);
+    return res.status(status.OK).json(loginResponse);
   } catch (e) {
     return handleLoginError(e, res);
   }

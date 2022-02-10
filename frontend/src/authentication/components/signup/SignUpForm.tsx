@@ -1,4 +1,4 @@
-import { AxiosError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { Form, Formik, useFormikContext } from "formik";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -10,21 +10,27 @@ import User from "../../../main/domain/User";
 import { setErrors } from "../../utils/setErrors";
 import { SubmitButton } from "../SubmitButton";
 import { FormikPhoneNumberField } from "../../../main/components/FormikPhoneNumberField";
+import { useCookies } from "react-cookie";
+import AuthProvider from "../../domain/AuthProvider";
+import { constants } from "../../../constants/constants";
 
 interface InternalSignUpFormProps {
+  data: AxiosResponse | undefined;
   state: State;
   error: AxiosError | undefined;
+  provider: string | string[] | undefined;
 }
 
-const InternalSignUpForm = ({ state, error }: InternalSignUpFormProps) => {
+const InternalSignUpForm = ({ data, state, error, provider }: InternalSignUpFormProps) => {
   const { errors: formErrors, touched, setErrors: setFormErrors, initialValues } = useFormikContext<User>();
 
   const router = useRouter();
+  const [cookies, setCookie] = useCookies([constants.AUTH_PROVIDER_COOKIE, constants.SESSION_TOKEN_COOKIE]);
 
   useEffect(() => {
     switch (state) {
       case State.SUCCESS:
-        // TODO set session cookies
+        setCookies(data?.data.token);
         router.push("/");
         break;
 
@@ -33,6 +39,11 @@ const InternalSignUpForm = ({ state, error }: InternalSignUpFormProps) => {
         break;
     }
   }, [router, state]);
+
+  const setCookies = (token: string) => {
+    setCookie(constants.AUTH_PROVIDER_COOKIE, provider ? provider : AuthProvider.LOCAL, { maxAge: constants.SESSION_TOKEN_TTL });
+    setCookie(constants.SESSION_TOKEN_COOKIE, token, { maxAge: constants.SESSION_TOKEN_TTL });
+  };
 
   return (
     <Form className="text-center align-middle justify-center">
@@ -52,9 +63,9 @@ const InternalSignUpForm = ({ state, error }: InternalSignUpFormProps) => {
 };
 
 export const SignUpForm = () => {
-  const { state, signUpUser, error } = useSignUp();
+  const { data, state, signUpUser, error } = useSignUp();
   const router = useRouter();
-  const { firstName, lastName, email } = router.query;
+  const { provider, firstName, lastName, email } = router.query;
 
   const initialValues: User = {
     username: "",
@@ -97,7 +108,7 @@ export const SignUpForm = () => {
         validateOnBlur={false}
         initialStatus={{}}
       >
-        <InternalSignUpForm state={state} error={error} />
+        <InternalSignUpForm data={data} state={state} error={error} provider={provider} />
       </Formik>
     </div>
   );

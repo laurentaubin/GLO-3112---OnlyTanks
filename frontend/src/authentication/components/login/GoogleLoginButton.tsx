@@ -5,12 +5,16 @@ import { useLogin } from "../../api/useLogin";
 import { State } from "../../../main/hooks/useAxios";
 import { useRouter } from "next/router";
 import AuthProvider from "../../domain/AuthProvider";
+import { useCookies } from "react-cookie";
+import { constants } from "../../../constants/constants";
 
 export const GoogleLoginButton = () => {
   const { data, state, loginUser } = useLogin();
   const [googleData, setGoogleData] = useState({} as GoogleLoginResponse | GoogleLoginResponseOffline);
 
   const router = useRouter();
+
+  const [, setCookie] = useCookies([constants.SESSION_TOKEN_COOKIE, constants.AUTH_PROVIDER_COOKIE]);
 
   useEffect(() => {
     switch (state) {
@@ -19,8 +23,8 @@ export const GoogleLoginButton = () => {
           handleLoginError();
           break;
         }
-
-        // TODO set session cookies if no error and redirect to home page
+        setCookies(data?.data.token);
+        router.push("/");
         break;
       case State.ERROR:
         handleLoginError();
@@ -40,6 +44,11 @@ export const GoogleLoginButton = () => {
         }
       });
     }
+  };
+
+  const setCookies = (token: string) => {
+    setCookie(constants.AUTH_PROVIDER_COOKIE, AuthProvider.GOOGLE, { maxAge: constants.SESSION_TOKEN_TTL });
+    setCookie(constants.SESSION_TOKEN_COOKIE, token, { maxAge: constants.SESSION_TOKEN_TTL });
   };
 
   const handleLogin = async (googleData: GoogleLoginResponse | GoogleLoginResponseOffline): Promise<void> => {

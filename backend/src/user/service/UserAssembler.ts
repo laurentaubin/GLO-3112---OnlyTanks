@@ -1,6 +1,8 @@
 import { UserRequest } from "./UserRequest";
 import { UserResponse } from "./UserResponse";
+import { LoginResponse } from "../../authentication/service/LoginResponse";
 import User from "../domain/User";
+import { UserLoginResponse } from "./UserLoginResponse";
 
 export default class UserAssembler {
   assembleUser(signUpRequest: UserRequest): User {
@@ -20,6 +22,17 @@ export default class UserAssembler {
       lastName: user.lastName,
       email: user.email,
       phoneNumber: user.phoneNumber
+    };
+  }
+
+  assembleUserLoginResponse(loginResponse: LoginResponse): UserLoginResponse {
+    return {
+      username: loginResponse.username,
+      firstName: loginResponse.firstName,
+      lastName: loginResponse.lastName,
+      email: loginResponse.email,
+      phoneNumber: loginResponse.phoneNumber,
+      token: loginResponse.token
     };
   }
 }
