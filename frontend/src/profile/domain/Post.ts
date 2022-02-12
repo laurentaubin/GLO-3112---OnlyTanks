@@ -1,10 +1,10 @@
 interface Post {
   imageUrl: string;
+  id: string;
+  caption: string;
   hashtags: string[];
   author: string;
-  caption: string;
-  id: string;
-  createdAt?: number;
+  createdAt: number;
 }
 
 export default Post;

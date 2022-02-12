@@ -1,6 +1,6 @@
 import { prop, getModelForClass, modelOptions } from "@typegoose/typegoose";
 
-@modelOptions({ schemaOptions: { collection: "posts", timestamps: true } })
+@modelOptions({ schemaOptions: { collection: "posts", timestamps: { createdAt: true, updatedAt: false } } })
 export class PostDto {
   @prop({ type: String, required: true })
   public author: string;
@@ -17,9 +17,10 @@ export class PostDto {
   @prop({ type: String, required: true })
   public id: string;
 
-  public createdAt?: Date;
+  @prop({ type: Number })
+  public createdAt: number;
 
-  public updatedAt?: Date;
+  public updatedAt?: number;
 }
 
 const PostModel = getModelForClass(PostDto);

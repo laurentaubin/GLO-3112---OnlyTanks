@@ -16,7 +16,8 @@ describe("MongoDbUserAssembler", () => {
       firstName: aFirstName,
       lastName: aLastName,
       email: anEmail,
-      phoneNumber: aPhoneNumber
+      phoneNumber: aPhoneNumber,
+      createdAt: 342567854321
     };
 
     describe("when assembling to domain", () => {

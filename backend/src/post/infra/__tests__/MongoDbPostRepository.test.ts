@@ -1,13 +1,17 @@
-import MongoPostRepository from "../MongoDbPostRepository";
+import MongoDbPostRepository from "../MongoDbPostRepository";
 import { mock, instance, when, verify } from "ts-mockito";
-import MongoPostAssembler from "../MongoDbPostAssembler";
-import Post from "src/post/domain/Post";
+import MongoDbPostAssembler from "../MongoDbPostAssembler";
+import Post from "../../domain/Post";
+import Paginator from "src/utils/pagination/Paginator";
 
 describe("MongoDbPostRepository", () => {
-  const mockMongoPostAssembler: MongoPostAssembler = mock<MongoPostAssembler>();
-  const mongoPostAssembler: MongoPostAssembler = instance(mockMongoPostAssembler);
+  const mockMongoPostAssembler: MongoDbPostAssembler = mock<MongoDbPostAssembler>();
+  const mongoPostAssembler: MongoDbPostAssembler = instance(mockMongoPostAssembler);
 
-  const mongoPostRepository: MongoPostRepository = new MongoPostRepository(mongoPostAssembler);
+  const mockPaginator: Paginator = mock<Paginator>();
+  const paginator: Paginator = instance(mockPaginator);
+
+  const mongoPostRepository: MongoDbPostRepository = new MongoDbPostRepository(mongoPostAssembler, paginator);
 
   const postModel = {
     save: jest.fn()
@@ -18,7 +22,8 @@ describe("MongoDbPostRepository", () => {
     caption: "caption",
     author: "username",
     imageUrl: "url",
-    id: "id"
+    id: "id",
+    createdAt: 3214567546523456
   };
 
   describe("save", () => {

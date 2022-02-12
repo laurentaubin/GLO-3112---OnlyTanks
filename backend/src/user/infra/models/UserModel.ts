@@ -1,6 +1,6 @@
 import { prop, getModelForClass, modelOptions } from "@typegoose/typegoose";
 
-@modelOptions({ schemaOptions: { collection: "users", timestamps: true } })
+@modelOptions({ schemaOptions: { collection: "users", timestamps: { createdAt: true, updatedAt: false } } })
 export class UserDto {
   @prop({ type: String, required: true })
   public username: string;
@@ -17,9 +17,10 @@ export class UserDto {
   @prop({ type: String, required: true })
   public phoneNumber: string;
 
-  public createdAt?: Date;
+  @prop({ type: Number })
+  public createdAt: number;
 
-  public updatedAt?: Date;
+  public updatedAt?: number;
 }
 
 const UserModel = getModelForClass(UserDto);

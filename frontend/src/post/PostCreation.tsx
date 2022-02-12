@@ -19,7 +19,7 @@ export default function PostCreation() {
     const postImageContent: PostImageContent = {
       image: file!,
       caption: caption,
-      author: "aUsername",
+      author: "Testing12345",
       hashtags: hashtags
     };
 

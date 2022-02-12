@@ -7,9 +7,18 @@ import { FileRequest } from "src/storage/domain/FileRequest";
 import StorageResponse from "src/storage/domain/S3StorageResponse";
 import Post from "src/post/domain/Post";
 import PostBody from "src/post/api/PostBody";
+import Pagination from "src/utils/pagination/Pagination";
+import UserRepository from "src/user/domain/UserRepository";
 
 describe("PostService", () => {
   const hashTag: string[] = [];
+
+  const anAuthor = "AN_AUTHOR";
+
+  const pagination: Pagination = {
+    limit: 10,
+    skip: 20
+  };
 
   const fileRequest: FileRequest = {
     encoding: "encoding",
@@ -41,8 +50,20 @@ describe("PostService", () => {
     caption: "caption",
     author: "username",
     imageUrl: "url",
-    id: "id"
+    id: "id",
+    createdAt: 45367432
   };
+
+  const anotherPost: Post = {
+    hashtags: hashTag,
+    caption: "caption",
+    author: "username",
+    imageUrl: "url",
+    id: "ididid",
+    createdAt: 534632567
+  };
+
+  const posts: Post[] = [post, anotherPost];
 
   const mockPostAssembler: PostAssembler = mock<PostAssembler>();
   const postAssembler = instance(mockPostAssembler);
@@ -53,7 +74,10 @@ describe("PostService", () => {
   const mockPicturageStorage: PictureStorage = mock<PictureStorage>();
   const pictureStorage = instance(mockPicturageStorage);
 
-  const postService = new PostService(postAssembler, postRepository, pictureStorage);
+  const mockUserRepository: UserRepository = mock<UserRepository>();
+  const userRepository = instance(mockUserRepository);
+
+  const postService = new PostService(postAssembler, postRepository, pictureStorage, userRepository);
 
   describe("when add post", () => {
     beforeEach(async () => {
@@ -73,6 +97,19 @@ describe("PostService", () => {
 
       it("should call the post Repository to save the post", () => {
         verify(mockPostRepository.save(post)).called();
+      });
+    });
+  });
+
+  describe("get author posts", () => {
+    beforeEach(async () => {
+      when(mockPostRepository.findByAuthor(anAuthor, pagination)).thenReturn(Promise.resolve(posts));
+      await postService.getAuthorPosts(anAuthor, pagination);
+    });
+
+    describe("given a author and a pagination", () => {
+      it("should call the post repositoty to get the posts with the right argument", () => {
+        verify(mockPostRepository.findByAuthor(anAuthor, pagination)).called();
       });
     });
   });

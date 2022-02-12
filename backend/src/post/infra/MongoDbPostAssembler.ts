@@ -1,7 +1,7 @@
 import Post from "../domain/Post";
-import PostModel from "./models/PostModel";
+import PostModel, { PostDto } from "./models/PostModel";
 
-export default class MongoPostAssembler {
+class MongoDbPostAssembler {
   public assemblePostModel(post: Post) {
     return new PostModel({
       imageUrl: post.imageUrl,
@@ -11,4 +11,17 @@ export default class MongoPostAssembler {
       id: post.id
     });
   }
+
+  public assemblePost(postDto: PostDto): Post {
+    return {
+      imageUrl: postDto.imageUrl,
+      createdAt: postDto.createdAt,
+      author: postDto.author,
+      caption: postDto.caption,
+      hashtags: postDto.hashtags,
+      id: postDto.id
+    };
+  }
 }
+
+export default MongoDbPostAssembler;
