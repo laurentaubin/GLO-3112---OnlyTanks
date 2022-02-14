@@ -2,8 +2,9 @@ import { status } from "../../api/Status";
 import express, { Response, Request } from "express";
 import { postRequestAssembler, postService, paginationFactory } from "../../AppContext";
 import PostRequest from "./PostRequest";
-import PostBody from "./PostBody";
+import PostRequestBody from "./PostRequestBody";
 import Pagination from "../../utils/pagination/Pagination";
+
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
@@ -11,9 +12,9 @@ const router = express.Router();
 
 router.post("/post", upload.single("image"), async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
-    const postRequest: PostBody = postRequestAssembler.assemblePostBody(req as PostRequest);
+    const postRequestBody: PostRequestBody = postRequestAssembler.assemblePostRequestBody(req as PostRequest);
 
-    postService.addPost(postRequest);
+    await postService.addPost(postRequestBody);
 
     res.status(status.OK).send();
   } catch (e) {

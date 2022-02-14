@@ -9,7 +9,8 @@ export default class UserBuilder {
       firstName: "Franky",
       lastName: "Boy",
       email: "franky@email.com",
-      phoneNumber: "418-123-4567"
+      phoneNumber: "418-123-4567",
+      imageUrl: "allo.com"
     };
   }
 

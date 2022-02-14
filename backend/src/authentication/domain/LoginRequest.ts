@@ -1,4 +1,4 @@
-import Provider from "../domain/Provider";
+import Provider from "./Provider";
 
 interface LoginRequest {
   authProvider: Provider;

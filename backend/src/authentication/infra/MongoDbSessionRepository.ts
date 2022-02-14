@@ -2,7 +2,7 @@ import SessionRepository from "../domain/SessionRepository";
 import MongoDbSessionAssembler from "./MongoDbSessionAssembler";
 import Session from "../domain/Session";
 import SessionModel, { SessionDto } from "./models/SessionModel";
-import { Token } from "../domain/Token";
+import Token from "../domain/Token";
 
 export default class MongoDbSessionRepository implements SessionRepository {
   constructor(private sessionAssembler: MongoDbSessionAssembler) {}

@@ -1,7 +1,7 @@
-import S3StorageConfig from "../domain/S3Config";
-import { getS3Config } from "../../config/index";
+import S3StorageConfig from "./S3StorageConfig";
+import { getS3Config } from "../../config";
 
-export default class StorageInformation {
+export default class S3StorageConfiguration {
   private readonly region: string;
   private readonly accessKeyId: string;
   private readonly secretAccessKey: string;

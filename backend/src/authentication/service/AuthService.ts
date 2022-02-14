@@ -1,26 +1,30 @@
 import UserRepository from "../../user/domain/UserRepository";
 import UserAssembler from "../../user/service/UserAssembler";
-import { UserRequest } from "../../user/service/UserRequest";
-import { UserResponse } from "../../user/service/UserResponse";
-import LoginRequest from "./LoginRequest";
+import LoginRequest from "../domain/LoginRequest";
 import AuthProviderSelector from "./AuthProviderSelector";
-import AuthProvider from "../infra/AuthProvider";
-import { Token } from "../domain/Token";
+import AuthProvider from "../domain/AuthProvider";
+import Token from "../domain/Token";
 import Provider from "../domain/Provider";
 import SessionRepository from "../domain/SessionRepository";
-import { LoginResponse } from "./LoginResponse";
-import { UserLoginResponse } from "../../user/service/UserLoginResponse";
+import LoginResponse from "./LoginResponse";
+import UserLoginResponse from "../../user/service/UserLoginResponse";
+import UserFactory from "../../user/service/UserFactory";
+import UserRequest from "../../user/service/UserRequest";
+import { constants } from "../../constants/constants";
+import LoginConfirmation from "../domain/LoginConfirmation";
 
 export default class AuthService {
   constructor(
     private userAssembler: UserAssembler,
+    private userFactory: UserFactory,
     private userRepository: UserRepository,
     private authProviderSelector: AuthProviderSelector,
     private sessionRepository: SessionRepository
   ) {}
 
-  public async signup(userRequest: UserRequest, authProviderName: string, token?: string): Promise<UserResponse> {
-    const user = this.userAssembler.assembleUser(userRequest);
+  public async signup(userRequest: UserRequest, authProviderName: string, token?: string): Promise<UserLoginResponse> {
+    const user = this.userFactory.create(userRequest, constants.default.profilePicture);
+
     const newUser = await this.userRepository.save(user);
 
     const loginRequest: LoginRequest = {
@@ -33,7 +37,10 @@ export default class AuthService {
 
   public async login(loginRequest: LoginRequest): Promise<UserLoginResponse> {
     const authProvider: AuthProvider = this.authProviderSelector.select(loginRequest.authProvider);
-    const loginResponse: LoginResponse = await authProvider.login(loginRequest);
+    const loginConfirmation: LoginConfirmation = await authProvider.login(loginRequest);
+
+    const loginResponse: LoginResponse = { ...loginConfirmation };
+
     await this.sessionRepository.save({ username: loginResponse.username, token: { value: loginResponse.token } });
 
     return this.userAssembler.assembleUserLoginResponse(loginResponse);

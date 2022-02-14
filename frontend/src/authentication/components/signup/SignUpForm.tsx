@@ -8,7 +8,7 @@ import { useSignUp } from "../../api/useSignUp";
 import { FormikField } from "../../../main/components/FormikField";
 import User from "../../../main/domain/User";
 import { setErrors } from "../../utils/setErrors";
-import { SubmitButton } from "../SubmitButton";
+import { NextButton } from "../NextButton";
 import { FormikPhoneNumberField } from "../../../main/components/FormikPhoneNumberField";
 import { useCookies } from "react-cookie";
 import AuthProvider from "../../domain/AuthProvider";
@@ -22,7 +22,7 @@ interface InternalSignUpFormProps {
 }
 
 const InternalSignUpForm = ({ data, state, error, provider }: InternalSignUpFormProps) => {
-  const { errors: formErrors, touched, setErrors: setFormErrors, initialValues } = useFormikContext<User>();
+  const { values, errors: formErrors, touched, setErrors: setFormErrors, initialValues } = useFormikContext<User>();
 
   const router = useRouter();
   const [cookies, setCookie] = useCookies([constants.AUTH_PROVIDER_COOKIE, constants.SESSION_TOKEN_COOKIE]);
@@ -31,7 +31,7 @@ const InternalSignUpForm = ({ data, state, error, provider }: InternalSignUpForm
     switch (state) {
       case State.SUCCESS:
         setCookies(data?.data.token);
-        router.push("/");
+        router.push({ pathname: "/signup/picture", query: { username: values.username } });
         break;
 
       case State.ERROR:
@@ -57,7 +57,7 @@ const InternalSignUpForm = ({ data, state, error, provider }: InternalSignUpForm
 
       <FormikPhoneNumberField name="phoneNumber" placeholder="Phone number" isError={!!(formErrors.phoneNumber && touched.phoneNumber)} />
 
-      <SubmitButton label={"Submit"} formErrors={formErrors} touched={touched} initialValues={initialValues} state={state} />
+      <NextButton label={"Next"} formErrors={formErrors} touched={touched} initialValues={initialValues} state={state} />
     </Form>
   );
 };
@@ -76,16 +76,18 @@ export const SignUpForm = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required(" "),
+    username: Yup.string()
+      .matches(/^[a-zA-Z0-9]+$/, "Invalid username")
+      .required(" "),
     firstName: Yup.string().required(" "),
     lastName: Yup.string().required(" "),
-    email: Yup.string().required(" "),
+    email: Yup.string().email("Invalid email").required(" "),
     phoneNumber: Yup.string().required(" ")
   });
 
-  const onSubmit = (values: User) => {
+  const onSubmit = async (values: User) => {
     const normalizedInputs = normalizeInputs(values);
-    signUpUser(normalizedInputs);
+    await signUpUser(normalizedInputs);
   };
 
   const normalizeInputs = (values: User): User => {

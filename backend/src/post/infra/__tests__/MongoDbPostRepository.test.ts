@@ -2,7 +2,7 @@ import MongoDbPostRepository from "../MongoDbPostRepository";
 import { mock, instance, when, verify } from "ts-mockito";
 import MongoDbPostAssembler from "../MongoDbPostAssembler";
 import Post from "../../domain/Post";
-import Paginator from "src/utils/pagination/Paginator";
+import Paginator from "../../../utils/pagination/Paginator";
 
 describe("MongoDbPostRepository", () => {
   const mockMongoPostAssembler: MongoDbPostAssembler = mock<MongoDbPostAssembler>();

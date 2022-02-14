@@ -14,11 +14,12 @@ interface Props {
   state: State;
 }
 
-export const SubmitButton = ({ label, formErrors, touched, initialValues, state }: Props) => {
+export const NextButton = ({ label, formErrors, touched, initialValues, state }: Props) => {
   return (
     <button
       className={
-        "text-white rounded py-2 mt-2 w-full " + (isFormInvalid(formErrors, touched, initialValues) ? "bg-blue-200" : "bg-blue-400")
+        "text-white rounded py-2 mt-2 w-full " +
+        (isFormInvalid(formErrors, touched, initialValues) ? "bg-blue-primary" : "bg-blue-secondary")
       }
       type="submit"
       disabled={isFormInvalid(formErrors, touched, initialValues)}

@@ -1,4 +1,4 @@
-export interface PostResponse {
+interface PostResponse {
   imageUrl: string;
   id: string;
   caption: string;

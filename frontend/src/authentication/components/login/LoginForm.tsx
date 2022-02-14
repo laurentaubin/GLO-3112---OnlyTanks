@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/router";
 import { setErrors } from "../../utils/setErrors";
-import { SubmitButton } from "../SubmitButton";
+import { NextButton } from "../NextButton";
 import AuthProvider from "../../domain/AuthProvider";
 import { useCookies } from "react-cookie";
 import { constants } from "../../../constants/constants";
@@ -59,7 +59,7 @@ const InternalLoginForm = ({ data, state, error }: InternalLoginFormProps) => {
   return (
     <Form className="text-center align-middle justify-center">
       <FormikField name="username" placeholder="Username" isError={!!(formErrors.username && touched.username)} />
-      <SubmitButton label="Log In" formErrors={formErrors} touched={touched} initialValues={initialValues} state={state} />
+      <NextButton label="Log In" formErrors={formErrors} touched={touched} initialValues={initialValues} state={state} />
     </Form>
   );
 };

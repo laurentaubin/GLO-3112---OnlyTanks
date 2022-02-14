@@ -1,4 +1,4 @@
-export interface UserLoginResponse {
+interface UserLoginResponse {
   username: string;
   firstName: string;
   lastName: string;
@@ -6,3 +6,5 @@ export interface UserLoginResponse {
   phoneNumber: string;
   token: string;
 }
+
+export default UserLoginResponse;

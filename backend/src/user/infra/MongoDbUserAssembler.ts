@@ -8,7 +8,8 @@ export default class MongoDbUserAssembler {
       username: user.username,
       firstName: user.firstName,
       lastName: user.lastName,
-      phoneNumber: user.phoneNumber
+      phoneNumber: user.phoneNumber,
+      imageUrl: user.imageUrl
     });
   }
 
@@ -18,7 +19,8 @@ export default class MongoDbUserAssembler {
       firstName: userDto.firstName,
       lastName: userDto.lastName,
       email: userDto.email,
-      phoneNumber: userDto.phoneNumber
+      phoneNumber: userDto.phoneNumber,
+      imageUrl: userDto.imageUrl
     };
   }
 }

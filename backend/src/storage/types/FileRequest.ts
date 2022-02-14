@@ -1,4 +1,4 @@
-export interface FileRequest {
+interface FileRequest {
   fieldname: string;
   originalname: string;
   encoding: string;
@@ -8,3 +8,5 @@ export interface FileRequest {
   path: string;
   size: number;
 }
+
+export default FileRequest;

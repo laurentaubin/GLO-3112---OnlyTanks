@@ -22,7 +22,7 @@ const ImageSelector = ({ imageSource, onImageSelected }: Props) => {
                     transition
                     ease-in-out
                     m-0
-                    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    focus:text-gray-700 focus:bg-white focus:border-blue-primary focus:outline-none"
           type="file"
           id="formFile"
           title=" "

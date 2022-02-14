@@ -1,8 +1,8 @@
-import PostBody from "./PostBody";
+import PostRequestBody from "./PostRequestBody";
 import PostRequest from "./PostRequest";
 
 class PostRequestAssembler {
-  public assemblePostBody(request: PostRequest): PostBody {
+  public assemblePostRequestBody(request: PostRequest): PostRequestBody {
     return {
       ...request.body,
       hashtags: JSON.parse(request.body.hashtags),

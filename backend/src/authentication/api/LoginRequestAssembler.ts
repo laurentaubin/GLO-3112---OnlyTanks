@@ -1,4 +1,4 @@
-import LoginRequest from "../service/LoginRequest";
+import LoginRequest from "../domain/LoginRequest";
 import Provider from "../domain/Provider";
 import LoginRequestDto from "./dto/LoginRequestDto";
 

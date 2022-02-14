@@ -18,7 +18,7 @@ export const SignUpMenu = () => {
       <MenuItem variant="sm">
         <span>{"Already have an account ? "}</span>
         <Link href="/">
-          <a className="text-blue-600 font-semibold">Log in</a>
+          <a className="text-blue-primary font-semibold">Log in</a>
         </Link>
       </MenuItem>
     </div>

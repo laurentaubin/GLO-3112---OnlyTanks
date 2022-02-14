@@ -1,3 +1,5 @@
-export interface Token {
+interface Token {
   value: string;
 }
+
+export default Token;

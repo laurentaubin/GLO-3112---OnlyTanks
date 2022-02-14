@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { SignUpMenu } from "../authentication/components/signup/SignUpMenu";
+import { SignUpMenu } from "../../authentication/components/signup/SignUpMenu";
 
 const Signup: NextPage = () => {
   return (

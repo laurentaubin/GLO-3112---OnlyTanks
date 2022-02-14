@@ -1,27 +1,24 @@
-import AuthProvider from "../AuthProvider";
-import User from "../../../user/domain/User";
+import AuthProvider from "../../domain/AuthProvider";
 import UserRepository from "../../../user/domain/UserRepository";
-import UserAssembler from "../../../user/service/UserAssembler";
 import { LoginTicket, OAuth2Client, TokenPayload } from "google-auth-library";
-import LoginRequest from "../../service/LoginRequest";
+import LoginRequest from "../../domain/LoginRequest";
 import MissingTokenException from "./exceptions/MissingTokenException";
 import EmailNotLinkedToGoogleAccountException from "./exceptions/EmailNotLinkedToGoogleAccountException";
 import InvalidTokenException from "./exceptions/InvalidTokenException";
-import { Token } from "../../domain/Token";
-import { LoginResponse } from "../../service/LoginResponse";
+import Token from "../../domain/Token";
 import SessionRepository from "../../domain/SessionRepository";
 import SessionNotFoundException from "../../domain/exceptions/SessionNotFoundException";
+import LoginConfirmation from "../../domain/LoginConfirmation";
 
 export default class GoogleAuthProvider implements AuthProvider {
   constructor(
     private clientId: string,
     private googleClient: OAuth2Client,
     private userRepository: UserRepository,
-    private userAssembler: UserAssembler,
     private sessionRepository: SessionRepository
   ) {}
 
-  public login = async (loginRequest: LoginRequest): Promise<LoginResponse> => {
+  public login = async (loginRequest: LoginRequest): Promise<LoginConfirmation> => {
     if (!loginRequest.token) {
       throw new MissingTokenException();
     }
@@ -31,8 +28,7 @@ export default class GoogleAuthProvider implements AuthProvider {
       throw new EmailNotLinkedToGoogleAccountException();
     }
 
-    const userDto = await this.userRepository.findByEmail(tokenPayload.email);
-    const user: User = this.userAssembler.assembleUser(userDto);
+    const user = await this.userRepository.findByEmail(tokenPayload.email);
     return { ...user, token: loginRequest.token };
   };
 

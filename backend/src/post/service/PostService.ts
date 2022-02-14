@@ -1,30 +1,36 @@
-import PictureStorage from "src/storage/domain/PictureStorage";
-import Pagination from "src/utils/pagination/Pagination";
-import PostBody from "../api/PostBody";
+import PostRequestBody from "../api/PostRequestBody";
 import Post from "../domain/Post";
 import PostRepository from "../domain/PostRepository";
-import PostAssembler from "./PostAssembler";
+import PostFactory from "./PostFactory";
+import FileAssembler from "../../storage/service/FileAssembler";
+import FileRepository from "../../storage/domain/FileRepository";
+import UserRepository from "../../user/domain/UserRepository";
+import Pagination from "../../utils/pagination/Pagination";
 import PostResponse from "../api/PostResponse";
-import UserRepository from "src/user/domain/UserRepository";
+import PostAssembler from "./PostAssembler";
 
 export default class PostService {
   constructor(
+    private postFactory: PostFactory,
     private postAssembler: PostAssembler,
     private postRepository: PostRepository,
-    private pictureStorage: PictureStorage,
+    private fileRepository: FileRepository,
+    private fileAssembler: FileAssembler,
     private userRepository: UserRepository
   ) {}
 
-  public async addPost(postRequest: PostBody) {
-    const storageResponse = await this.pictureStorage.store(postRequest.file);
+  public async addPost(postRequest: PostRequestBody) {
+    const file = this.fileAssembler.assembleFile(postRequest.file);
 
-    const post: Post = this.postAssembler.assemblePost(postRequest, storageResponse);
+    const storageReport = await this.fileRepository.storeImage(file);
+
+    const post: Post = this.postFactory.create(postRequest, storageReport.imageUrl);
 
     this.postRepository.save(post);
   }
 
   public async getAuthorPosts(author: string, pagination: Pagination): Promise<PostResponse[]> {
-    this.userRepository.verifyIfUserExists(author);
+    await this.userRepository.verifyIfUserExists(author);
 
     const posts = await this.postRepository.findByAuthor(author, pagination);
 

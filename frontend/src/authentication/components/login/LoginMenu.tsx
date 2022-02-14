@@ -20,7 +20,7 @@ export const LoginMenu = () => {
       <MenuItem variant="sm">
         <span>{"Don't have an account ? "}</span>
         <Link href="/signup">
-          <a className="text-blue-600 font-semibold">Sign up</a>
+          <a className="text-blue-primary font-semibold">Sign up</a>
         </Link>
       </MenuItem>
     </div>

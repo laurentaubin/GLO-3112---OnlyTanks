@@ -1,4 +1,4 @@
-import AuthProvider from "../infra/AuthProvider";
+import AuthProvider from "../domain/AuthProvider";
 import Provider from "../domain/Provider";
 
 export default class AuthProviderSelector {

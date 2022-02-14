@@ -2,14 +2,14 @@ import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { status } from "../../api/Status";
 import { authService } from "../../AppContext";
-import { UserRequest } from "../../user/service/UserRequest";
 import { isUnusedEmail } from "./validators/isUnusedEmail";
 import { isUnusedUsername } from "./validators/isUnusedUsername";
-import LoginRequest from "../service/LoginRequest";
+import LoginRequest from "../domain/LoginRequest";
 import LoginRequestAssembler from "./LoginRequestAssembler";
 import LoginRequestDto from "./dto/LoginRequestDto";
 import UserNotFoundException from "../../user/domain/exceptions/UserNotFoundException";
 import { constants } from "../../constants/constants";
+import UserRequest from "../../user/service/UserRequest";
 
 const loginRequestAssembler = new LoginRequestAssembler();
 
@@ -29,6 +29,7 @@ router.post(
     }
 
     const signUpResponse = await authService.signup(req.body, req.header(constants.AUTH_PROVIDER_HEADER) as string);
+
     return res.status(status.CREATED).setHeader("LOCATION", `/users/${signUpResponse.username}`).json(signUpResponse);
   }
 );

@@ -3,12 +3,19 @@ import UserBuilder from "../../../__tests__/utils/UserBuilder";
 import UserRepository from "../../domain/UserRepository";
 import UserService from "../UserService";
 import UserAssembler from "../UserAssembler";
+import FileAssembler from "../../../storage/service/FileAssembler";
+import FileRepository from "../../../storage/domain/FileRepository";
 
 describe("UserService", () => {
   const mockedUserRepository: UserRepository = mock<UserRepository>();
   const userRepository = instance(mockedUserRepository);
+
+  const mockedFileRepository: FileRepository = mock<FileRepository>();
+  const fileRepository = instance(mockedFileRepository);
+
   const userAssembler = new UserAssembler();
-  const userService = new UserService(userAssembler, userRepository);
+  const fileAssembler = new FileAssembler();
+  const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
 
   describe("given a username", () => {
     const aUsername = "pablo";

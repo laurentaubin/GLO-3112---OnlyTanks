@@ -17,6 +17,9 @@ export class UserDto {
   @prop({ type: String, required: true })
   public phoneNumber: string;
 
+  @prop({ type: String, required: true })
+  public imageUrl: string;
+
   @prop({ type: Number })
   public createdAt: number;
 
