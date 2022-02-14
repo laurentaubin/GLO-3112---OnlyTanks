@@ -1,3 +1,7 @@
+require("dotenv").config();
+
+const s3Information = process.env;
+
 export interface S3Config {
   AWS_BUCKET_NAME: string;
   AWS_BUCKET_REGION: string;
@@ -6,8 +10,8 @@ export interface S3Config {
 }
 
 export const S3Config: S3Config = {
-  AWS_BUCKET_NAME: "only-tanks-user-images",
-  AWS_BUCKET_REGION: "us-east-1",
-  AWS_ACCES_KEY_ID: "AKIA3BTJSTENVACS4KMF",
-  AWS_SECRET_ACCESS_KEY: "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"
+  AWS_BUCKET_NAME: s3Information.AWS_BUCKET_NAME!,
+  AWS_BUCKET_REGION: s3Information.AWS_BUCKET_REGION!,
+  AWS_ACCES_KEY_ID: s3Information.AWS_ACCES_KEY_ID!,
+  AWS_SECRET_ACCESS_KEY: s3Information.AWS_SECRET_ACCESS_KEY!
 };
