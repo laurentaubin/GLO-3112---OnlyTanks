@@ -8,7 +8,7 @@ import { status } from "../api/Status";
 import SessionNotFoundException from "../authentication/domain/exceptions/SessionNotFoundException";
 
 export const authMiddleware = async (req: Request<Record<string, unknown>, Record<string, unknown>, any>, res: Response, next: any) => {
-  const allowedRoutes = ["/login", "/signup"];
+  const allowedRoutes = ["/", "/login", "/signup"];
   if (allowedRoutes.includes(req.path)) next();
   else {
     try {
@@ -18,7 +18,12 @@ export const authMiddleware = async (req: Request<Record<string, unknown>, Recor
       await authService.validateToken(authProvider as string, token as string);
       next();
     } catch (e) {
-      if (e instanceof InvalidTokenException || e instanceof SessionNotFoundException) {
+      if (
+        e instanceof InvalidTokenException ||
+        e instanceof SessionNotFoundException ||
+        e instanceof MissingAuthProviderHeaderException ||
+        e instanceof MissingTokenHeaderException
+      ) {
         res.status(status.UNAUTHORIZED).json({ name: e.name, message: e.message });
       }
     }

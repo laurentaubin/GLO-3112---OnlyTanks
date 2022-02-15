@@ -5,6 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
+const healthResource = require("./api/HealthResource");
 const userResource = require("./user/api/UserResource");
 const authResource = require("./authentication/api/AuthResource");
 const postResource = require("./post/api/PostResource");
@@ -22,6 +23,7 @@ app.use(cors());
 
 app.use(authMiddleware);
 
+app.use("/", healthResource);
 app.use("/", authResource);
 app.use("/", userResource);
 app.use("/", postResource);
