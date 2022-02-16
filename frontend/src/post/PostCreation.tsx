@@ -1,15 +1,14 @@
 import { useState } from "react";
+import Button from "../main/components/Button";
+import { FormLayout } from "../main/components/FormLayout";
+import InputWithLabel from "../main/components/InputWithLabel";
 import { PostImageContent } from "./api/PostImageRequest";
+import { useCreatePost } from "./api/useCreatePost";
 import HashtagInput from "./components/HashtagInput";
 import ImageSelector from "./components/ImageSelector";
-import InputWithLabel from "../main/components/InputWithLabel";
-import Button from "../main/components/Button";
-import { useCreatePost } from "./api/useCreatePost";
-import { FormLayout } from "../main/components/FormLayout";
-import { Form, Field } from "formik";
 
 export default function PostCreation() {
-  const { createPost, data, error } = useCreatePost();
+  const { createPost } = useCreatePost();
   const [imageSource, setImageSource] = useState("");
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [file, setFile] = useState<File>();

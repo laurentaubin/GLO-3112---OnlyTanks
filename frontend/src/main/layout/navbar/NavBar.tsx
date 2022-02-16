@@ -10,7 +10,7 @@ const navItems: NavItem[] = [
   {
     title: "Home",
     icon: <BiHome size={32} />,
-    href: "/temp"
+    href: "/"
   },
   {
     title: "Notifications",

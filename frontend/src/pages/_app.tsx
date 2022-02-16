@@ -6,7 +6,7 @@ import { constants } from "../constants/constants";
 import { useCookies } from "react-cookie";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const [cookies, _] = useCookies([constants.SESSION_TOKEN_COOKIE]);
+  const [cookies] = useCookies([constants.SESSION_TOKEN_COOKIE]);
   const [loaded, setLoaded] = useState(false);
   const [isLoggedIn] = useState(!!cookies[constants.SESSION_TOKEN_COOKIE]);
 
