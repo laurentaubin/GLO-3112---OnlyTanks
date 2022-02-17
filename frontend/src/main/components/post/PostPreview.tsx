@@ -1,10 +1,6 @@
 import * as React from "react";
 import Post from "../../domain/Post";
-import { convertTimestampToDate } from "../../utils/convertTimestampToDate";
-import dayjs from "dayjs";
-import formatTimestamp from "../../utils/formatTimestamp";
 import { useState } from "react";
-import { BiArrowToRight, BiUser } from "react-icons/bi";
 import { useRouter } from "next/router";
 import PostCaption from "./PostCaption";
 import PostHeader from "./PostHeader";

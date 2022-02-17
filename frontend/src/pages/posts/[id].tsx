@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import PostCreation from "../../post/PostCreation";
 import Head from "next/head";
 import { Layout } from "../../main/layout/Layout";
 import PostPage from "../../post/PostPage";

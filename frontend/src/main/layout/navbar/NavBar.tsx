@@ -35,7 +35,7 @@ export const NavBar = () => {
 
   return (
     <div className="md:px-8 md:sticky md:top-0">
-      <div className="bg-white px-6 py-4 mx-auto">
+      <div className="bg-white px-6 py-1 mx-auto">
         <div className="-mx-4 w-full flex flex-row md:block">
           {isLoggedIn ? (
             <>

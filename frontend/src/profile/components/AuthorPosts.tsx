@@ -14,7 +14,7 @@ const AuthorPosts = ({ posts }: Props) => {
         </div>
       )}
       {posts.map((post) => (
-        <ImagePost key={post.id} imageUrl={post.imageUrl} />
+        <ImagePost key={post.id} id={post.id} imageUrl={post.imageUrl} />
       ))}
     </div>
   );
