@@ -1,6 +1,6 @@
 import { status } from "../../api/Status";
-import express, { Response, Request } from "express";
-import { postRequestAssembler, postService, paginationFactory } from "../../AppContext";
+import express, { Request, Response } from "express";
+import { paginationFactory, postRequestAssembler, postService } from "../../AppContext";
 import PostRequest from "./PostRequest";
 import PostRequestBody from "./PostRequestBody";
 import Pagination from "../../utils/pagination/Pagination";
@@ -10,7 +10,7 @@ const upload = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
-router.post("/post", upload.single("image"), async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.post("/", upload.single("image"), async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const postRequestBody: PostRequestBody = postRequestAssembler.assemblePostRequestBody(req as PostRequest);
 
@@ -22,7 +22,7 @@ router.post("/post", upload.single("image"), async (req: Request<Record<string, 
   }
 });
 
-router.get("/post/:author", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.get("/:author", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
   try {
     const posts = await postService.getAuthorPosts(req.params.author as string, pagination);
@@ -30,6 +30,17 @@ router.get("/post/:author", async (req: Request<Record<string, unknown>, Record<
     res.status(status.OK).send(posts);
   } catch (e) {
     res.status(status.NOT_FOUND).send(e.message);
+  }
+});
+
+router.get("/", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
+
+  try {
+    const postsResponse = await postService.getPosts(pagination);
+    res.status(status.OK).send(postsResponse);
+  } catch (e) {
+    res.status(status.BAD_REQUEST).send(e.message);
   }
 });
 

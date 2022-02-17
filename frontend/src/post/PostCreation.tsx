@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../main/components/Button";
 import { FormLayout } from "../main/components/FormLayout";
 import InputWithLabel from "../main/components/InputWithLabel";
@@ -7,17 +7,25 @@ import { PostImageContent } from "./api/PostImageRequest";
 import { useCreatePost } from "./api/useCreatePost";
 import HashtagInput from "./components/HashtagInput";
 import ImageSelector from "./components/ImageSelector";
+import { State } from "../main/hooks/useAxios";
+import { useRouter } from "next/router";
 
 export default function PostCreation() {
   const [imageSource, setImageSource] = useState("");
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [file, setFile] = useState<File>();
   const [caption, setCaption] = useState<string>("");
-
   const { me } = useAuth();
-  const { createPost } = useCreatePost();
+  const { state, createPost } = useCreatePost();
+  const router = useRouter();
 
-  const submit = () => {
+  useEffect(() => {
+    if (state === State.SUCCESS) {
+      router.push("/");
+    }
+  }, [state]);
+
+  const submit = async () => {
     const postImageContent: PostImageContent = {
       image: file!,
       caption: caption,
@@ -25,7 +33,7 @@ export default function PostCreation() {
       hashtags: hashtags
     };
 
-    createPost(postImageContent);
+    await createPost(postImageContent);
   };
 
   const onImageSelected = (event: React.ChangeEvent<HTMLInputElement>): void => {

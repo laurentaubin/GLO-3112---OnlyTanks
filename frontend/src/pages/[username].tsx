@@ -4,7 +4,7 @@ import { SpinnerIcon } from "../main/components/SpinnerIcon";
 import { State } from "../main/hooks/useAxios";
 import { Layout } from "../main/layout/Layout";
 import { useAuthorPosts } from "../profile/api/usePost";
-import { useUser } from "../profile/api/useUser";
+import { useUser } from "../main/api/user/useUser";
 import UserProfile from "../profile/UserProfile";
 
 const User: NextPage = () => {

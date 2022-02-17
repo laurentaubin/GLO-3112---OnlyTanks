@@ -11,7 +11,7 @@ export class PostDto {
   @prop({ type: [String], required: true })
   public hashtags: string[];
 
-  @prop({ type: String, required: true })
+  @prop({ type: String })
   public caption: string;
 
   @prop({ type: String, required: true })

@@ -8,6 +8,7 @@ import UserRepository from "../../user/domain/UserRepository";
 import Pagination from "../../utils/pagination/Pagination";
 import PostResponse from "../api/PostResponse";
 import PostAssembler from "./PostAssembler";
+import User from "../../user/domain/User";
 
 export default class PostService {
   constructor(
@@ -33,7 +34,17 @@ export default class PostService {
     await this.userRepository.verifyIfUserExists(author);
 
     const posts = await this.postRepository.findByAuthor(author, pagination);
+    const user = await this.userRepository.findByUsername(author);
 
-    return posts.map(this.postAssembler.assemblePostResponse);
+    return posts.map((post) => this.postAssembler.assemblePostResponse(post, user));
+  }
+
+  public async getPosts(pagination: Pagination): Promise<Awaited<PostResponse>[]> {
+    const posts = await this.postRepository.find(pagination);
+    const postResponse = posts.map(async (post) => {
+      const user = await this.userRepository.findByUsername(post.author);
+      return this.postAssembler.assemblePostResponse(post, user as User);
+    });
+    return Promise.all(postResponse);
   }
 }

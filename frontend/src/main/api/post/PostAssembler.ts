@@ -1,15 +1,17 @@
-import Post from "../domain/Post";
+import Post from "../../domain/Post";
 import PostResponse from "./PostResponse";
+import dayjs from "dayjs";
+import formatHashtags from "../../utils/formatHashtags";
 
 class PostAssembler {
   public assemblePost(postResponse: PostResponse): Post {
     return {
       caption: postResponse.caption,
-      createdAt: postResponse.createdAt,
-      author: postResponse.author,
+      timestamp: { datetime: dayjs(postResponse.createdAt).toDate() },
+      author: { ...postResponse.author },
       id: postResponse.id,
       imageUrl: postResponse.imageUrl,
-      hashtags: postResponse.hashtags
+      hashtags: formatHashtags(postResponse.hashtags)
     };
   }
 }

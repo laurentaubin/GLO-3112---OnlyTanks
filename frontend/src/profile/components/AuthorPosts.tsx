@@ -1,4 +1,4 @@
-import Post from "../domain/Post";
+import Post from "../../main/domain/Post";
 import ImagePost from "./ImagePost";
 
 interface Props {

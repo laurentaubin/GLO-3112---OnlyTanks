@@ -1,6 +1,6 @@
 import { useAxios } from "../../main/hooks/useAxios";
 import { useEffect } from "react";
-import PostAssembler from "./PostAssembler";
+import PostAssembler from "../../main/api/post/PostAssembler";
 
 export const useAuthorPosts = (username: string) => {
   const { data, sendRequest, state, error } = useAxios();
@@ -8,7 +8,7 @@ export const useAuthorPosts = (username: string) => {
   useEffect(() => {
     if (username) {
       const getAuthorPosts = async () => {
-        await sendRequest({ url: `/post/${username}`, method: "GET" });
+        await sendRequest({ url: `/posts/${username}`, method: "GET" });
       };
 
       getAuthorPosts();

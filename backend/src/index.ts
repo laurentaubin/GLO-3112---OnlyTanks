@@ -26,7 +26,7 @@ app.use(authMiddleware);
 app.use("/", healthResource);
 app.use("/", authResource);
 app.use("/", userResource);
-app.use("/", postResource);
+app.use("/posts", postResource);
 
 app.listen(config.http.port, () => {
   console.log(`server started at http://localhost:${config.http.port}`);

@@ -1,9 +1,15 @@
 import React from "react";
+import PostPreview from "./PostPreview";
+import useFeed from "./api/useFeed";
 
 export const MainFeed = () => {
+  const { posts } = useFeed();
+
   return (
-    <div className="text-3xl text-green-300">
-      <p>Welcome to your feed</p>
-    </div>
+    <>
+      {posts.map((post) => (
+        <PostPreview key={post.id} post={post} />
+      ))}
+    </>
   );
 };

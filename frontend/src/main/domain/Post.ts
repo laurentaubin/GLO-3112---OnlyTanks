@@ -1,12 +1,13 @@
+import Timestamp from "./Timestamp";
 import UserPreview from "./UserPreview";
 
-interface PostResponse {
+interface Post {
   imageUrl: string;
   id: string;
   caption: string;
   hashtags: string[];
   author: UserPreview;
-  createdAt: number;
+  timestamp: Timestamp;
 }
 
-export default PostResponse;
+export default Post;

@@ -3,7 +3,7 @@ interface PostResponse {
   id: string;
   caption: string;
   hashtags: string[];
-  author: string;
+  author: { username: string; imageUrl: string };
   createdAt: number;
 }
 

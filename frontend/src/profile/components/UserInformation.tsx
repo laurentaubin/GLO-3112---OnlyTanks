@@ -1,4 +1,3 @@
-import { useState } from "react";
 import User from "../../main/domain/User";
 import ProfilePicture from "./ProfilePicture";
 
