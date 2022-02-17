@@ -6,6 +6,8 @@ interface PostRepository {
 
   find(pagination: Pagination): Promise<Post[]>;
 
+  findById(id: string): Promise<Post>;
+
   findByAuthor(author: string, pagination: Pagination): Promise<Post[]>;
 }
 

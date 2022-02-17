@@ -30,6 +30,15 @@ router.get("/", async (req: Request<Record<string, unknown>, Record<string, unkn
   return await getPosts(res, pagination);
 });
 
+router.get("/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    const postsResponse = await postService.getPost(req.params.id as string);
+    res.status(status.OK).send(postsResponse);
+  } catch (e) {
+    res.status(status.BAD_REQUEST).send(e.message);
+  }
+});
+
 const getAuthorPosts = async (author: string, res: Response, pagination: Pagination) => {
   try {
     const posts = await postService.getAuthorPosts(author, pagination);

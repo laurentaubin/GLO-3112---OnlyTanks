@@ -5,6 +5,7 @@ import MongoDbPostAssembler from "./MongoDbPostAssembler";
 import Pagination from "../../utils/pagination/Pagination";
 import MongoDbQuery from "../../utils/pagination/MongoDbQuery";
 import Paginator from "../../utils/pagination/Paginator";
+import PostNotFoundException from "../domain/exceptions/PostNotFoundException";
 
 class MongoDbPostRepository implements PostRepository {
   constructor(private mongoDBPostAssembler: MongoDbPostAssembler, private paginator: Paginator) {}
@@ -25,6 +26,16 @@ class MongoDbPostRepository implements PostRepository {
     const query: MongoDbQuery = PostModel.find().sort("-createdAt");
 
     return this.fetchPosts(pagination, query);
+  }
+
+  public async findById(id: string): Promise<Post> {
+    const postDto = (await PostModel.findOne({ id: id })) as unknown as PostDto;
+
+    if (!postDto) {
+      throw new PostNotFoundException();
+    }
+
+    return this.mongoDBPostAssembler.assemblePost(postDto);
   }
 
   private async fetchPosts(pagination: Pagination, query: MongoDbQuery): Promise<Post[]> {

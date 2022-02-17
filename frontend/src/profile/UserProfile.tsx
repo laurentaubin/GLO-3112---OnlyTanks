@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import UserInformation from "./components/UserInformation";
 import User from "../main/domain/User";
 import Post from "../main/domain/Post";
