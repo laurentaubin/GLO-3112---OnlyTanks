@@ -8,6 +8,7 @@ interface UserRepository {
   findByUsername(username: string): Promise<User>;
 
   findByEmail(email: string): Promise<User>;
+  findAll(): Promise<User[]>;
 
   verifyIfUserExists(username: string): Promise<void>;
 }

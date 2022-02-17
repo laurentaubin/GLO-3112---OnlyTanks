@@ -1,6 +1,7 @@
 import UserResponse from "./UserResponse";
 import LoginResponse from "../../authentication/service/LoginResponse";
 import User from "../domain/User";
+import MultipleUsersResponse from "./MultipleUsersResponse";
 import UserLoginResponse from "./UserLoginResponse";
 
 export default class UserAssembler {
@@ -13,6 +14,12 @@ export default class UserAssembler {
       phoneNumber: user.phoneNumber,
       imageUrl: user.imageUrl
     };
+  }
+
+  assembleMultipleUsersResponse(users: User[]): MultipleUsersResponse {
+    const assembledUsers = users.map(this.assembleUserResponse);
+
+    return { users: assembledUsers, count: assembledUsers.length };
   }
 
   assembleUserLoginResponse(loginResponse: LoginResponse): UserLoginResponse {
