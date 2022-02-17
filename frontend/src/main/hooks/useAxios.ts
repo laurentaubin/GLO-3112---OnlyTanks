@@ -20,7 +20,7 @@ export const useAxios = () => {
   const [error, setError] = useState<AxiosError>();
   const [state, setState] = useState<State>(State.IDLE);
 
-  const [cookies, _] = useCookies([constants.AUTH_PROVIDER_COOKIE, constants.SESSION_TOKEN_COOKIE]);
+  const [cookies] = useCookies([constants.AUTH_PROVIDER_COOKIE, constants.SESSION_TOKEN_COOKIE]);
 
   const sendRequest = async (params: AxiosRequestConfig) => {
     setState(State.LOADING);
@@ -28,10 +28,13 @@ export const useAxios = () => {
       const result = await axios.request({
         ...params,
         // TODO Find a way to set attribute name dynamically
-        headers: {
-          "x-onlytanks-token": cookies[constants.SESSION_TOKEN_COOKIE] as string,
-          "x-auth-provider": cookies[constants.AUTH_PROVIDER_COOKIE]
-        }
+        headers:
+          cookies[constants.SESSION_TOKEN_COOKIE] && cookies[constants.AUTH_PROVIDER_COOKIE]
+            ? {
+                "x-onlytanks-token": cookies[constants.SESSION_TOKEN_COOKIE],
+                "x-auth-provider": cookies[constants.AUTH_PROVIDER_COOKIE]
+              }
+            : {}
       });
       setData(result);
       setState(State.SUCCESS);

@@ -5,6 +5,8 @@ interface SessionRepository {
   save(session: Session): Promise<void>;
 
   exists(token: Token): Promise<boolean>;
+
+  findUsernameWithToken(token: Token): Promise<string>;
 }
 
 export default SessionRepository;

@@ -13,7 +13,16 @@ export default class MongoDbSessionRepository implements SessionRepository {
   };
 
   public exists = async (token: Token): Promise<boolean> => {
-    const sessionDto = (await SessionModel.findOne({ token: token.value })) as unknown as SessionDto;
+    const sessionDto = await this.findUserWithToken(token);
     return !!sessionDto;
+  };
+
+  public findUsernameWithToken = async (token: Token): Promise<string> => {
+    const sessionDto = await this.findUserWithToken(token);
+    return sessionDto.username;
+  };
+
+  private findUserWithToken = async (token: Token): Promise<SessionDto> => {
+    return (await SessionModel.findOne({ token: token.value })) as unknown as SessionDto;
   };
 }

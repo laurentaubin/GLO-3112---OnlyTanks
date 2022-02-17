@@ -6,6 +6,8 @@ interface AuthProvider {
   login(loginRequest: LoginRequest): Promise<LoginConfirmation>;
 
   verifyToken(token: Token): void;
+
+  getCurrentUsername(sessionToken: Token): Promise<string>;
 }
 
 export default AuthProvider;

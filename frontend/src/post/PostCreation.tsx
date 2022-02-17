@@ -2,23 +2,26 @@ import { useState } from "react";
 import Button from "../main/components/Button";
 import { FormLayout } from "../main/components/FormLayout";
 import InputWithLabel from "../main/components/InputWithLabel";
+import { useAuth } from "../main/hooks/useAuth";
 import { PostImageContent } from "./api/PostImageRequest";
 import { useCreatePost } from "./api/useCreatePost";
 import HashtagInput from "./components/HashtagInput";
 import ImageSelector from "./components/ImageSelector";
 
 export default function PostCreation() {
-  const { createPost } = useCreatePost();
   const [imageSource, setImageSource] = useState("");
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [file, setFile] = useState<File>();
   const [caption, setCaption] = useState<string>("");
 
+  const { me } = useAuth();
+  const { createPost } = useCreatePost();
+
   const submit = () => {
     const postImageContent: PostImageContent = {
       image: file!,
       caption: caption,
-      author: "Testing12345",
+      author: me!.username,
       hashtags: hashtags
     };
 

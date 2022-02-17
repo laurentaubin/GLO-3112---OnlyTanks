@@ -27,4 +27,9 @@ export default class LocalAuthProvider implements AuthProvider {
       throw new SessionNotFoundException();
     }
   };
+
+  public getCurrentUsername = async (token: Token): Promise<string> => {
+    this.verifyToken(token);
+    return await this.sessionRepository.findUsernameWithToken(token);
+  };
 }

@@ -12,6 +12,7 @@ import UserFactory from "../../user/service/UserFactory";
 import UserRequest from "../../user/service/UserRequest";
 import { constants } from "../../constants/constants";
 import LoginConfirmation from "../domain/LoginConfirmation";
+import UserResponse from "src/user/service/UserResponse";
 
 export default class AuthService {
   constructor(
@@ -47,8 +48,18 @@ export default class AuthService {
   }
 
   public validateToken = async (authProviderName: string, token: string): Promise<void> => {
-    const authProvider: AuthProvider = this.authProviderSelector.select(Provider[authProviderName as keyof typeof Provider]);
+    const authProvider = this.authProviderSelector.select(Provider[authProviderName as keyof typeof Provider]);
     const sessionToken: Token = { value: token };
     await authProvider.verifyToken(sessionToken);
+  };
+
+  public getCurrentUser = async (authProviderName: string, token: string): Promise<UserResponse> => {
+    const authProvider = this.authProviderSelector.select(Provider[authProviderName as keyof typeof Provider]);
+    const sessionToken: Token = { value: token };
+
+    const currentUsername = await authProvider.getCurrentUsername(sessionToken);
+    const currentUser = await this.userRepository.findByUsername(currentUsername);
+
+    return this.userAssembler.assembleUserResponse(currentUser);
   };
 }

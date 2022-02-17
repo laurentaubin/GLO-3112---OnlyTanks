@@ -43,6 +43,11 @@ export default class GoogleAuthProvider implements AuthProvider {
     }
   };
 
+  public getCurrentUsername = async (token: Token): Promise<string> => {
+    this.verifyToken(token);
+    return await this.sessionRepository.findUsernameWithToken(token);
+  };
+
   private fetchTokenPayload = async (token: string): Promise<TokenPayload | undefined> => {
     const ticket: LoginTicket = await this.googleClient.verifyIdToken({
       idToken: token,

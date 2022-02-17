@@ -16,9 +16,9 @@ router.post("/post", upload.single("image"), async (req: Request<Record<string, 
 
     await postService.addPost(postRequestBody);
 
-    res.status(status.OK).send();
+    res.status(status.CREATED).send();
   } catch (e) {
-    res.status(status.BAD_REQUEST).send(e.message);
+    res.status(status.INTERNAL_SERVER_ERROR).send(e.message);
   }
 });
 

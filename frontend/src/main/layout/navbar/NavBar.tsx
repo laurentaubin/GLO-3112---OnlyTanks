@@ -6,32 +6,32 @@ import { LogoutButton } from "../../../authentication/components/logout/LogoutBu
 import { LoginButton } from "../../../authentication/components/login/LoginButton";
 import { useAuth } from "../../hooks/useAuth";
 
-const navItems: NavItem[] = [
-  {
-    title: "Home",
-    icon: <BiHome size={32} />,
-    href: "/"
-  },
-  {
-    title: "Notifications",
-    icon: <BiBell size={32} />,
-    href: "/notifications"
-  },
-  {
-    title: "Messages",
-    icon: <BiMessageDetail size={32} />,
-    href: "/messages"
-  },
-  {
-    title: "Profile",
-    icon: <BiUser size={32} />,
-    href: "/profile"
-  }
-];
-
 export const NavBar = () => {
   const { pathname } = useRouter();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, me } = useAuth();
+
+  const navItems: NavItem[] = [
+    {
+      title: "Home",
+      icon: <BiHome size={32} />,
+      href: "/"
+    },
+    {
+      title: "Notifications",
+      icon: <BiBell size={32} />,
+      href: "/notifications"
+    },
+    {
+      title: "Messages",
+      icon: <BiMessageDetail size={32} />,
+      href: "/messages"
+    },
+    {
+      title: "Profile",
+      icon: <BiUser size={32} />,
+      href: `/${me?.username}`
+    }
+  ];
 
   return (
     <div className="md:px-8 md:sticky md:top-0">

@@ -7,25 +7,31 @@ import MissingTokenHeaderException from "./exceptions/MissingTokenHeaderExceptio
 import { status } from "../api/Status";
 import SessionNotFoundException from "../authentication/domain/exceptions/SessionNotFoundException";
 
-export const authMiddleware = async (req: Request<Record<string, unknown>, Record<string, unknown>, any>, res: Response, next: any) => {
-  const allowedRoutes = ["/", "/login", "/signup"];
-  if (allowedRoutes.includes(req.path)) next();
-  else {
-    try {
-      const authProvider = req.header(constants.AUTH_PROVIDER_HEADER);
-      const token = req.header(constants.AUTH_TOKEN_HEADER);
-      validateHeaders(authProvider, token);
-      await authService.validateToken(authProvider as string, token as string);
-      next();
-    } catch (e) {
-      if (
-        e instanceof InvalidTokenException ||
-        e instanceof SessionNotFoundException ||
-        e instanceof MissingAuthProviderHeaderException ||
-        e instanceof MissingTokenHeaderException
-      ) {
-        res.status(status.UNAUTHORIZED).json({ name: e.name, message: e.message });
-      }
+export const authMiddleware = async (
+  req: Request<Record<string, unknown>, Record<string, unknown>, unknown>,
+  res: Response,
+  next: () => void
+) => {
+  const forbiddenRoutes: string[] = [];
+  if (!forbiddenRoutes.includes(req.path)) {
+    next();
+    return;
+  }
+
+  try {
+    const authProvider = req.header(constants.AUTH_PROVIDER_HEADER);
+    const token = req.header(constants.AUTH_TOKEN_HEADER);
+    validateHeaders(authProvider, token);
+    await authService.validateToken(authProvider as string, token as string);
+    next();
+  } catch (e) {
+    if (
+      e instanceof InvalidTokenException ||
+      e instanceof SessionNotFoundException ||
+      e instanceof MissingAuthProviderHeaderException ||
+      e instanceof MissingTokenHeaderException
+    ) {
+      res.status(status.UNAUTHORIZED).json({ name: e.name, message: e.message });
     }
   }
 };
