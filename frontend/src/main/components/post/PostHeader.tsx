@@ -4,6 +4,7 @@ import * as React from "react";
 import Timestamp from "../../domain/Timestamp";
 import { useRouter } from "next/router";
 import PostDropdown from "./PostDropdown";
+import PostAuthorInformation from "./PostAuthorInformation";
 
 interface Props {
   isMyPost: boolean;
@@ -21,9 +22,8 @@ const PostHeader = ({ isMyPost, username, profileImageUrl, timestamp, onGoToPost
 
   return (
     <header className="flex px-3 py-2 border-b border-zinc-100">
-      <img className="rounded-full w-12 h-12" src={profileImageUrl} />
-      <div className="w-full ml-3 flex items-center justify-between">
-        <span className="font-bold">{username}</span>
+      <div className="w-full flex items-center justify-between">
+        <PostAuthorInformation username={username} profileImageUrl={profileImageUrl} />
         <div className="flex">
           <div className="text-gray-500 text-sm whitespace-nowrap my-auto">{formatTimestamp(timestamp)}</div>
           <>
