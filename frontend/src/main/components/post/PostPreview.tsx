@@ -1,6 +1,6 @@
 import * as React from "react";
-import Post from "../../domain/Post";
 import { useState } from "react";
+import Post from "../../domain/Post";
 import { useRouter } from "next/router";
 import PostCaption from "./PostCaption";
 import PostHeader from "./PostHeader";

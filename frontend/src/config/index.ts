@@ -10,6 +10,7 @@ export interface Config {
   };
 
   google: {
+    enabled: boolean;
     clientId: string;
   };
 }
@@ -29,6 +30,6 @@ export const getConfigForEnvironment = () => {
       return productionConfig;
 
     default:
-      throw "Unknown environement name";
+      throw "Unknown environment name";
   }
 };

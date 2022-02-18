@@ -5,8 +5,11 @@ import { FormLayout } from "../../../main/components/FormLayout";
 import { MenuItem } from "../../../main/components/MenuItem";
 import { LoginForm } from "./LoginForm";
 import { GoogleLoginButton } from "./GoogleLoginButton";
+import { getConfigForEnvironment } from "../../../config";
 
 export const LoginMenu = () => {
+  const config = getConfigForEnvironment();
+
   return (
     <div>
       <MenuItem variant="xl">
@@ -14,7 +17,7 @@ export const LoginMenu = () => {
           <FormHeader />
           <LoginForm />
         </FormLayout>
-        <GoogleLoginButton />
+        {config.google.enabled && <GoogleLoginButton />}
       </MenuItem>
 
       <MenuItem variant="sm">

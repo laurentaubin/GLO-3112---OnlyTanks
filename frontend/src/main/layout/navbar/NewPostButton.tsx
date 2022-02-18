@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { BiPlus } from "react-icons/bi";
-import { useRouter } from "next/router";
 
 export const NewPostButton = () => {
   return (

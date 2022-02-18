@@ -5,9 +5,8 @@ import PostPreview from "../main/components/post/PostPreview";
 import { State } from "../main/hooks/useAxios";
 import { BiArrowBack } from "react-icons/bi";
 import useDeletePost from "./api/useDeletePost";
-import NotFoundPage from "../main/components/NotFoundPage";
 import { SpinnerIcon } from "../main/components/SpinnerIcon";
-import PostNotFound from "../main/components/NotFoundPage";
+import NotFoundPage from "../main/components/NotFoundPage";
 
 const PostPage = () => {
   const { deletePost } = useDeletePost();
