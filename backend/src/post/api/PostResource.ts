@@ -31,6 +31,16 @@ router.get("/", async (req: Request<Record<string, unknown>, Record<string, unkn
   return await getPosts(res, pagination);
 });
 
+router.delete("/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    await postService.deletePost(req.params.id as string);
+
+    res.send(status.ACCEPTED).send();
+  } catch (e) {
+    res.status(status.NOT_FOUND).send(e.message);
+  }
+});
+
 router.get("/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const postsResponse = await postService.getPost(req.params.id as string);

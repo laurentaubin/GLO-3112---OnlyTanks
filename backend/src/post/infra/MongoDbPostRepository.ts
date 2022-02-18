@@ -11,6 +11,10 @@ import PostNotFoundException from "../domain/exceptions/PostNotFoundException";
 class MongoDbPostRepository implements PostRepository {
   constructor(private mongoDBPostAssembler: MongoDbPostAssembler, private paginator: Paginator) {}
 
+  public async delete(id: string): Promise<void> {
+    await PostModel.deleteOne({ id });
+  }
+
   public async save(post: Post) {
     const postModel = this.mongoDBPostAssembler.assemblePostModel(post);
 

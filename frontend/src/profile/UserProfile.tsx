@@ -13,7 +13,7 @@ const UserProfile = ({ user, posts }: Props) => {
   return (
     <div className="ml-10">
       <UserInformation user={user as User} />
-      <hr className="mt-5"/>
+      <hr className="mt-5" />
       <UserPosts posts={posts ? posts : []} />
     </div>
   );

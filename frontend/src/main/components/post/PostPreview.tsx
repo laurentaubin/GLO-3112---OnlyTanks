@@ -9,9 +9,10 @@ import EditPostModal from "./EditPostModal";
 
 interface Props {
   post: Post;
+  onDeletePostClick: () => void;
 }
 
-const PostPreview = ({ post: postProp }: Props) => {
+const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
   const [post, setPost] = useState<Post>(postProp);
   const [editPostModalOpen, setEditPostModalOpen] = useState(false);
   const router = useRouter();
@@ -28,10 +29,6 @@ const PostPreview = ({ post: postProp }: Props) => {
 
   const onEditPostClick = () => {
     setEditPostModalOpen(true);
-  };
-
-  const onDeletePostClick = () => {
-    console.log("delete");
   };
 
   const onPostUpdated = (updatedPost: Post) => {

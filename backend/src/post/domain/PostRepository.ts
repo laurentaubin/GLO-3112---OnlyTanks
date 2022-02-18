@@ -5,6 +5,8 @@ import EditPostFields from "./EditPostFields";
 interface PostRepository {
   save(post: Post): Promise<void>;
 
+  delete(id: string): Promise<void>;
+
   find(pagination: Pagination): Promise<Post[]>;
 
   findById(id: string): Promise<Post>;

@@ -52,6 +52,10 @@ export default class PostService {
     return Promise.all(postResponse);
   }
 
+  public async deletePost(id: string) {
+    await this.postRepository.delete(id);
+  }
+
   public async getPost(id: string): Promise<PostResponse> {
     const post = await this.postRepository.findById(id);
     const user = await this.userRepository.findByUsername(post.author);

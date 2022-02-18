@@ -18,6 +18,7 @@ describe("PostService", () => {
   const hashTag: string[] = [];
 
   const anAuthor = "AN_AUTHOR";
+  const aPostId = "A_POST_ID";
 
   const pagination: Pagination = {
     limit: 10,
@@ -141,6 +142,16 @@ describe("PostService", () => {
       it("should call the post repository to get the posts with the right argument", () => {
         verify(mockPostRepository.findByAuthor(anAuthor, pagination)).called();
       });
+    });
+  });
+
+  describe("delete post", () => {
+    beforeEach(async () => {
+      postService.deletePost(aPostId);
+    });
+
+    it("should call the repository to delete the post", () => {
+      verify(mockPostRepository.delete(aPostId)).called();
     });
   });
 });

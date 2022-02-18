@@ -4,10 +4,13 @@ import usePost from "./api/usePost";
 import PostPreview from "../main/components/post/PostPreview";
 import { State } from "../main/hooks/useAxios";
 import { BiArrowBack } from "react-icons/bi";
+import useDeletePost from "./api/useDeletePost";
 import NotFoundPage from "../main/components/NotFoundPage";
 import { SpinnerIcon } from "../main/components/SpinnerIcon";
+import PostNotFound from "../main/components/NotFoundPage";
 
 const PostPage = () => {
+  const { deletePost } = useDeletePost();
   const router = useRouter();
   const { id } = router.query;
   const { post, getPost, state } = usePost();
@@ -20,6 +23,11 @@ const PostPage = () => {
 
   const onBack = () => {
     router.back();
+  };
+
+  const onDeletePost = async () => {
+    await deletePost(post.id);
+    onBack();
   };
 
   return (
@@ -38,7 +46,7 @@ const PostPage = () => {
           <SpinnerIcon size={32} />
         </div>
       )}
-      {state === State.SUCCESS && <PostPreview post={post} />}
+      {state === State.SUCCESS && <PostPreview onDeletePostClick={onDeletePost} post={post} />}
     </>
   );
 };

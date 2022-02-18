@@ -55,7 +55,7 @@ const PostDropdown = ({ canGoToPost, onSeePostClick, onEditPostClick, onDeletePo
               </Menu.Item>
             </div>
             <div className="px-1 py-1">
-              <Menu.Item>
+              <Menu.Item onClick={onDeletePostClick}>
                 {({ active }) => (
                   <button
                     className={`${
