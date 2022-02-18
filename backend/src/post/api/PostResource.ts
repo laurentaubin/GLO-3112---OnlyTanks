@@ -4,6 +4,7 @@ import { paginationFactory, postRequestAssembler, postService } from "../../AppC
 import PostRequest from "./PostRequest";
 import PostRequestBody from "./PostRequestBody";
 import Pagination from "../../utils/pagination/Pagination";
+import EditPostFieldsRequest from "./EditPostFieldsRequest";
 
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -34,6 +35,15 @@ router.get("/:id", async (req: Request<Record<string, unknown>, Record<string, u
   try {
     const postsResponse = await postService.getPost(req.params.id as string);
     res.status(status.OK).send(postsResponse);
+  } catch (e) {
+    res.status(status.BAD_REQUEST).send(e.message);
+  }
+});
+
+router.put("/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    const updatedPostResponse = await postService.editPost(req.params.id as string, req.body as EditPostFieldsRequest);
+    res.status(status.OK).send(updatedPostResponse);
   } catch (e) {
     res.status(status.BAD_REQUEST).send(e.message);
   }

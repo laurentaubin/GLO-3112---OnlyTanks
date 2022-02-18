@@ -21,6 +21,7 @@
     ]
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.3",
     "@pathofdev/react-tag-input": "^1.0.7",
     "axios": "^0.24.0",
     "dayjs": "^1.10.7",

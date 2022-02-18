@@ -5,15 +5,16 @@ import MongoDbPostAssembler from "./MongoDbPostAssembler";
 import Pagination from "../../utils/pagination/Pagination";
 import MongoDbQuery from "../../utils/pagination/MongoDbQuery";
 import Paginator from "../../utils/pagination/Paginator";
+import EditPostFields from "../domain/EditPostFields";
 import PostNotFoundException from "../domain/exceptions/PostNotFoundException";
 
 class MongoDbPostRepository implements PostRepository {
   constructor(private mongoDBPostAssembler: MongoDbPostAssembler, private paginator: Paginator) {}
 
-  public save(post: Post) {
+  public async save(post: Post) {
     const postModel = this.mongoDBPostAssembler.assemblePostModel(post);
 
-    postModel.save();
+    await postModel.save();
   }
 
   public async findByAuthor(author: string, pagination: Pagination): Promise<Post[]> {
@@ -36,6 +37,13 @@ class MongoDbPostRepository implements PostRepository {
     }
 
     return this.mongoDBPostAssembler.assemblePost(postDto);
+  }
+
+  public async update(id: string, editPostFields: EditPostFields): Promise<Post> {
+    const updatedPostDto = (await PostModel.findOneAndUpdate({ id: id }, editPostFields, {
+      new: true
+    })) as unknown as PostDto;
+    return this.mongoDBPostAssembler.assemblePost(updatedPostDto);
   }
 
   private async fetchPosts(pagination: Pagination, query: MongoDbQuery): Promise<Post[]> {

@@ -12,6 +12,7 @@ import PostRequestBody from "../../api/PostRequestBody";
 import Pagination from "../../../utils/pagination/Pagination";
 import UserRepository from "../../../user/domain/UserRepository";
 import PostAssembler from "../PostAssembler";
+import EditPostFieldsAssembler from "../EditPostFieldsAssembler";
 
 describe("PostService", () => {
   const hashTag: string[] = [];
@@ -94,7 +95,18 @@ describe("PostService", () => {
   const mockFileAssembler: FileAssembler = mock<FileAssembler>();
   const fileAssembler = instance(mockFileAssembler);
 
-  const postService = new PostService(postFactory, postAssembler, postRepository, fileRepository, fileAssembler, userRepository);
+  const mockEditPostFieldsAssembler: EditPostFieldsAssembler = mock<EditPostFieldsAssembler>();
+  const editPostFieldsAssembler = instance(mockEditPostFieldsAssembler);
+
+  const postService = new PostService(
+    postFactory,
+    postAssembler,
+    postRepository,
+    fileRepository,
+    fileAssembler,
+    userRepository,
+    editPostFieldsAssembler
+  );
 
   describe("when add post", () => {
     beforeEach(async () => {

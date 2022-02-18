@@ -49,7 +49,7 @@ export default function PostCreation() {
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <ImageSelector imageSource={imageSource} onImageSelected={onImageSelected} />
-            <InputWithLabel label="Caption" onTextChange={setCaption} />
+            <InputWithLabel value={caption} label="Caption" onTextChange={setCaption} />
           </div>
           <HashtagInput hashtags={hashtags} setHashtags={setHashtags} />
           <Button text="Post" onClick={submit} />

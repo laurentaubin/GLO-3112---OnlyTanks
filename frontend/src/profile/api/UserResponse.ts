@@ -4,6 +4,7 @@ interface UserResponse {
   lastName: string;
   email: string;
   phoneNumber: string;
+  imageUrl: string;
 }
 
 export default UserResponse;

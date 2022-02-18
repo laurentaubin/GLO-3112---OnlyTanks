@@ -5,7 +5,14 @@ import MultipleUsersResponse from "./MultipleUsersResponse";
 class UserAssembler {
   public assembleToUser(userResponse: UserResponse): User | undefined {
     if (userResponse) {
-      return new User(userResponse.username, userResponse.firstName, userResponse.lastName, userResponse.email, userResponse.phoneNumber);
+      return new User(
+        userResponse.username,
+        userResponse.firstName,
+        userResponse.lastName,
+        userResponse.email,
+        userResponse.phoneNumber,
+        userResponse.imageUrl
+      );
     }
   }
 

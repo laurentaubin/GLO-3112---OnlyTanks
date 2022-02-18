@@ -13,7 +13,7 @@ const ImagePost = ({ id, imageUrl }: Props) => {
   };
   return (
     <div onClick={onPostClick} className="cursor-pointer">
-      <img src={imageUrl} style={{ height: 180 }} alt="display image" />
+      <img className="object-cover" src={imageUrl} style={{ height: 200 }} alt="display image" />
     </div>
   );
 };

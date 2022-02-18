@@ -2,7 +2,7 @@ import React from "react";
 import UserInformation from "./components/UserInformation";
 import User from "../main/domain/User";
 import Post from "../main/domain/Post";
-import AuthorPosts from "./components/AuthorPosts";
+import UserPosts from "./components/UserPosts";
 
 interface Props {
   user: User | undefined;
@@ -11,10 +11,11 @@ interface Props {
 
 const UserProfile = ({ user, posts }: Props) => {
   return (
-    <>
+    <div className="ml-10">
       <UserInformation user={user as User} />
-      <AuthorPosts posts={posts ? posts : []} />
-    </>
+      <hr className="mt-5"/>
+      <UserPosts posts={posts ? posts : []} />
+    </div>
   );
 };
 

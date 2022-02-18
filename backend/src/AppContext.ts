@@ -24,6 +24,7 @@ import UploadProfilePictureRequestAssembler from "./user/api/UploadProfilePictur
 import PaginationFactory from "./utils/pagination/PaginationFactory";
 import Paginator from "./utils/pagination/Paginator";
 import PostRequestAssembler from "./post/api/PostRequestAssembler";
+import EditPostFieldsAssembler from "./post/service/EditPostFieldsAssembler";
 
 // utils
 const paginator = new Paginator();
@@ -45,6 +46,7 @@ const mongoDbUserAssembler = new MongoDbUserAssembler();
 const mongoDbSessionAssembler = new MongoDbSessionAssembler();
 const mongoDbPostAssembler = new MongoPostAssembler();
 const storageReportAssembler = new StorageReportAssembler();
+const editPostFieldsAssembler = new EditPostFieldsAssembler();
 
 // repository
 const postRepository = new MongoDbPostRepository(mongoDbPostAssembler, paginator);
@@ -68,6 +70,14 @@ const localAuthProvider = new LocalAuthProvider(userRepository, userAssembler, s
 const authProviderSelector = new AuthProviderSelector(localAuthProvider, googleAuthProvider);
 
 // service
-export const postService = new PostService(postFactory, postAssembler, postRepository, fileRepository, fileAssembler, userRepository);
+export const postService = new PostService(
+  postFactory,
+  postAssembler,
+  postRepository,
+  fileRepository,
+  fileAssembler,
+  userRepository,
+  editPostFieldsAssembler
+);
 export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
 export const authService = new AuthService(userAssembler, userFactory, userRepository, authProviderSelector, sessionRepository);

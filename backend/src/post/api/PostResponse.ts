@@ -1,11 +1,11 @@
-import UserPreview from "./UserPreview";
+import UserPreviewResponse from "./UserPreviewResponse";
 
 interface PostResponse {
   imageUrl: string;
   id: string;
   caption: string;
   hashtags: string[];
-  author: UserPreview;
+  author: UserPreviewResponse;
   createdAt: number;
 }
 

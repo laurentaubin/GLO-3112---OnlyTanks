@@ -9,6 +9,9 @@ import Pagination from "../../utils/pagination/Pagination";
 import PostResponse from "../api/PostResponse";
 import PostAssembler from "./PostAssembler";
 import User from "../../user/domain/User";
+import EditPostFieldsRequest from "../api/EditPostFieldsRequest";
+import EditPostFields from "../domain/EditPostFields";
+import EditPostFieldsAssembler from "./EditPostFieldsAssembler";
 
 export default class PostService {
   constructor(
@@ -17,7 +20,8 @@ export default class PostService {
     private postRepository: PostRepository,
     private fileRepository: FileRepository,
     private fileAssembler: FileAssembler,
-    private userRepository: UserRepository
+    private userRepository: UserRepository,
+    private editPostFieldsAssembler: EditPostFieldsAssembler
   ) {}
 
   public async addPost(postRequest: PostRequestBody) {
@@ -27,7 +31,7 @@ export default class PostService {
 
     const post: Post = this.postFactory.create(postRequest, storageReport.imageUrl);
 
-    this.postRepository.save(post);
+    await this.postRepository.save(post);
   }
 
   public async getAuthorPosts(author: string, pagination: Pagination): Promise<PostResponse[]> {
@@ -52,5 +56,14 @@ export default class PostService {
     const post = await this.postRepository.findById(id);
     const user = await this.userRepository.findByUsername(post.author);
     return this.postAssembler.assemblePostResponse(post, user);
+  }
+
+  public async editPost(id: string, editPostFieldsRequest: EditPostFieldsRequest): Promise<PostResponse> {
+    const editPostFields: EditPostFields = this.editPostFieldsAssembler.assembleEditPostFields(editPostFieldsRequest);
+    const updatedPost = await this.postRepository.update(id, editPostFields);
+
+    const user = await this.userRepository.findByUsername(updatedPost.author);
+
+    return this.postAssembler.assemblePostResponse(updatedPost, user);
   }
 }

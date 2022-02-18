@@ -1,7 +1,7 @@
 import Post from "../../domain/Post";
 import PostResponse from "./PostResponse";
 import dayjs from "dayjs";
-import formatHashtags from "../../utils/formatHashtags";
+import HashtagsFormatter from "../../utils/HashtagsFormatter";
 
 class PostAssembler {
   public assemblePost(postResponse: PostResponse): Post {
@@ -11,7 +11,7 @@ class PostAssembler {
       author: { ...postResponse.author },
       id: postResponse.id,
       imageUrl: postResponse.imageUrl,
-      hashtags: formatHashtags(postResponse.hashtags)
+      hashtags: HashtagsFormatter.addHashtagSymbol(postResponse.hashtags)
     };
   }
 }

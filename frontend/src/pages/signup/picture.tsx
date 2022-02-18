@@ -8,8 +8,6 @@ const Picture: NextPage = () => {
   const { query } = router;
   const username = query.username as string;
 
-  console.warn(username);
-
   return (
     <>
       <Head>
