@@ -11,10 +11,10 @@ interface Props {
 
 const UserProfile = ({ user, posts }: Props) => {
   return (
-    <div>
-      <UserInformation user={user} />
+    <>
+      <UserInformation user={user as User} />
       <AuthorPosts posts={posts ? posts : []} />
-    </div>
+    </>
   );
 };
 

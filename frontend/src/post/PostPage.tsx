@@ -3,8 +3,9 @@ import { useRouter } from "next/router";
 import usePost from "./api/usePost";
 import PostPreview from "../main/components/post/PostPreview";
 import { State } from "../main/hooks/useAxios";
-import PostNotFound from "./PostNotFound";
 import { BiArrowBack } from "react-icons/bi";
+import NotFoundPage from "../main/components/NotFoundPage";
+import { SpinnerIcon } from "../main/components/SpinnerIcon";
 
 const PostPage = () => {
   const router = useRouter();
@@ -12,7 +13,9 @@ const PostPage = () => {
   const { post, getPost, state } = usePost();
 
   useEffect(() => {
-    getPost(id as string);
+    if (id) {
+      getPost(id as string);
+    }
   }, [id]);
 
   const onBack = () => {
@@ -29,7 +32,13 @@ const PostPage = () => {
           <span className="my-auto text-lg ml-2"> BACK </span>
         </div>
       </header>
-      {state === State.SUCCESS ? <PostPreview post={post} /> : <PostNotFound />}
+      {state === State.ERROR && <NotFoundPage />}
+      {state === (State.IDLE || State.LOADING) && (
+        <div className="flex justify-center text-blue-primary mt-10">
+          <SpinnerIcon size={32} />
+        </div>
+      )}
+      {state === State.SUCCESS && <PostPreview post={post} />}
     </>
   );
 };

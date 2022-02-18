@@ -1,5 +1,4 @@
 import { BiLogOut } from "react-icons/bi";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { constants } from "../../../constants/constants";

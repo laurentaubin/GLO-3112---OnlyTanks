@@ -25,7 +25,7 @@ const InternalSignUpForm = ({ data, state, error, provider }: InternalSignUpForm
   const { values, errors: formErrors, touched, setErrors: setFormErrors, initialValues } = useFormikContext<User>();
 
   const router = useRouter();
-  const [cookies, setCookie] = useCookies([constants.AUTH_PROVIDER_COOKIE, constants.SESSION_TOKEN_COOKIE]);
+  const [, setCookie] = useCookies([constants.AUTH_PROVIDER_COOKIE, constants.SESSION_TOKEN_COOKIE]);
 
   useEffect(() => {
     switch (state) {

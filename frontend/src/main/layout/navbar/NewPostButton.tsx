@@ -3,12 +3,6 @@ import { BiPlus } from "react-icons/bi";
 import { useRouter } from "next/router";
 
 export const NewPostButton = () => {
-  const router = useRouter();
-
-  const onClick = () => {
-    router.push("/create");
-  };
-
   return (
     <Link href="/create" passHref>
       <div className="mt-2">

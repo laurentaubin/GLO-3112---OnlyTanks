@@ -2,7 +2,7 @@ import User from "../../main/domain/User";
 import ProfilePicture from "./ProfilePicture";
 
 interface Props {
-  user: User | undefined;
+  user: User;
 }
 
 const UserInformation = ({ user }: Props) => {
@@ -13,9 +13,9 @@ const UserInformation = ({ user }: Props) => {
         size="10em"
       />
       <div>
-        <h1 className="text-2xl font-medium">{user ? user.firstName + " " + user.lastName : "User not found"}</h1>
-        <h1 className="text-base">@{user?.username}</h1>
-        <h1 className="text-base">{user?.email}</h1>
+        <h1 className="text-2xl font-medium">{user.firstName + " " + user.lastName}</h1>
+        <h1 className="text-base">@{user.username}</h1>
+        <h1 className="text-base">{user.email}</h1>
       </div>
     </div>
   );
