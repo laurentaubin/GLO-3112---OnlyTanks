@@ -58,7 +58,7 @@ const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
         <div className="flex justify-center">
           <img src={post.imageUrl} />
         </div>
-        <section className="my-3 px-3 flex flex-row justify-between">
+        <section className="my-3 px-3">
           <div>
             {post.caption && (
               <PostCaption
