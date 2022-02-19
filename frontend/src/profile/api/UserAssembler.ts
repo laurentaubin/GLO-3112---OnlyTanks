@@ -20,7 +20,14 @@ class UserAssembler {
     if (UsersResponse) {
       return UsersResponse.users.map(
         (userResponse) =>
-          new User(userResponse.username, userResponse.firstName, userResponse.lastName, userResponse.email, userResponse.phoneNumber)
+          new User(
+            userResponse.username,
+            userResponse.firstName,
+            userResponse.lastName,
+            userResponse.email,
+            userResponse.phoneNumber,
+            userResponse.imageUrl
+          )
       );
     } else {
       return [];
