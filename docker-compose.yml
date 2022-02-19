@@ -5,6 +5,11 @@ services:
     build: ./backend
     environment:
       ENVIRONMENT: docker
+      AWS_BUCKET_NAME: only-tanks-user-images
+      AWS_BUCKET_REGION: us-east-1
+      AWS_ACCES_KEY_ID: AKIA3BTJSTENVACS4KMF
+      AWS_SECRET_ACCESS_KEY: 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
+
     volumes:
       - ./backend/src:/app/src
     ports:
