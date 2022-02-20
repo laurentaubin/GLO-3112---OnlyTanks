@@ -4,6 +4,11 @@
 
 Make sure you have [Node](https://nodejs.org/en/download/) and [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable) installed.
 
+Make sure the dependencies are correctly installed
+```bash
+yarn
+```
+
 Then, to run the frontend locally run
 
 ```bash

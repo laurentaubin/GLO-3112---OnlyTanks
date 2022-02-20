@@ -46,11 +46,20 @@ To manually run both the frontend and backend of the app, refer to each project'
 
 ### 🐳 Using docker
 
-A dev Docker setup is available using `docker-compose.dev.yml` and the projects' `Dockerfile.dev`.
+A dev Docker setup is available using `docker-compose.dev.yaml` and the projects' `Dockerfile.dev`.
 
 With [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed:
 
+
 ```bash
+#install frontend dependencies
+cd frontend
+yarn 
+
+#install backend dependencies
+cd backend
+yarn 
+
 # build the app
 docker-compose -f docker-compose.dev.yaml build
 
@@ -59,6 +68,8 @@ docker-compose -f docker-compose.dev.yaml up -d
 ```
 
 Additionally, you can do both at the same time with `docker-compose -f docker-compose.dev.yaml up --build -d `.
+
+For the production docker, only building and running `docker-compose.yml` is necessary.
 
 ### 🌐 Access the app
 
