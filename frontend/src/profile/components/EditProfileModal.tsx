@@ -27,6 +27,7 @@ const InternalUserInformation = ({ updatedUser, state, error, onCloseModal }: In
       case State.SUCCESS:
         if (updatedUser) {
           resetForm({ values: formatInputs(updatedUser) });
+          onCloseModal();
         }
         break;
 
@@ -71,7 +72,7 @@ interface Props {
 
 const EditProfileModal = ({ user, open, setOpen, onUserUpdated }: Props) => {
   const cancelButtonRef = useRef(null);
-  const { updateUserInformation, updatedUser, state, error, resetErrors } = useUpdateUserInformation();
+  const { updateUserInformation, updatedUser, state, error } = useUpdateUserInformation();
 
   useEffect(() => {
     if (updatedUser) {
@@ -90,7 +91,6 @@ const EditProfileModal = ({ user, open, setOpen, onUserUpdated }: Props) => {
 
   const onCloseModal = () => {
     setOpen(false);
-    resetErrors();
   };
 
   const onSubmit = async (values: User) => {

@@ -8,9 +8,9 @@ const formatTimestamp = (timestamp: Timestamp) => {
     return `${now.diff(date, "hours")} hours ago`;
   }
   if (isDateMoreThanOneYearAgo(now, date)) {
-    return date.format("DD MMM YYYY");
+    return date.format("MMM DD YYYY");
   }
-  return date.format("DD MMM");
+  return date.format("MMM DD");
 };
 
 const isDateWithinLastDay = (now: Dayjs, date: Dayjs): boolean => {

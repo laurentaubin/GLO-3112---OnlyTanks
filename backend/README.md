@@ -5,6 +5,7 @@
 Make sure you have [Node](https://nodejs.org/en/download/), [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable) and [Docker](https://www.docker.com/) installed.
 
 Make sure the dependencies are correctly installed
+
 ```bash
 yarn
 ```

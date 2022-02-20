@@ -13,7 +13,7 @@ const AuthorPostItem = ({ id, imageUrl }: Props) => {
   };
   return (
     <div onClick={onPostClick} className="cursor-pointer">
-      <img className="object-cover" src={imageUrl} style={{ height: 200 }} alt="display image" />
+      <img className="object-cover hover:opacity-80 w-24 h-24 md:w-48 md:h-48" src={imageUrl} alt="display image" />
     </div>
   );
 };

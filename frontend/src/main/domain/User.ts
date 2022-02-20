@@ -9,7 +9,15 @@ class User {
   public imageUrl?: string;
   public createdAt?: number;
 
-  constructor(username: string, firstName: string, lastName: string, email: string, phoneNumber: string,imageUrl?: string,createdAt?:number) {
+  constructor(
+    username: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    phoneNumber: string,
+    imageUrl?: string,
+    createdAt?: number
+  ) {
     this.username = username;
     this.firstName = firstName;
     this.lastName = lastName;
