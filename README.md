@@ -6,37 +6,34 @@
   <p> https://d2w3pepxe2h8ho.cloudfront.net/ </p> 
 </p>
 
-## 📋 Setup TODOs
+## ⚡️ Quickstart
 
-- Add logging
+### 🐳 Using docker
 
-## 🧰 Development Stack
+A dev Docker setup is available using `docker-compose.yml` and the projects' `Dockerfile`.
 
-### 🎨 Frontend
+With [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed:
 
-OnlyTanks's frontend is built using [NextJs](https://nextjs.org/) paired with [Typescript](https://www.typescriptlang.org/). We are using [Jest](https://jestjs.io/) for functional testing and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for testing our components. Finally, we make use of [Tailwind CSS](https://tailwindcss.com/) when it comes to styling.
+```bash
+# build and run the app
+docker-compose -f docker-compose.dev.yaml up --build
+```
 
-### 👾 Backend
+### 🌐 Access the app
 
-OnlyTanks's backend is built using [NodeJs](https://nodejs.org/en/) paired with Typescript. The web API portion of the app is built using [ExpressJs](https://expressjs.com/). Similarly to the frontend, we are using Jest for our backend testing.
+After running the app with Docker, the frontend will be served at `http://localhost:3000` and the backend at `http://localhost:8080`.
 
-### 💾 Database
 
-All of OnlyTanks's data is stored in a [MongoDB](https://www.mongodb.com/) database, which is accessed in the backend code using the [Mongoose](https://mongoosejs.com/) ORM. The database is hosted on [MongoDB Atlas](https://www.mongodb.com/atlas/database).
+## 📆 Releases
 
-### 📓 Logging
+Every release will have its own documentation where we will list completed features, our design choices and any other information related to the given release.
 
-We plan to use [Winston](https://github.com/winstonjs/winston) paired with [Sentry](https://sentry.io/welcome/) to access the logs. This part is not completely decided yet, it is subject to change.
+| Release   | Documentation file                  |
+|-----------|-------------------------------------|
+| Release 1 | [RELEASE_1.md](./RELEASE_1.md)      |
+| Release 2 | [RELEASE_2.md](./RELEASE_2.md) TODO |
+| Release 3 | [RELEASE_3.md](./RELEASE_3.md) TODO |
 
-## 👨🏼‍💻 Development process
-
-### 🔄 CI/CD
-
-Our CI/CD processes are run using [GitHub Actions](https://github.com/features/actions) and can be found in the [.github/workflows](./.github/workflows) directory.
-
-### ☁️ Deployments
-
-Deployments follow the methods demonstrated in the course. The frontend is deployed on Amazon S3 as a static website and the backend is deployed on Amazon Elastic Beanstalk.
 
 ## 👨‍🔬 Local development
 
@@ -74,6 +71,12 @@ For the production docker, only building and running `docker-compose.yml` is nec
 ### 🌐 Access the app
 
 After running the app with Docker, the frontend will be served at `http://localhost:3000` and the backend at `http://localhost:8080`.
+
+
+## 🧰 Development Stack
+
+See [STACK.md](./STACK.md)
+
 
 ## ⭐️ Contributors
 
