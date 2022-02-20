@@ -1,33 +1,35 @@
-import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import InputWithLabel from "../InputWithLabel";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { ChosenPicture } from "../../../post/components/ChosenPicture";
 import HashtagInput from "../../../post/components/HashtagInput";
+import Post from "../../domain/Post";
+import UserTag from "../../domain/UserTag";
 import useUpdatePost from "../../hooks/useUpdatePost";
 import HashtagsFormatter from "../../utils/HashtagsFormatter";
-import Post from "../../domain/Post";
+import InputWithLabel from "../InputWithLabel";
 
 interface Props {
-  postId: string;
+  originalPost: Post;
   open: boolean;
-  oldCaption: string;
-  oldHashtags: string[];
   setOpen: (open: boolean) => void;
   onUpdated: (updatedPost: Post) => void;
 }
 
-const EditPostModal = ({ postId, open, oldCaption, oldHashtags, setOpen, onUpdated }: Props) => {
+const EditPostModal = ({ originalPost, open, setOpen, onUpdated }: Props) => {
   const [caption, setCaption] = useState("");
   const [hashtags, setHashtags] = useState<string[]>([]);
+  const [userTags, setUserTags] = useState<UserTag[]>([]);
   const cancelButtonRef = useRef(null);
   const { updatePost, updatedPost } = useUpdatePost();
 
   useEffect(() => {
-    setCaption(oldCaption);
-    setHashtags(HashtagsFormatter.removeHashtagSymbol(oldHashtags));
-  }, [oldCaption, oldHashtags]);
+    setCaption(originalPost.caption);
+    setHashtags(HashtagsFormatter.removeHashtagSymbol(originalPost.hashtags));
+    setUserTags(originalPost.userTags);
+  }, [originalPost]);
 
   const onConfirm = async () => {
-    await updatePost(postId, caption, hashtags);
+    await updatePost(originalPost.id, caption, hashtags, userTags);
     setOpen(false);
   };
 
@@ -36,6 +38,14 @@ const EditPostModal = ({ postId, open, oldCaption, oldHashtags, setOpen, onUpdat
       onUpdated(updatedPost);
     }
   }, [onUpdated, updatedPost]);
+
+  const onUserTagged = (userTag: UserTag) => {
+    setUserTags((current) => [...current, userTag]);
+  };
+
+  const onTagDelete = (username: string) => {
+    setUserTags((current) => current.filter((tag) => tag.username !== username));
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -73,6 +83,7 @@ const EditPostModal = ({ postId, open, oldCaption, oldHashtags, setOpen, onUpdat
                     </Dialog.Title>
                   </div>
                 </div>
+                <ChosenPicture src={originalPost.imageUrl} userTags={userTags} onUserTagged={onUserTagged} onTagDelete={onTagDelete} />
                 <InputWithLabel value={caption} label="Caption" onTextChange={setCaption} />
                 <HashtagInput hashtags={hashtags} setHashtags={setHashtags} />
               </div>

@@ -1,5 +1,13 @@
 import { prop, getModelForClass, modelOptions } from "@typegoose/typegoose";
 
+class UserTagDto {
+  @prop({ type: String, required: true })
+  public username: string;
+
+  @prop({ type: [Number, Number], required: true })
+  public position: [number, number];
+}
+
 @modelOptions({ schemaOptions: { collection: "posts", timestamps: { createdAt: true, updatedAt: false } } })
 export class PostDto {
   @prop({ type: String, required: true })
@@ -13,6 +21,9 @@ export class PostDto {
 
   @prop({ type: String })
   public caption: string;
+
+  @prop({ type: () => UserTagDto })
+  public userTags: UserTagDto[];
 
   @prop({ type: String, required: true })
   public id: string;

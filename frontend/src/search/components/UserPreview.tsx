@@ -1,24 +1,22 @@
-import Link from "next/link";
 import User from "../../main/domain/User";
 import ProfilePicture from "../../profile/components/ProfilePicture";
 
 interface Props {
   user: User;
+  variant?: "sm" | "lg";
 }
-export const UsersPreview = ({ user }: Props) => {
+export const UsersPreview = ({ user, variant = "lg" }: Props) => {
   return (
-    <Link href={`/${user.username}`} passHref>
-      <div className="border-2 m-1 rounded-md">
-        <div className="flex m-2">
-          <ProfilePicture imageUrl={user.imageUrl} size="5em" />
-          <div className="flex-col">
-            <div className="ml-2 font-bold text-xl">
-              {user.firstName} {user.lastName} @{user.username}
-            </div>
-            <div className="ml-2 font-normal text-sm">{user.email}</div>
+    <div className={["border-2 m-1 rounded-md hover:bg-gray-100", variant === "lg" ? "cursor-pointer" : ""].join(" ")}>
+      <div className="flex m-2">
+        <ProfilePicture imageUrl={user.imageUrl} size={variant === "lg" ? "5em" : "2em"} />
+        <div className="flex-col">
+          <div className={["ml-2", variant === "lg" ? "text-xl" : "text-sm"].join(" ")}>
+            {user.firstName} {user.lastName} <span className="font-bold">@{user.username}</span>
           </div>
+          {variant === "lg" && <div className="ml-2 font-normal text-sm">{user.email}</div>}
         </div>
       </div>
-    </Link>
+    </div>
   );
 };

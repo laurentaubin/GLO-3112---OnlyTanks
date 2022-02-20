@@ -54,8 +54,13 @@ const ChooseProfilePicture = ({ username }: Props) => {
           </div>
           {error && <p className="mt-5 text-base text-red-500">There was an error uploading your picture</p>}
           <div className="flex flex-row justify-between">
-            <Button text="Skip" onClick={onSkipClick} color="bg-gray-pale" hoverColor="bg-gray-light" textColor="text-gray-primary" />
-            <Button text="Next" onClick={onNextClick} disabled={!file} />
+            <Button text="Skip" onClick={onSkipClick} buttonClassName="text-gray-primary hover:bg-gray-pale" />
+            <Button
+              text="Next"
+              onClick={onNextClick}
+              buttonClassName={["text-white", !file ? "bg-gray-light" : "bg-blue-primary hover:bg-blue-500"].join(" ")}
+              disabled={!file}
+            />
           </div>
         </FormLayout>
       </MenuItem>

@@ -6,6 +6,7 @@ class PostRequestAssembler {
     return {
       ...request.body,
       hashtags: JSON.parse(request.body.hashtags),
+      userTags: JSON.parse(request.body.userTags),
       file: request.file
     };
   }

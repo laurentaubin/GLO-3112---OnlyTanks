@@ -1,5 +1,5 @@
 import Post from "../../main/domain/Post";
-import ImagePost from "./ImagePost";
+import AuthorPostItem from "./AuthorPostItem";
 
 interface Props {
   posts: Post[];
@@ -15,7 +15,7 @@ const UserPosts = ({ posts }: Props) => {
       )}
       <div className="grid gap-4 grid-cols-3 mt-10">
         {posts.map((post) => (
-          <ImagePost key={post.id} id={post.id} imageUrl={post.imageUrl} />
+          <AuthorPostItem key={post.id} id={post.id} imageUrl={post.imageUrl} />
         ))}
       </div>
     </>

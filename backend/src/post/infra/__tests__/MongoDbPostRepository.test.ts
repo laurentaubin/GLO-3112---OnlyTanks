@@ -23,6 +23,7 @@ describe("MongoDbPostRepository", () => {
     author: "username",
     imageUrl: "url",
     id: "id",
+    userTags: [],
     createdAt: 3214567546523456
   };
 

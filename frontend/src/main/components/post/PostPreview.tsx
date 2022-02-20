@@ -4,6 +4,7 @@ import Post from "../../domain/Post";
 import { useRouter } from "next/router";
 import PostCaption from "./PostCaption";
 import PostHeader from "./PostHeader";
+import { PostImage } from "./PostImage";
 import { useAuth } from "../../hooks/useAuth";
 import EditPostModal from "./EditPostModal";
 
@@ -37,14 +38,7 @@ const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
 
   return (
     <>
-      <EditPostModal
-        postId={post.id}
-        oldCaption={post.caption}
-        oldHashtags={post.hashtags}
-        open={editPostModalOpen}
-        setOpen={setEditPostModalOpen}
-        onUpdated={onPostUpdated}
-      />
+      <EditPostModal originalPost={post} open={editPostModalOpen} setOpen={setEditPostModalOpen} onUpdated={onPostUpdated} />
       <div className="mt-5 border border-gray-200 rounded">
         <PostHeader
           isMyPost={me?.username === post.author.username}
@@ -56,7 +50,7 @@ const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
           onDeletePostClick={onDeletePostClick}
         />
         <div className="flex justify-center">
-          <img src={post.imageUrl} />
+          <PostImage src={post.imageUrl} userTags={post.userTags} />
         </div>
         <section className="my-3 px-3">
           <div>

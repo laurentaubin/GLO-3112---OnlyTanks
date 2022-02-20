@@ -7,7 +7,7 @@ interface Props {
 const InputWithLabel = ({ label, onTextChange, value }: Props) => {
   return (
     <div>
-      <label className="block text-gray-700 text-sm font-bold mb-2 mt-10">{label}</label>
+      <label className="block text-gray-700 text-sm font-bold my-2">{label}</label>
       <input
         onChange={(e) => onTextChange(e.target.value)}
         value={value}

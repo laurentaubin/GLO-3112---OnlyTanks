@@ -1,3 +1,4 @@
+import Link from "next/link";
 import User from "../../main/domain/User";
 import { UsersPreview } from "./UserPreview";
 
@@ -8,7 +9,11 @@ export const UsersList = ({ users }: Props) => {
   return (
     <>
       {users.map((user) => (
-        <UsersPreview key={user.username} user={user} />
+        <Link href={`/${user.username}`} passHref key={user.username}>
+          <a>
+            <UsersPreview key={user.username} user={user} />
+          </a>
+        </Link>
       ))}
     </>
   );

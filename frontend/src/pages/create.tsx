@@ -10,7 +10,7 @@ const Create: NextPage = () => {
         <title>New post • Onlytanks</title>
       </Head>
       <Layout>
-        <div className="md:bg-slate-100 h-screen md:items-center">
+        <div className="h-full md:items-center">
           <PostCreation />
         </div>
       </Layout>

@@ -8,6 +8,7 @@ export default class PostFactory {
       caption: postRequest.caption,
       hashtags: postRequest.hashtags,
       author: postRequest.author,
+      userTags: postRequest.userTags,
       imageUrl: imageUrl,
       id: UUIDGenerator.generate()
     };

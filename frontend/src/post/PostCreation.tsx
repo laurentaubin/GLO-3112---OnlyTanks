@@ -1,22 +1,26 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Button from "../main/components/Button";
-import { FormLayout } from "../main/components/FormLayout";
 import InputWithLabel from "../main/components/InputWithLabel";
+import UserTag from "../main/domain/UserTag";
 import { useAuth } from "../main/hooks/useAuth";
+import { State } from "../main/hooks/useAxios";
 import { PostImageContent } from "./api/PostImageRequest";
 import { useCreatePost } from "./api/useCreatePost";
 import HashtagInput from "./components/HashtagInput";
 import ImageSelector from "./components/ImageSelector";
-import { State } from "../main/hooks/useAxios";
-import { useRouter } from "next/router";
 
 export default function PostCreation() {
   const [imageSource, setImageSource] = useState("");
   const [hashtags, setHashtags] = useState<string[]>([]);
+  const [userTags, setUserTags] = useState<UserTag[]>([]);
   const [file, setFile] = useState<File>();
   const [caption, setCaption] = useState<string>("");
+
   const { me } = useAuth();
+
   const { state, createPost } = useCreatePost();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -30,7 +34,8 @@ export default function PostCreation() {
       image: file!,
       caption: caption,
       author: me!.username,
-      hashtags: hashtags
+      hashtags: hashtags,
+      userTags: userTags
     };
 
     await createPost(postImageContent);
@@ -43,18 +48,44 @@ export default function PostCreation() {
     }
   };
 
+  const onCancelClick = () => {
+    setImageSource("");
+    setUserTags([]);
+    setFile(undefined);
+  };
+
+  const onUserTagged = (newTag: UserTag) => {
+    setUserTags((current) => [...current, newTag]);
+  };
+
+  const onTagDeleted = (username: string) => {
+    setUserTags((current) => current.filter((tag) => tag.username !== username));
+  };
+
   return (
-    <div className="flex justify-center md:items-center">
-      <FormLayout>
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <div className="mb-4">
-            <ImageSelector imageSource={imageSource} onImageSelected={onImageSelected} />
+    <div className="flex justify-center h-full items-center md:items-start md:pt-12 overflow-x-auto md:overflow-x-visible">
+      <form className="flex flex-col justify-center bg-white shadow-md rounded md:px-8 md:pt-6 pb-8 mb-4 w-full min-h-[50%]">
+        <ImageSelector
+          imageSource={imageSource}
+          userTags={userTags}
+          onTagDelete={onTagDeleted}
+          onImageSelected={onImageSelected}
+          onUserTagged={onUserTagged}
+        />
+        {!!file && (
+          <>
             <InputWithLabel value={caption} label="Caption" onTextChange={setCaption} />
+            <HashtagInput hashtags={hashtags} setHashtags={setHashtags} />
+          </>
+        )}
+
+        {!!file && (
+          <div className="flex flex-row">
+            <Button text="Cancel" buttonClassName="bg-white text-gray-400 hover:bg-gray-pale" onClick={onCancelClick} />
+            <Button className="ml-auto" text="Post" buttonClassName="bg-blue-primary text-white hover:bg-blue-500" onClick={submit} />
           </div>
-          <HashtagInput hashtags={hashtags} setHashtags={setHashtags} />
-          <Button text="Post" onClick={submit} />
-        </form>
-      </FormLayout>
+        )}
+      </form>
     </div>
   );
 }

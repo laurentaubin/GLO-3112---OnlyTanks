@@ -5,7 +5,7 @@ interface Props {
   imageUrl: string;
 }
 
-const ImagePost = ({ id, imageUrl }: Props) => {
+const AuthorPostItem = ({ id, imageUrl }: Props) => {
   const router = useRouter();
 
   const onPostClick = () => {
@@ -18,4 +18,4 @@ const ImagePost = ({ id, imageUrl }: Props) => {
   );
 };
 
-export default ImagePost;
+export default AuthorPostItem;

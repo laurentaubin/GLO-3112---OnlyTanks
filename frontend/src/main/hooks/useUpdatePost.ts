@@ -3,13 +3,19 @@ import { useAxios } from "./useAxios";
 import PostResponse from "../api/post/PostResponse";
 import { useEffect, useState } from "react";
 import Post from "../domain/Post";
+import UserTag from "../domain/UserTag";
 
 const useUpdatePost = () => {
   const { data, sendRequest } = useAxios();
   const [updatedPost, setUpdatedPost] = useState<Post>();
 
-  const updatePost = async (id: string, caption: string, hashtags: string[]) => {
-    await sendRequest({ url: `/posts/${id}`, method: "PUT", data: { caption: caption, hashtags: hashtags } });
+  const updatePost = async (id: string, caption: string, hashtags: string[], userTags: UserTag[]) => {
+    const formattedUserTags: UserTag[] = userTags.map((tag) => ({
+      username: tag.username,
+      position: tag.position.map((post) => post / 100)
+    }));
+
+    await sendRequest({ url: `/posts/${id}`, method: "PUT", data: { caption, hashtags, userTags: formattedUserTags } });
   };
 
   useEffect(() => {

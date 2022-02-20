@@ -8,7 +8,7 @@ interface Props {
 
 const HashtagInput = ({ hashtags, setHashtags }: Props) => {
   return (
-    <div className="mb-6 mt-10">
+    <div className="my-2">
       <label className="block text-gray-700 text-sm font-bold mb-2"> Hashtags </label>
       <ReactTagInput placeholder="Press enter to confirm Hashtag" tags={hashtags} onChange={(newTags) => setHashtags(newTags)} />
     </div>

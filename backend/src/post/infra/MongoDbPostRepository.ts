@@ -22,19 +22,19 @@ class MongoDbPostRepository implements PostRepository {
   }
 
   public async findByAuthor(author: string, pagination: Pagination): Promise<Post[]> {
-    const query: MongoDbQuery = PostModel.find({ author }).sort("-createdAt");
+    const query: MongoDbQuery = PostModel.find({ author }).sort("-createdAt").lean();
 
     return this.fetchPosts(pagination, query);
   }
 
   public async find(pagination: Pagination): Promise<Post[]> {
-    const query: MongoDbQuery = PostModel.find().sort("-createdAt");
+    const query: MongoDbQuery = PostModel.find().sort("-createdAt").lean();
 
     return this.fetchPosts(pagination, query);
   }
 
   public async findById(id: string): Promise<Post> {
-    const postDto = (await PostModel.findOne({ id: id })) as unknown as PostDto;
+    const postDto = (await PostModel.findOne({ id: id }).lean()) as unknown as PostDto;
 
     if (!postDto) {
       throw new PostNotFoundException();
@@ -46,7 +46,7 @@ class MongoDbPostRepository implements PostRepository {
   public async update(id: string, editPostFields: EditPostFields): Promise<Post> {
     const updatedPostDto = (await PostModel.findOneAndUpdate({ id: id }, editPostFields, {
       new: true
-    })) as unknown as PostDto;
+    }).lean()) as unknown as PostDto;
     return this.mongoDBPostAssembler.assemblePost(updatedPostDto);
   }
 

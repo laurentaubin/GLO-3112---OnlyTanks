@@ -18,8 +18,7 @@ export const NextButton = ({ label, formErrors, touched, initialValues, state }:
   return (
     <button
       className={
-        "text-white rounded py-2 mt-2 w-full " +
-        (isFormInvalid(formErrors, touched, initialValues) ? "bg-blue-primary" : "bg-blue-secondary")
+        "text-white rounded py-2 mt-2 w-full " + (isFormInvalid(formErrors, touched, initialValues) ? "bg-gray-light" : "bg-blue-primary")
       }
       type="submit"
       disabled={isFormInvalid(formErrors, touched, initialValues)}

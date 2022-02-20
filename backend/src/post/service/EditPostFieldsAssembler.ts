@@ -5,7 +5,8 @@ class EditPostFieldsAssembler {
   public assembleEditPostFields(editPostFieldsRequest: EditPostFieldsRequest): EditPostFields {
     return {
       caption: editPostFieldsRequest.caption,
-      hashtags: editPostFieldsRequest.hashtags
+      hashtags: editPostFieldsRequest.hashtags,
+      userTags: editPostFieldsRequest.userTags
     };
   }
 }

@@ -51,6 +51,7 @@ describe("PostService", () => {
     caption: "anCaption",
     hashtags: hashTag,
     author: "anUsername",
+    userTags: [],
     file: fileRequest
   };
 
@@ -64,6 +65,7 @@ describe("PostService", () => {
     author: "username",
     imageUrl: "url",
     id: "id",
+    userTags: [],
     createdAt: 45367432
   };
 
@@ -73,6 +75,7 @@ describe("PostService", () => {
     author: "username",
     imageUrl: "url",
     id: "ididid",
+    userTags: [],
     createdAt: 534632567
   };
 

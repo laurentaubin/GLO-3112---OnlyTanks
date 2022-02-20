@@ -1,13 +1,11 @@
-import { useState } from "react";
-import User from "../../main/domain/User";
-import ProfilePicture from "./ProfilePicture";
-import EditProfileModal from "./EditProfileModal";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { BiEdit } from "react-icons/bi";
+import User from "../../main/domain/User";
 import { useAuth } from "../../main/hooks/useAuth";
-import Button from "../../main/components/Button";
-import { BiEdit, BiEditAlt, BiMessageRoundedEdit } from "react-icons/bi";
-import { BsFillCreditCard2BackFill } from "react-icons/bs";
 import { formatInputs } from "../../main/utils/inputUtils";
+import EditProfileModal from "./EditProfileModal";
+import ProfilePicture from "./ProfilePicture";
 
 interface Props {
   user: User;

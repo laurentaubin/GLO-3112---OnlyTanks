@@ -1,3 +1,4 @@
+import UserTagsDto from "./UserTagsDto";
 import UserPreviewResponse from "./UserPreviewResponse";
 
 interface PostResponse {
@@ -5,6 +6,7 @@ interface PostResponse {
   id: string;
   caption: string;
   hashtags: string[];
+  userTags: UserTagsDto[];
   author: UserPreviewResponse;
   createdAt: number;
 }
