@@ -9,10 +9,10 @@ import * as Yup from "yup";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/router";
 import { setErrors } from "../../utils/setErrors";
-import { NextButton } from "../NextButton";
 import AuthProvider from "../../domain/AuthProvider";
 import { useCookies } from "react-cookie";
 import { constants } from "../../../constants/constants";
+import { NextButton } from "../NextButton";
 
 export interface LoginValues {
   username: string;

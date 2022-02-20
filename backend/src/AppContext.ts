@@ -24,6 +24,7 @@ import UploadProfilePictureRequestAssembler from "./user/api/UploadProfilePictur
 import PaginationFactory from "./utils/pagination/PaginationFactory";
 import Paginator from "./utils/pagination/Paginator";
 import PostRequestAssembler from "./post/api/PostRequestAssembler";
+import UserRequestAssembler from "./user/api/UserRequestAssembler";
 import EditPostFieldsAssembler from "./post/service/EditPostFieldsAssembler";
 
 // utils
@@ -36,6 +37,7 @@ const storageInformation = new S3StorageConfiguration();
 const userFactory = new UserFactory();
 export const paginationFactory = new PaginationFactory();
 // assembler
+export const userRequestAssembler = new UserRequestAssembler();
 export const uploadProfilePictureRequestAssembler = new UploadProfilePictureRequestAssembler();
 export const postRequestAssembler = new PostRequestAssembler();
 const fileAssembler = new FileAssembler();

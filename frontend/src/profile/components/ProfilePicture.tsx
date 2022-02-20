@@ -4,7 +4,7 @@ interface Props {
 }
 
 const ProfilePicture = ({ imageUrl, size }: Props) => {
-  return <img style={{ width: size, height: size }} className="rounded-full border-2" src={imageUrl} alt="" />;
+  return <img style={{ width: size, height: size }} className="rounded-full border-2 mb-2" src={imageUrl} alt="" />;
 };
 
 export default ProfilePicture;

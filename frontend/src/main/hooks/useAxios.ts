@@ -44,5 +44,5 @@ export const useAxios = () => {
     }
   };
 
-  return { data, error, state, sendRequest };
+  return { data, error, setError, state, sendRequest };
 };

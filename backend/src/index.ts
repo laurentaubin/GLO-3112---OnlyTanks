@@ -16,7 +16,11 @@ import { limiter } from "./api/RateLimit";
 const app = express();
 const config = getConfigForEnvironment();
 
-mongoose.connect(`${config.mongo.connectionString}/${config.mongo.databaseName}?retryWrites=true&w=majority`);
+mongoose.connect(`${config.mongo.connectionString}/${config.mongo.databaseName}?retryWrites=true&w=majority`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+});
 
 app.use(limiter);
 app.use(express.json());

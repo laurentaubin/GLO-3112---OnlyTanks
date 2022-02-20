@@ -1,4 +1,4 @@
-interface UserRequest {
+interface UserDto {
   username: string;
   firstName: string;
   lastName: string;
@@ -7,4 +7,4 @@ interface UserRequest {
   imageUrl: string;
 }
 
-export default UserRequest;
+export default UserDto;

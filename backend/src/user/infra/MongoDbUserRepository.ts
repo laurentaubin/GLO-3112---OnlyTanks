@@ -60,4 +60,16 @@ export default class MongoDbUserRepository implements UserRepository {
       throw new UserNotFoundException();
     }
   }
+
+  public async updateUserInformation(user: User): Promise<User> {
+    const updatedUserDto = (await UserModel.findOneAndUpdate({ username: user.username }, user, {
+      new: true
+    })) as unknown as UserDto;
+
+    if (!updatedUserDto) {
+      throw new UserNotFoundException();
+    }
+
+    return this.userAssembler.assembleUser(updatedUserDto);
+  }
 }

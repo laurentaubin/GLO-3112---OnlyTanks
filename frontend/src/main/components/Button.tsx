@@ -16,7 +16,7 @@ const Button = ({
   disabled = false
 }: Props) => {
   return (
-    <div className="flex items-center justify-center mt-10">
+    <div className="flex items-center justify-cente p-2 ml-auto">
       <button
         onClick={onClick}
         disabled={disabled}

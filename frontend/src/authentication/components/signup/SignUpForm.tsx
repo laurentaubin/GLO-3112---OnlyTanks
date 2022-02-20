@@ -8,11 +8,12 @@ import { useSignUp } from "../../api/useSignUp";
 import { FormikField } from "../../../main/components/FormikField";
 import User from "../../../main/domain/User";
 import { setErrors } from "../../utils/setErrors";
-import { NextButton } from "../NextButton";
 import { FormikPhoneNumberField } from "../../../main/components/FormikPhoneNumberField";
 import { useCookies } from "react-cookie";
 import AuthProvider from "../../domain/AuthProvider";
 import { constants } from "../../../constants/constants";
+import { normalizeInputs } from "../../../main/utils/inputUtils";
+import { NextButton } from "../NextButton";
 
 interface InternalSignUpFormProps {
   data: AxiosResponse | undefined;
@@ -88,17 +89,6 @@ export const SignUpForm = () => {
   const onSubmit = async (values: User) => {
     const normalizedInputs = normalizeInputs(values);
     await signUpUser(normalizedInputs);
-  };
-
-  const normalizeInputs = (values: User): User => {
-    return {
-      ...values,
-      phoneNumber: normalizePhoneNumberInput(values.phoneNumber)
-    };
-  };
-
-  const normalizePhoneNumberInput = (phoneNumber: string): string => {
-    return phoneNumber.replace(/[ ()+-]/g, () => "");
   };
 
   return (

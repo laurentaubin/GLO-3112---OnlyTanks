@@ -21,7 +21,11 @@ const User: NextPage = () => {
         <title>{username} • Onlytanks</title>
       </Head>
       <Layout>
-        {state === State.LOADING ? <SpinnerIcon size={20} /> : <> {user ? <UserProfile posts={posts} user={user} /> : <NotFoundPage />} </>}
+        {state === State.LOADING ? (
+          <SpinnerIcon size={20} />
+        ) : (
+          <> {user ? <UserProfile posts={posts} userProp={user} /> : <NotFoundPage />} </>
+        )}
       </Layout>
     </>
   );
