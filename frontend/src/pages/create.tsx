@@ -7,7 +7,7 @@ const Create: NextPage = () => {
   return (
     <>
       <Head>
-        <title>OnlyTanks - Create new post</title>
+        <title>New post • Onlytanks</title>
       </Head>
       <Layout>
         <div className="md:bg-slate-100 h-screen md:items-center">

@@ -17,4 +17,3 @@ const PostAuthorInformation = ({ profileImageUrl, username }: Props) => {
 };
 
 export default PostAuthorInformation;
-

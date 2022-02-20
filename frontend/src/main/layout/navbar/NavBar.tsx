@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { BiBell, BiHome, BiMessageDetail, BiUser } from "react-icons/bi";
+import { BiBell, BiHome, BiMessageDetail, BiUser, BiSearchAlt } from "react-icons/bi";
 import { NavItem } from "./NavItem";
 import { NewPostButton } from "./NewPostButton";
 import { LogoutButton } from "../../../authentication/components/logout/LogoutButton";
@@ -19,12 +19,17 @@ export const NavBar = () => {
     {
       title: "Notifications",
       icon: <BiBell size={32} />,
-      href: "/notifications"
+      href: "/direct/notifications"
     },
     {
       title: "Messages",
       icon: <BiMessageDetail size={32} />,
-      href: "/messages"
+      href: "/direct/messages"
+    },
+    {
+      title: "Search",
+      icon: <BiSearchAlt size={32} />,
+      href: "/search/users"
     },
     {
       title: "Profile",

@@ -6,7 +6,7 @@ import { constants } from "../../../constants/constants";
 export const LogoutButton = () => {
   const router = useRouter();
 
-  const [_, setCookies, removeCookies] = useCookies([constants.AUTH_PROVIDER_COOKIE, constants.SESSION_TOKEN_COOKIE]);
+  const [, , removeCookies] = useCookies([constants.AUTH_PROVIDER_COOKIE, constants.SESSION_TOKEN_COOKIE]);
 
   const onClick = () => {
     handleRemoveCookies();
@@ -20,7 +20,9 @@ export const LogoutButton = () => {
 
   return (
     <button
-      className={"flex items-center m-2 py-2 pl-1 rounded-full w-full hover:text-blue-primary cursor-pointer text-gray-500"}
+      className={
+        "flex items-center m-2 py-2 pl-1 rounded-full w-full hover:text-blue-primary hover:bg-blue-pale cursor-pointer text-gray-500"
+      }
       onClick={onClick}
     >
       <div>

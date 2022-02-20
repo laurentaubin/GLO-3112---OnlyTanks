@@ -11,7 +11,7 @@ const Picture: NextPage = () => {
   return (
     <>
       <Head>
-        <title>OnlyTanks - Signup</title>
+        <title>Signup • Onlytanks</title>
       </Head>
       <div className="md:bg-slate-100 h-screen w-screen flex justify-center text-center md:items-center">
         <ChooseProfilePicture username={username} />
