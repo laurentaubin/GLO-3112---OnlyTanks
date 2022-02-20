@@ -5,6 +5,7 @@ interface UserRequest {
   email: string;
   phoneNumber: string;
   imageUrl: string;
+  createdAt: number;
 }
 
 export default UserRequest;

@@ -1,8 +1,10 @@
+import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import User from "../../main/domain/User";
 import { useAuth } from "../../main/hooks/useAuth";
+import formatTimestamp from "../../main/utils/formatTimestamp";
 import { formatInputs } from "../../main/utils/inputUtils";
 import EditProfileModal from "./EditProfileModal";
 import ProfilePicture from "./ProfilePicture";
@@ -17,6 +19,8 @@ const UserInformation = ({ user, onUserUpdated }: Props) => {
   const router = useRouter();
   const { username } = router.query;
   const { me } = useAuth();
+
+  
 
   return (
     <div className="flex flex-col items-center mt-10 sm:flex sm:flex-row">
@@ -34,6 +38,7 @@ const UserInformation = ({ user, onUserUpdated }: Props) => {
         <h1 className="text-base">@{user?.username}</h1>
         <h1 className="text-base">{user?.email}</h1>
         <h1 className="text-base">{formatInputs(user).phoneNumber}</h1>
+        <h1 className="text-base">{formatTimestamp({ datetime: dayjs(user?.createdAt).toDate()})}</h1>
       </div>
     </div>
   );

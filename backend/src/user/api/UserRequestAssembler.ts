@@ -9,7 +9,8 @@ export default class UserRequestAssembler {
       lastName: userDto.lastName,
       email: userDto.email,
       phoneNumber: userDto.phoneNumber,
-      imageUrl: userDto.imageUrl
+      imageUrl: userDto.imageUrl,
+      createdAt: userDto.createdAt
     };
   }
 }

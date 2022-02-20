@@ -11,7 +11,8 @@ class UserAssembler {
         userResponse.lastName,
         userResponse.email,
         userResponse.phoneNumber,
-        userResponse.imageUrl
+        userResponse.imageUrl,
+        userResponse.createdAt
       );
     }
   }
@@ -26,7 +27,8 @@ class UserAssembler {
             userResponse.lastName,
             userResponse.email,
             userResponse.phoneNumber,
-            userResponse.imageUrl
+            userResponse.imageUrl,
+            userResponse.createdAt
           )
       );
     } else {

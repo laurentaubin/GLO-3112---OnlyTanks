@@ -13,7 +13,8 @@ export default class UserAssembler {
       lastName: userRequest.lastName,
       email: userRequest.email,
       phoneNumber: userRequest.phoneNumber,
-      imageUrl: userRequest.imageUrl
+      imageUrl: userRequest.imageUrl,
+      createdAt: userRequest.createdAt
     };
   }
 
@@ -24,7 +25,8 @@ export default class UserAssembler {
       lastName: user.lastName,
       email: user.email,
       phoneNumber: user.phoneNumber,
-      imageUrl: user.imageUrl
+      imageUrl: user.imageUrl,
+      createdAt: user.createdAt
     };
   }
 

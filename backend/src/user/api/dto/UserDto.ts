@@ -5,6 +5,7 @@ interface UserDto {
   email: string;
   phoneNumber: string;
   imageUrl: string;
+  createdAt:number;
 }
 
 export default UserDto;

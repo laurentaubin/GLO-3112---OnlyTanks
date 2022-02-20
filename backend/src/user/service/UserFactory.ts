@@ -9,7 +9,8 @@ class UserFactory {
       lastName: userRequest.lastName,
       email: userRequest.email,
       phoneNumber: userRequest.phoneNumber,
-      imageUrl: imageUrl
+      imageUrl: imageUrl,
+      createdAt: userRequest.createdAt
     };
   }
 }

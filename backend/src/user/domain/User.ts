@@ -5,6 +5,7 @@ interface User {
   email: string;
   phoneNumber: string;
   imageUrl: string;
+  createdAt: number;
 }
 
 export default User;

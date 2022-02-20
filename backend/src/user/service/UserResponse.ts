@@ -5,6 +5,7 @@ interface UserResponse {
   email: string;
   phoneNumber: string;
   imageUrl: string;
+  createdAt: number;
 }
 
 export default UserResponse;
