@@ -1,5 +1,5 @@
-import User from "../../main/domain/User";
-import ProfilePicture from "../../profile/components/ProfilePicture";
+import User from "../../../main/domain/User";
+import ProfilePicture from "../../../profile/components/ProfilePicture";
 
 interface Props {
   user: User;
@@ -11,10 +11,12 @@ export const UsersPreview = ({ user, variant = "lg" }: Props) => {
       <div className="flex m-2">
         <ProfilePicture imageUrl={user.imageUrl} size={variant === "lg" ? "5em" : "2em"} />
         <div className="flex-col">
-          <div className={["ml-2", variant === "lg" ? "text-xl" : "text-sm"].join(" ")}>
-            {user.firstName} {user.lastName} <span className="font-bold">@{user.username}</span>
+          <div className={["ml-2 text-left", variant === "lg" ? "text-xl" : "text-sm"].join(" ")}>
+            <p className="font-semibold">@{user.username}</p>
+            <p className="text-sm">
+              {user.firstName} {user.lastName}
+            </p>
           </div>
-          {variant === "lg" && <div className="ml-2 font-normal text-sm">{user.email}</div>}
         </div>
       </div>
     </div>

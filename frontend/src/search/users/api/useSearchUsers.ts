@@ -1,7 +1,7 @@
-import { useAxios } from "../../main/hooks/useAxios";
+import { useAxios } from "../../../main/hooks/useAxios";
 import { useEffect } from "react";
-import UserAssembler from "../../profile/api/UserAssembler";
-import MultipleUsersResponse from "../../profile/api/MultipleUsersResponse";
+import UserAssembler from "../../../profile/api/UserAssembler";
+import MultipleUsersResponse from "../../../profile/api/MultipleUsersResponse";
 
 export const useSearchUsers = () => {
   const { data, sendRequest, state, error } = useAxios();

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import User from "../../main/domain/User";
+import User from "../../../main/domain/User";
 import { UsersPreview } from "./UserPreview";
 
 interface Props {
@@ -7,14 +7,16 @@ interface Props {
 }
 export const UsersList = ({ users }: Props) => {
   return (
-    <>
+    <div className="flex flex-row flex-wrap">
       {users.map((user) => (
         <Link href={`/${user.username}`} passHref key={user.username}>
-          <a>
-            <UsersPreview key={user.username} user={user} />
-          </a>
+          <div className="w-full md:w-[50%]">
+            <a>
+              <UsersPreview key={user.username} user={user} />
+            </a>
+          </div>
         </Link>
       ))}
-    </>
+    </div>
   );
 };
