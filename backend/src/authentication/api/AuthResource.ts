@@ -14,6 +14,7 @@ import InvalidTokenException from "../infra/google/exceptions/InvalidTokenExcept
 import SessionNotFoundException from "../domain/exceptions/SessionNotFoundException";
 import MissingAuthProviderHeaderException from "../../middleware/exceptions/MissingAuthProviderHeaderException";
 import MissingTokenHeaderException from "../../middleware/exceptions/MissingTokenHeaderException";
+import { isNotForbiddenUsername } from "./validators/isNotForbiddenUsername";
 
 const loginRequestAssembler = new LoginRequestAssembler();
 
@@ -21,7 +22,7 @@ const router = express.Router();
 
 router.post(
   "/signup",
-  body("username").exists().withMessage("The username field is required").custom(isUnusedUsername),
+  body("username").exists().withMessage("The username field is required").custom(isUnusedUsername).custom(isNotForbiddenUsername),
   body("email").isEmail().withMessage("Email is not valid ").custom(isUnusedEmail),
   body("firstName").exists().withMessage("The first name field is required"),
   body("lastName").exists().withMessage("The last name field is required"),

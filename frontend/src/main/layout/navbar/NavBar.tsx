@@ -19,12 +19,12 @@ export const NavBar = () => {
     {
       title: "Notifications",
       icon: <BiBell size={32} />,
-      href: "/direct/notifications"
+      href: "/notifications"
     },
     {
       title: "Messages",
       icon: <BiMessageDetail size={32} />,
-      href: "/direct/messages"
+      href: "/messages"
     },
     {
       title: "Search",
