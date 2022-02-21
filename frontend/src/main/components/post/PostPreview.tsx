@@ -48,6 +48,7 @@ const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
           onGoToPostClick={onGoToPostClick}
           onEditPostClick={onEditPostClick}
           onDeletePostClick={onDeletePostClick}
+          isSpecificPostPage={router.pathname.includes("/posts")}
         />
         <div className="flex justify-center">
           <PostImage src={post.imageUrl} userTags={post.userTags} />

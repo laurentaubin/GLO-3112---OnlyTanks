@@ -1,15 +1,18 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { DropDownMenuItem } from "./DropDownMenuItem";
 
 interface Props {
-  canGoToPost: boolean;
+  isMyPost: boolean;
   onSeePostClick: () => void;
   onEditPostClick: () => void;
   onDeletePostClick: () => void;
+  isSpecificPostPage: boolean;
 }
 
-const PostDropdown = ({ canGoToPost, onSeePostClick, onEditPostClick, onDeletePostClick }: Props) => {
+const PostDropdown = ({ isMyPost, onSeePostClick, onEditPostClick, onDeletePostClick, isSpecificPostPage }: Props) => {
+  console.log({ isMyPost, isSpecificPostPage });
   return (
     <div>
       <Menu as="div" className="relative inline-block text-left">
@@ -29,43 +32,19 @@ const PostDropdown = ({ canGoToPost, onSeePostClick, onEditPostClick, onDeletePo
         >
           <Menu.Items className="absolute right-0 w-40 z-10 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-1 ">
-              {canGoToPost && (
-                <Menu.Item onClick={onSeePostClick}>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active ? "bg-blue-primary text-white" : "text-gray-900"
-                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                    >
-                      See post
-                    </button>
+              {!isSpecificPostPage ? (
+                <DropDownMenuItem onClick={onSeePostClick} label="See post" backgroundColor="blue" />
+              ) : (
+                <>
+                  {isMyPost && (
+                    <>
+                      <DropDownMenuItem onClick={onEditPostClick} label="Edit" backgroundColor="blue" />
+                      <div className="h-[1px] w-[90%] bg-slate-100 mx-auto" />
+                      <DropDownMenuItem onClick={onDeletePostClick} label="Delete" backgroundColor="red" />
+                    </>
                   )}
-                </Menu.Item>
+                </>
               )}
-              <Menu.Item onClick={onEditPostClick}>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-blue-primary text-white" : "text-gray-900"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    Edit
-                  </button>
-                )}
-              </Menu.Item>
-            </div>
-            <div className="px-1 py-1">
-              <Menu.Item onClick={onDeletePostClick}>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-red-primary text-white" : "text-gray-900"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    Delete
-                  </button>
-                )}
-              </Menu.Item>
             </div>
           </Menu.Items>
         </Transition>
