@@ -12,7 +12,6 @@ interface Props {
 }
 
 const PostDropdown = ({ isMyPost, onSeePostClick, onEditPostClick, onDeletePostClick, isSpecificPostPage }: Props) => {
-  console.log({ isMyPost, isSpecificPostPage });
   return (
     <div>
       <Menu as="div" className="relative inline-block text-left">
