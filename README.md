@@ -10,13 +10,13 @@
 
 ### 🐳 Using docker
 
-A dev Docker setup is available using `docker-compose.yml` and the projects' `Dockerfile`.
+A Docker setup is available using `docker-compose.yml` and the projects' `Dockerfile`.
 
 With [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed:
 
 ```bash
 # build and run the app
-docker-compose -f docker-compose.dev.yaml up --build
+docker-compose -f docker-compose.yml up --build
 ```
 
 ### 🌐 Access the app
