@@ -4,10 +4,12 @@ ARG ENVIRONMENT
 
 WORKDIR /app
 
-COPY . .
-
+COPY package.json .
+COPY yarn.lock .
 RUN yarn
 
+COPY . .
 RUN yarn build
 
-CMD ["yarn", "start" ]
+EXPOSE 8080
+CMD ["yarn", "start"]

@@ -1,5 +1,6 @@
 import getConfig from "next/config";
 import { dockerConfig } from "./config.docker";
+import { labConfig } from "./config.lab";
 import { localConfig } from "./config.local";
 import { productionConfig } from "./config.production";
 
@@ -25,6 +26,9 @@ export const getConfigForEnvironment = () => {
 
     case "docker":
       return dockerConfig;
+
+    case "lab":
+      return labConfig;
 
     case "production":
       return productionConfig;

@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:lab": "NEXT_PUBLIC_ENVIRONMENT=lab next build && next export",
     "build:prod": "NEXT_PUBLIC_ENVIRONMENT=production next build && next export",
     "start": "next start",
     "start:docker": "NEXT_PUBLIC_ENVIRONMENT=docker next start",

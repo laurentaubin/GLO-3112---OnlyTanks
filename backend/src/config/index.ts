@@ -1,4 +1,5 @@
 import { dockerConfig } from "./config.docker";
+import { labConfig } from "./config.lab";
 import { localConfig } from "./config.local";
 import { productionConfig } from "./config.production";
 import { S3Config } from "./config.S3";
@@ -27,6 +28,9 @@ export const getConfigForEnvironment = () => {
 
     case "docker":
       return dockerConfig;
+
+    case "lab":
+      return labConfig;
 
     case "production":
       return productionConfig;
