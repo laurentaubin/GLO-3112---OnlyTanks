@@ -37,7 +37,7 @@ const EditPostModal = ({ originalPost, open, setOpen, onUpdated }: Props) => {
     if (updatedPost) {
       onUpdated(updatedPost);
     }
-  }, [onUpdated, updatedPost]);
+  }, [updatedPost]);
 
   const onUserTagged = (userTag: UserTag) => {
     setUserTags((current) => [...current, userTag]);

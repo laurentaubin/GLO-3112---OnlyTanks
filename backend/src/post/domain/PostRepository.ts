@@ -1,6 +1,5 @@
 import Post from "./Post";
 import Pagination from "../../utils/pagination/Pagination";
-import EditPostFields from "./EditPostFields";
 
 interface PostRepository {
   save(post: Post): Promise<void>;
@@ -13,7 +12,7 @@ interface PostRepository {
 
   findByAuthor(author: string, pagination: Pagination): Promise<Post[]>;
 
-  update(id: string, editPostFields: EditPostFields): Promise<Post>;
+  update(id: string, updatedPost: Post): Promise<Post>;
 }
 
 export default PostRepository;

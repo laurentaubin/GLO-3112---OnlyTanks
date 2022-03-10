@@ -11,6 +11,8 @@ interface PostResponse {
   userTags?: UserTag[];
   author: { username: string; imageUrl: string };
   createdAt: number;
+  isLiked: boolean;
+  numberOfLikes: number;
 }
 
 export default PostResponse;

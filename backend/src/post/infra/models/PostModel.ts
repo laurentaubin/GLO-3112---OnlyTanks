@@ -28,6 +28,9 @@ export class PostDto {
   @prop({ type: String, required: true })
   public id: string;
 
+  @prop({ type: [String], required: true })
+  public likes: string[];
+
   @prop({ type: Number })
   public createdAt: number;
 

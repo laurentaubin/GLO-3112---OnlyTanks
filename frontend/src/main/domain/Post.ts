@@ -10,6 +10,8 @@ interface Post {
   userTags: UserTag[];
   author: UserPreview;
   timestamp: Timestamp;
+  isLiked: boolean;
+  numberOfLikes: number;
 }
 
 export default Post;

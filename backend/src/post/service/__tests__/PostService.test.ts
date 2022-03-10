@@ -13,6 +13,7 @@ import Pagination from "../../../utils/pagination/Pagination";
 import UserRepository from "../../../user/domain/UserRepository";
 import PostAssembler from "../PostAssembler";
 import EditPostFieldsAssembler from "../EditPostFieldsAssembler";
+import SessionRepository from "../../../authentication/domain/SessionRepository";
 
 describe("PostService", () => {
   const hashTag: string[] = [];
@@ -66,7 +67,8 @@ describe("PostService", () => {
     imageUrl: "url",
     id: "id",
     userTags: [],
-    createdAt: 45367432
+    createdAt: 45367432,
+    likes: []
   };
 
   const anotherPost: Post = {
@@ -76,7 +78,8 @@ describe("PostService", () => {
     imageUrl: "url",
     id: "ididid",
     userTags: [],
-    createdAt: 534632567
+    createdAt: 534632567,
+    likes: []
   };
 
   const posts: Post[] = [post, anotherPost];
@@ -102,6 +105,9 @@ describe("PostService", () => {
   const mockEditPostFieldsAssembler: EditPostFieldsAssembler = mock<EditPostFieldsAssembler>();
   const editPostFieldsAssembler = instance(mockEditPostFieldsAssembler);
 
+  const mockSessionRepository: SessionRepository = mock<SessionRepository>();
+  const sessionRepository = instance(mockSessionRepository);
+
   const postService = new PostService(
     postFactory,
     postAssembler,
@@ -109,7 +115,8 @@ describe("PostService", () => {
     fileRepository,
     fileAssembler,
     userRepository,
-    editPostFieldsAssembler
+    editPostFieldsAssembler,
+    sessionRepository
   );
 
   describe("when add post", () => {

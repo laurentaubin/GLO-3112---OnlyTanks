@@ -1,4 +1,4 @@
-import SessionModel, { SessionDto } from "./models/SessionModel";
+import SessionModel from "./models/SessionModel";
 import Session from "../domain/Session";
 
 export default class MongoDbSessionAssembler {
@@ -8,11 +8,4 @@ export default class MongoDbSessionAssembler {
       token: session.token.value
     });
   }
-
-  assembleSession = (sessionDto: SessionDto): Session => {
-    return {
-      username: sessionDto.username,
-      token: { value: sessionDto.token }
-    };
-  };
 }

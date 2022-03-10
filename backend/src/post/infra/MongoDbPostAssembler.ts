@@ -9,7 +9,8 @@ class MongoDbPostAssembler {
       caption: post.caption,
       userTags: post.userTags,
       hashtags: post.hashtags,
-      id: post.id
+      id: post.id,
+      likes: post.likes ?? []
     });
   }
 
@@ -23,7 +24,8 @@ class MongoDbPostAssembler {
       caption: postDto.caption,
       userTags: userTags,
       hashtags: postDto.hashtags,
-      id: postDto.id
+      id: postDto.id,
+      likes: postDto.likes
     };
   }
 }

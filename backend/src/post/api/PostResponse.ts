@@ -9,6 +9,8 @@ interface PostResponse {
   userTags: UserTagsDto[];
   author: UserPreviewResponse;
   createdAt: number;
+  isLiked: boolean;
+  numberOfLikes: number;
 }
 
 export default PostResponse;

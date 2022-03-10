@@ -12,6 +12,8 @@ import User from "../../user/domain/User";
 import EditPostFieldsRequest from "../api/EditPostFieldsRequest";
 import EditPostFields from "../domain/EditPostFields";
 import EditPostFieldsAssembler from "./EditPostFieldsAssembler";
+import SessionRepository from "../../authentication/domain/SessionRepository";
+import Token from "../../authentication/domain/Token";
 
 export default class PostService {
   constructor(
@@ -21,7 +23,8 @@ export default class PostService {
     private fileRepository: FileRepository,
     private fileAssembler: FileAssembler,
     private userRepository: UserRepository,
-    private editPostFieldsAssembler: EditPostFieldsAssembler
+    private editPostFieldsAssembler: EditPostFieldsAssembler,
+    private sessionRepository: SessionRepository
   ) {}
 
   public async addPost(postRequest: PostRequestBody) {
@@ -63,11 +66,41 @@ export default class PostService {
   }
 
   public async editPost(id: string, editPostFieldsRequest: EditPostFieldsRequest): Promise<PostResponse> {
+    const postToUpdate: Post = await this.postRepository.findById(id);
     const editPostFields: EditPostFields = this.editPostFieldsAssembler.assembleEditPostFields(editPostFieldsRequest);
-    const updatedPost = await this.postRepository.update(id, editPostFields);
+    const updatedPost: Post = { ...postToUpdate, ...editPostFields };
+    await this.postRepository.update(id, updatedPost);
 
     const user = await this.userRepository.findByUsername(updatedPost.author);
 
     return this.postAssembler.assemblePostResponse(updatedPost, user);
   }
+
+  public async likePost(token: string, postId: string): Promise<void> {
+    const requester = await this.findRequester(token);
+    const postToUpdate = await this.postRepository.findById(postId);
+    const user = postToUpdate.likes?.find((username) => username === requester.username);
+    if (!user) {
+      const updatedLikes = postToUpdate.likes ? [...postToUpdate.likes, requester.username] : [requester.username];
+      const updatedPost = { ...postToUpdate, likes: updatedLikes };
+      await this.postRepository.update(postId, updatedPost);
+    }
+  }
+
+  public async unlikePost(token: string, postId: string): Promise<void> {
+    const requester = await this.findRequester(token);
+    const postToUpdate = await this.postRepository.findById(postId);
+    const user = postToUpdate.likes?.find((username) => username === requester.username);
+    if (user) {
+      const updatedLikes = postToUpdate.likes?.filter((username) => username !== requester.username);
+      const updatedPost = { ...postToUpdate, likes: updatedLikes };
+      await this.postRepository.update(postId, updatedPost);
+    }
+  }
+
+  private findRequester = async (token: string): Promise<User> => {
+    const sessionToken: Token = { value: token };
+    const requesterUsername = await this.sessionRepository.findUsernameWithToken(sessionToken);
+    return this.userRepository.findByUsername(requesterUsername);
+  };
 }

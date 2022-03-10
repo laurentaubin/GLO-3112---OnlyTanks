@@ -5,6 +5,7 @@ import PostRequest from "./PostRequest";
 import PostRequestBody from "./PostRequestBody";
 import Pagination from "../../utils/pagination/Pagination";
 import EditPostFieldsRequest from "./EditPostFieldsRequest";
+import { constants } from "../../constants/constants";
 
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -54,6 +55,28 @@ router.put("/:id", async (req: Request<Record<string, unknown>, Record<string, u
   try {
     const updatedPostResponse = await postService.editPost(req.params.id as string, req.body as EditPostFieldsRequest);
     res.status(status.OK).send(updatedPostResponse);
+  } catch (e) {
+    res.status(status.BAD_REQUEST).send(e.message);
+  }
+});
+
+router.post("/:id/like", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
+    const postId = req.params.id as string;
+    await postService.likePost(token, postId);
+    res.status(status.OK).send();
+  } catch (e) {
+    res.status(status.BAD_REQUEST).send(e.message);
+  }
+});
+
+router.post("/:id/unlike", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
+    const postId = req.params.id as string;
+    await postService.unlikePost(token, postId);
+    res.status(status.OK).send();
   } catch (e) {
     res.status(status.BAD_REQUEST).send(e.message);
   }

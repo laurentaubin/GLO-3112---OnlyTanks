@@ -1,5 +1,3 @@
-import Timestamp from "./Timestamp";
-
 class User {
   public username: string;
   public firstName: string;

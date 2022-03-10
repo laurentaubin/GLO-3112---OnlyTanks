@@ -1,8 +1,6 @@
 import formatTimestamp from "../../utils/formatTimestamp";
-import { BiArrowToRight } from "react-icons/bi";
 import * as React from "react";
 import Timestamp from "../../domain/Timestamp";
-import { useRouter } from "next/router";
 import PostDropdown from "./PostDropdown";
 import PostAuthorInformation from "./PostAuthorInformation";
 

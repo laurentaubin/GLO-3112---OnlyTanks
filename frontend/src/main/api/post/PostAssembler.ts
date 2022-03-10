@@ -16,7 +16,9 @@ class PostAssembler {
       id: postResponse.id,
       imageUrl: postResponse.imageUrl,
       userTags: userTags,
-      hashtags: HashtagsFormatter.addHashtagSymbol(postResponse.hashtags)
+      hashtags: HashtagsFormatter.addHashtagSymbol(postResponse.hashtags),
+      isLiked: postResponse.isLiked,
+      numberOfLikes: postResponse.numberOfLikes
     };
   }
 }

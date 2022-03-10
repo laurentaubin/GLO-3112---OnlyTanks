@@ -10,7 +10,8 @@ export default class PostFactory {
       author: postRequest.author,
       userTags: postRequest.userTags,
       imageUrl: imageUrl,
-      id: UUIDGenerator.generate()
+      id: UUIDGenerator.generate(),
+      likes: []
     };
   }
 }

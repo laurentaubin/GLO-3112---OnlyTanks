@@ -7,6 +7,8 @@ import PostHeader from "./PostHeader";
 import { PostImage } from "./PostImage";
 import { useAuth } from "../../hooks/useAuth";
 import EditPostModal from "./EditPostModal";
+import PostReaction from "./PostReaction";
+import usePostReaction from "../../hooks/usePostReaction";
 
 interface Props {
   post: Post;
@@ -19,6 +21,9 @@ const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
   const router = useRouter();
   const { me } = useAuth();
   const [showEntireCaption, setShowEntireCaption] = useState(post.caption.length < 100);
+  const { likePost, unlikePost } = usePostReaction();
+  const [isLiked, setIsLiked] = useState(postProp.isLiked);
+  const [numberOfLikes, setNumberOfLikes] = useState(postProp.numberOfLikes);
 
   const onShowEntireCaptionClick = () => {
     setShowEntireCaption(!showEntireCaption);
@@ -34,6 +39,12 @@ const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
 
   const onPostUpdated = (updatedPost: Post) => {
     setPost(updatedPost);
+  };
+
+  const onPostReaction = async () => {
+    isLiked ? await unlikePost(post.id) : await likePost(post.id);
+    setIsLiked(!isLiked);
+    !isLiked ? setNumberOfLikes(numberOfLikes + 1) : setNumberOfLikes(numberOfLikes - 1);
   };
 
   return (
@@ -54,6 +65,7 @@ const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
           <PostImage src={post.imageUrl} userTags={post.userTags} />
         </div>
         <section className="my-3 px-3">
+          <PostReaction numberOfLikes={numberOfLikes} isLiked={isLiked} onPostReaction={onPostReaction} />
           <div>
             {post.caption && (
               <PostCaption

@@ -79,7 +79,8 @@ export const postService = new PostService(
   fileRepository,
   fileAssembler,
   userRepository,
-  editPostFieldsAssembler
+  editPostFieldsAssembler,
+  sessionRepository
 );
 export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
 export const authService = new AuthService(userAssembler, userFactory, userRepository, authProviderSelector, sessionRepository);

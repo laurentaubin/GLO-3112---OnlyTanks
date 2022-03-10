@@ -8,6 +8,7 @@ interface Post {
   caption: string;
   id: string;
   createdAt?: number;
+  likes: string[];
 }
 
 export default Post;

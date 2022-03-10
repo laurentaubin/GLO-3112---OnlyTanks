@@ -5,7 +5,6 @@ import MongoDbPostAssembler from "./MongoDbPostAssembler";
 import Pagination from "../../utils/pagination/Pagination";
 import MongoDbQuery from "../../utils/pagination/MongoDbQuery";
 import Paginator from "../../utils/pagination/Paginator";
-import EditPostFields from "../domain/EditPostFields";
 import PostNotFoundException from "../domain/exceptions/PostNotFoundException";
 
 class MongoDbPostRepository implements PostRepository {
@@ -43,8 +42,8 @@ class MongoDbPostRepository implements PostRepository {
     return this.mongoDBPostAssembler.assemblePost(postDto);
   }
 
-  public async update(id: string, editPostFields: EditPostFields): Promise<Post> {
-    const updatedPostDto = (await PostModel.findOneAndUpdate({ id: id }, editPostFields, {
+  public async update(id: string, updatedPost: Post): Promise<Post> {
+    const updatedPostDto = (await PostModel.findOneAndUpdate({ id: id }, updatedPost, {
       new: true
     }).lean()) as unknown as PostDto;
     return this.mongoDBPostAssembler.assemblePost(updatedPostDto);

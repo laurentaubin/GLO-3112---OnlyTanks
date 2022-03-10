@@ -11,7 +11,9 @@ export default class PostAssembler {
       userTags: post.userTags,
       hashtags: post.hashtags,
       author: { username: user.username, imageUrl: user.imageUrl },
-      createdAt: post.createdAt!
+      createdAt: post.createdAt!,
+      isLiked: post.likes?.includes(user.username),
+      numberOfLikes: post.likes?.length
     };
   }
 }
