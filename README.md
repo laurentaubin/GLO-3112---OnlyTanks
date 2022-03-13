@@ -3,8 +3,20 @@
 </h1>
 <p align="center"> 
   <p>Share your tank <b>pictures</b> around the world, <b>follow</b> other tank enthousiasts and <b>much more</b> with OnlyTanks. </p>
-  <p> https://d2w3pepxe2h8ho.cloudfront.net/ </p> 
 </p>
+
+## 🧩 Components
+
+Below is a list of our app components with link to their live versions. To deploy a new version of a component, refer to [DEPLOYMENTS.md](./DEPLOYMENTS.md)
+
+| Component | Environment | Live URL                                                                    |
+|-----------|-------------|-----------------------------------------------------------------------------|
+| Frontend  | Prod        | http://d2w3pepxe2h8ho.cloudfront.net                                        |
+| Frontend  | Lab         | http://d2x5r4wzhp2043.cloudfront.net                                        |
+| Backend   | Prod        | http://onlytanksbackend-env.eba-w3ecpqtz.us-east-1.elasticbeanstalk.com/    |
+| Backend   | Lab         | http://onlytanksbackendlab-env.eba-8qv4up2m.us-east-1.elasticbeanstalk.com/ |
+| MongoDB   | Prod        | https://cloud.mongodb.com/v2/61e19a714dabab391e07e923                       |
+| MongoDB   | Lab         | https://cloud.mongodb.com/v2/62092634038ef03d77df1d69                       |
 
 ## ⚡️ Quickstart
 
