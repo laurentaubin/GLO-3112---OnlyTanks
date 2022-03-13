@@ -12,7 +12,7 @@ import UserFactory from "../../user/service/UserFactory";
 import UserRequest from "../../user/service/UserRequest";
 import { constants } from "../../constants/constants";
 import LoginConfirmation from "../domain/LoginConfirmation";
-import UserResponse from "src/user/service/UserResponse";
+import UserResponse from "../../user/service/UserResponse";
 
 export default class AuthService {
   constructor(

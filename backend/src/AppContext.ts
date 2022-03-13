@@ -26,6 +26,9 @@ import Paginator from "./utils/pagination/Paginator";
 import PostRequestAssembler from "./post/api/PostRequestAssembler";
 import UserRequestAssembler from "./user/api/UserRequestAssembler";
 import EditPostFieldsAssembler from "./post/service/EditPostFieldsAssembler";
+import MongoDbPostNotificationAssembler from "./notifications/infra/MongoDbPostNotificationAssembler";
+import MongoDbPostNotificationRepository from "./notifications/infra/MongoDbPostNotificationRepository";
+import NotificationService from "./notifications/service/NotificationService";
 
 // utils
 const paginator = new Paginator();
@@ -49,12 +52,14 @@ const mongoDbSessionAssembler = new MongoDbSessionAssembler();
 const mongoDbPostAssembler = new MongoPostAssembler();
 const storageReportAssembler = new StorageReportAssembler();
 const editPostFieldsAssembler = new EditPostFieldsAssembler();
+const postNotificationAssembler = new MongoDbPostNotificationAssembler();
 
 // repository
 const postRepository = new MongoDbPostRepository(mongoDbPostAssembler, paginator);
 const userRepository = new MongoDbUserRepository(mongoDbUserAssembler);
 const sessionRepository = new MongoDbSessionRepository(mongoDbSessionAssembler);
 export const fileRepository = new S3FileRepository(storageInformation, storageReportAssembler);
+const postNotificationRepository = new MongoDbPostNotificationRepository(postNotificationAssembler);
 
 //provider
 const googleClient = new OAuth2Client({
@@ -70,6 +75,7 @@ const googleAuthProvider = new GoogleAuthProvider(
 
 const localAuthProvider = new LocalAuthProvider(userRepository, userAssembler, sessionRepository);
 const authProviderSelector = new AuthProviderSelector(localAuthProvider, googleAuthProvider);
+const notificationService = new NotificationService(postNotificationRepository);
 
 // service
 export const postService = new PostService(
@@ -78,6 +84,7 @@ export const postService = new PostService(
   postRepository,
   fileRepository,
   fileAssembler,
+  notificationService,
   userRepository,
   editPostFieldsAssembler,
   sessionRepository

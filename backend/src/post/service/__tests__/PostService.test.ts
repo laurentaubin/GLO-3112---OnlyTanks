@@ -14,6 +14,7 @@ import UserRepository from "../../../user/domain/UserRepository";
 import PostAssembler from "../PostAssembler";
 import EditPostFieldsAssembler from "../EditPostFieldsAssembler";
 import SessionRepository from "../../../authentication/domain/SessionRepository";
+import NotificationService from "src/notifications/service/NotificationService";
 
 describe("PostService", () => {
   const hashTag: string[] = [];
@@ -108,12 +109,16 @@ describe("PostService", () => {
   const mockSessionRepository: SessionRepository = mock<SessionRepository>();
   const sessionRepository = instance(mockSessionRepository);
 
+  const mockNotificationService: NotificationService = mock<NotificationService>();
+  const notificationService = instance(mockNotificationService);
+
   const postService = new PostService(
     postFactory,
     postAssembler,
     postRepository,
     fileRepository,
     fileAssembler,
+    notificationService,
     userRepository,
     editPostFieldsAssembler,
     sessionRepository

@@ -14,6 +14,8 @@ import EditPostFields from "../domain/EditPostFields";
 import EditPostFieldsAssembler from "./EditPostFieldsAssembler";
 import SessionRepository from "../../authentication/domain/SessionRepository";
 import Token from "../../authentication/domain/Token";
+import NotificationService from "../../notifications/service/NotificationService";
+import NotificationType from "../../notifications/domain/NotificationType";
 
 export default class PostService {
   constructor(
@@ -22,6 +24,7 @@ export default class PostService {
     private postRepository: PostRepository,
     private fileRepository: FileRepository,
     private fileAssembler: FileAssembler,
+    private notificationService: NotificationService,
     private userRepository: UserRepository,
     private editPostFieldsAssembler: EditPostFieldsAssembler,
     private sessionRepository: SessionRepository
@@ -84,6 +87,12 @@ export default class PostService {
       const updatedLikes = postToUpdate.likes ? [...postToUpdate.likes, requester.username] : [requester.username];
       const updatedPost = { ...postToUpdate, likes: updatedLikes };
       await this.postRepository.update(postId, updatedPost);
+      this.notificationService.sendPostNotification({
+        postId,
+        to: updatedPost.author,
+        from: requester.username,
+        type: NotificationType.POST_LIKE
+      });
     }
   }
 
