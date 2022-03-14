@@ -3,7 +3,7 @@ import Post from "../domain/Post";
 import User from "../../user/domain/User";
 
 export default class PostAssembler {
-  public assemblePostResponse(post: Post, user: User): PostResponse {
+  public assemblePostResponse(post: Post, user: User, requesterUsername: string): PostResponse {
     return {
       id: post.id,
       imageUrl: post.imageUrl,
@@ -12,7 +12,7 @@ export default class PostAssembler {
       hashtags: post.hashtags,
       author: { username: user.username, imageUrl: user.imageUrl },
       createdAt: post.createdAt!,
-      isLiked: post.likes?.includes(user.username),
+      isLiked: post.likes?.includes(requesterUsername),
       numberOfLikes: post.likes?.length
     };
   }

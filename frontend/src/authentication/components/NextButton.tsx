@@ -3,7 +3,7 @@ import { State } from "../../main/hooks/useAxios";
 import { SpinnerIcon } from "../../main/components/SpinnerIcon";
 import * as React from "react";
 import { LoginValues } from "./login/LoginForm";
-import User from "../../main/domain/User";
+import User from "../../main/domain/user/User";
 import { FormikErrors, FormikTouched } from "formik";
 
 interface Props {

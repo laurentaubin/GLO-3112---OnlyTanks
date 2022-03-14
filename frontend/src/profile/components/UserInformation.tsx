@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { BiEdit } from "react-icons/bi";
-import User from "../../main/domain/User";
+import User from "../../main/domain/user/User";
 import { useAuth } from "../../main/hooks/useAuth";
 import formatTimestamp from "../../main/utils/formatTimestamp";
 import { formatInputs } from "../../main/utils/inputUtils";

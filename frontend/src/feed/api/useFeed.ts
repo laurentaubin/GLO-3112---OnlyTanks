@@ -1,6 +1,6 @@
 import { useAxios } from "../../main/hooks/useAxios";
 import { useEffect, useState } from "react";
-import Post from "../../main/domain/Post";
+import Post from "../../main/domain/post/Post";
 import PostAssembler from "../../main/api/post/PostAssembler";
 
 const useFeed = () => {

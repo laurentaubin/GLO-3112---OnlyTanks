@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { State } from "../../../main/hooks/useAxios";
 import { useSignUp } from "../../api/useSignUp";
 import { FormikField } from "../../../main/components/FormikField";
-import User from "../../../main/domain/User";
+import User from "../../../main/domain/user/User";
 import { setErrors } from "../../utils/setErrors";
 import { FormikPhoneNumberField } from "../../../main/components/FormikPhoneNumberField";
 import { useCookies } from "react-cookie";

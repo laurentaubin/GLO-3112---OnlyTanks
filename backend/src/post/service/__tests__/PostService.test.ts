@@ -14,11 +14,13 @@ import UserRepository from "../../../user/domain/UserRepository";
 import PostAssembler from "../PostAssembler";
 import EditPostFieldsAssembler from "../EditPostFieldsAssembler";
 import SessionRepository from "../../../authentication/domain/SessionRepository";
+import UserPreviewService from "../../../user/service/UserPreviewService";
 import NotificationService from "src/notifications/service/NotificationService";
 
 describe("PostService", () => {
   const hashTag: string[] = [];
 
+  const aToken = "A_TOKEN";
   const anAuthor = "AN_AUTHOR";
   const aPostId = "A_POST_ID";
 
@@ -109,6 +111,9 @@ describe("PostService", () => {
   const mockSessionRepository: SessionRepository = mock<SessionRepository>();
   const sessionRepository = instance(mockSessionRepository);
 
+  const mockUserPreviewService: UserPreviewService = mock<UserPreviewService>();
+  const userPreviewService = instance(mockUserPreviewService);
+
   const mockNotificationService: NotificationService = mock<NotificationService>();
   const notificationService = instance(mockNotificationService);
 
@@ -121,7 +126,8 @@ describe("PostService", () => {
     notificationService,
     userRepository,
     editPostFieldsAssembler,
-    sessionRepository
+    sessionRepository,
+    userPreviewService
   );
 
   describe("when add post", () => {
@@ -150,7 +156,7 @@ describe("PostService", () => {
   describe("get author posts", () => {
     beforeEach(async () => {
       when(mockPostRepository.findByAuthor(anAuthor, pagination)).thenReturn(Promise.resolve(posts));
-      await postService.getAuthorPosts(anAuthor, pagination);
+      await postService.getAuthorPosts(aToken, anAuthor, pagination);
     });
 
     describe("given a author and a pagination", () => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import User from "../../main/domain/User";
+import User from "../../main/domain/user/User";
 import { useAxios } from "../../main/hooks/useAxios";
 import UserAssembler from "./UserAssembler";
 import UserResponse from "./UserResponse";

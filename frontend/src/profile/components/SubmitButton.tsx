@@ -1,7 +1,7 @@
 import { State } from "../../main/hooks/useAxios";
 import { SpinnerIcon } from "../../main/components/SpinnerIcon";
 import * as React from "react";
-import User from "../../main/domain/User";
+import User from "../../main/domain/user/User";
 import { FormikErrors } from "formik";
 import { isFormInvalid } from "../utils/isFormInvalid";
 

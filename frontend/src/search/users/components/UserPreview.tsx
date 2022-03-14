@@ -1,4 +1,4 @@
-import User from "../../../main/domain/User";
+import User from "../../../main/domain/user/User";
 import ProfilePicture from "../../../profile/components/ProfilePicture";
 
 interface Props {

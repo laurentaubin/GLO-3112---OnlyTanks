@@ -1,4 +1,4 @@
-import Post from "../../domain/Post";
+import Post from "../../domain/post/Post";
 import PostResponse from "./PostResponse";
 import dayjs from "dayjs";
 import HashtagsFormatter from "../../utils/HashtagsFormatter";

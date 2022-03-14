@@ -2,7 +2,7 @@ import PostAssembler from "../api/post/PostAssembler";
 import { useAxios } from "./useAxios";
 import PostResponse from "../api/post/PostResponse";
 import { useEffect, useState } from "react";
-import Post from "../domain/Post";
+import Post from "../domain/post/Post";
 import UserTag from "../domain/UserTag";
 
 const useUpdatePost = () => {

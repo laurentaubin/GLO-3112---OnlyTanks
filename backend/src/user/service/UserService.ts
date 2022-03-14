@@ -7,8 +7,10 @@ import UploadProfilePictureRequestBody from "../api/UploadProfilePictureRequestB
 import FileRepository from "../../storage/domain/FileRepository";
 import FileAssembler from "../../storage/service/FileAssembler";
 import File from "../../storage/domain/File";
+import UserPreview from "../domain/UserPreview";
+import UserPreviewService from "./UserPreviewService";
 
-class UserService {
+class UserService implements UserPreviewService {
   constructor(
     private userAssembler: UserAssembler,
     private userRepository: UserRepository,
@@ -40,6 +42,14 @@ class UserService {
     const storageReport = await this.fileRepository.storeImage(file);
 
     await this.userRepository.updateUserPicture(request.username, storageReport.imageUrl);
+  }
+
+  public getUserPreviews(usernames: string[]): Promise<Awaited<UserPreview>[]> {
+    const userPreviews = usernames.map(async (username) => {
+      const user = await this.userRepository.findByUsername(username);
+      return { username: username, imageUrl: user.imageUrl };
+    });
+    return Promise.all(userPreviews);
   }
 }
 

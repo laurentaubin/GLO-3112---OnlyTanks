@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserInformation from "./components/UserInformation";
-import User from "../main/domain/User";
-import Post from "../main/domain/Post";
+import User from "../main/domain/user/User";
+import Post from "../main/domain/post/Post";
 import UserPosts from "./components/UserPosts";
 
 interface Props {

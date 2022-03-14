@@ -78,6 +78,8 @@ const authProviderSelector = new AuthProviderSelector(localAuthProvider, googleA
 const notificationService = new NotificationService(postNotificationRepository);
 
 // service
+
+export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
 export const postService = new PostService(
   postFactory,
   postAssembler,
@@ -87,7 +89,7 @@ export const postService = new PostService(
   notificationService,
   userRepository,
   editPostFieldsAssembler,
-  sessionRepository
+  sessionRepository,
+  userService
 );
-export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
 export const authService = new AuthService(userAssembler, userFactory, userRepository, authProviderSelector, sessionRepository);

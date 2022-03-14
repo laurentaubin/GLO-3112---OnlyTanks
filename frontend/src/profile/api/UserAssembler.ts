@@ -1,6 +1,8 @@
-import User from "../../main/domain/User";
+import User from "../../main/domain/user/User";
 import UserResponse from "./UserResponse";
 import MultipleUsersResponse from "./MultipleUsersResponse";
+import UserPreviewsResponse from "../../main/api/user/UserPreviewsResponse";
+import UserPreview from "../../main/domain/user/UserPreview";
 
 class UserAssembler {
   public assembleToUser(userResponse: UserResponse): User | undefined {
@@ -17,9 +19,9 @@ class UserAssembler {
     }
   }
 
-  public assembleToUsers(UsersResponse: MultipleUsersResponse): User[] {
-    if (UsersResponse) {
-      return UsersResponse.users.map(
+  public assembleToUsers(usersResponse: MultipleUsersResponse): User[] {
+    if (usersResponse) {
+      return usersResponse.users.map(
         (userResponse) =>
           new User(
             userResponse.username,
@@ -31,6 +33,19 @@ class UserAssembler {
             userResponse.createdAt
           )
       );
+    } else {
+      return [];
+    }
+  }
+
+  public assembleToUserPreviews(userPreviewsResponse: UserPreviewsResponse): UserPreview[] {
+    if (userPreviewsResponse) {
+      return userPreviewsResponse.likedBy.map((userPreviewResponse) => {
+        return {
+          username: userPreviewResponse.username,
+          imageUrl: userPreviewResponse.imageUrl
+        };
+      });
     } else {
       return [];
     }

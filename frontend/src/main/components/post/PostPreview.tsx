@@ -1,14 +1,15 @@
 import * as React from "react";
 import { useState } from "react";
-import Post from "../../domain/Post";
+import Post from "../../domain/post/Post";
 import { useRouter } from "next/router";
 import PostCaption from "./PostCaption";
 import PostHeader from "./PostHeader";
 import { PostImage } from "./PostImage";
 import { useAuth } from "../../hooks/useAuth";
 import EditPostModal from "./EditPostModal";
-import PostReaction from "./PostReaction";
 import usePostReaction from "../../hooks/usePostReaction";
+import PostLikesModal from "./likes-modal/PostLikesModal";
+import PostReaction from "./PostReaction";
 
 interface Props {
   post: Post;
@@ -18,6 +19,7 @@ interface Props {
 const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
   const [post, setPost] = useState<Post>(postProp);
   const [editPostModalOpen, setEditPostModalOpen] = useState(false);
+  const [postLikesModalOpen, setPostLikesModalOpen] = useState(false);
   const router = useRouter();
   const { me } = useAuth();
   const [showEntireCaption, setShowEntireCaption] = useState(post.caption.length < 100);
@@ -47,9 +49,14 @@ const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
     !isLiked ? setNumberOfLikes(numberOfLikes + 1) : setNumberOfLikes(numberOfLikes - 1);
   };
 
+  const onSeePostLikesClick = () => {
+    setPostLikesModalOpen(true);
+  };
+
   return (
     <>
       <EditPostModal originalPost={post} open={editPostModalOpen} setOpen={setEditPostModalOpen} onUpdated={onPostUpdated} />
+      {postLikesModalOpen && <PostLikesModal postId={post.id} open={postLikesModalOpen} setOpen={setPostLikesModalOpen} />}
       <div className="mt-5 border border-gray-200 rounded">
         <PostHeader
           isMyPost={me?.username === post.author.username}
@@ -65,7 +72,12 @@ const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
           <PostImage src={post.imageUrl} userTags={post.userTags} />
         </div>
         <section className="my-3 px-3">
-          <PostReaction numberOfLikes={numberOfLikes} isLiked={isLiked} onPostReaction={onPostReaction} />
+          <PostReaction
+            numberOfLikes={numberOfLikes}
+            isLiked={isLiked}
+            onPostReaction={onPostReaction}
+            onLikesClick={onSeePostLikesClick}
+          />
           <div>
             {post.caption && (
               <PostCaption

@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import useUpdateUserInformation from "../api/useUpdateUserInformation";
 import { Form, Formik, useFormikContext } from "formik";
-import User from "../../main/domain/User";
+import User from "../../main/domain/user/User";
 import { State } from "../../main/hooks/useAxios";
 import { AxiosError } from "axios";
 import { formatInputs, normalizeInputs } from "../../main/utils/inputUtils";

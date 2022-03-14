@@ -1,5 +1,5 @@
 import Link from "next/link";
-import User from "../../../main/domain/User";
+import User from "../../../main/domain/user/User";
 import { UsersPreview } from "./UserPreview";
 
 interface Props {

@@ -26,10 +26,11 @@ router.post("/", upload.single("image"), async (req: Request<Record<string, unkn
 
 router.get("/", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
+  const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
   if (req.query.author) {
-    return await getAuthorPosts(req.query.author as string, res, pagination);
+    return await getAuthorPosts(token as string, req.query.author as string, res, pagination);
   }
-  return await getPosts(res, pagination);
+  return await getPosts(token, res, pagination);
 });
 
 router.delete("/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
@@ -44,7 +45,8 @@ router.delete("/:id", async (req: Request<Record<string, unknown>, Record<string
 
 router.get("/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
-    const postsResponse = await postService.getPost(req.params.id as string);
+    const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
+    const postsResponse = await postService.getPost(token as string, req.params.id as string);
     res.status(status.OK).send(postsResponse);
   } catch (e) {
     res.status(status.BAD_REQUEST).send(e.message);
@@ -53,7 +55,8 @@ router.get("/:id", async (req: Request<Record<string, unknown>, Record<string, u
 
 router.put("/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
-    const updatedPostResponse = await postService.editPost(req.params.id as string, req.body as EditPostFieldsRequest);
+    const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
+    const updatedPostResponse = await postService.editPost(token as string, req.params.id as string, req.body as EditPostFieldsRequest);
     res.status(status.OK).send(updatedPostResponse);
   } catch (e) {
     res.status(status.BAD_REQUEST).send(e.message);
@@ -82,18 +85,28 @@ router.post("/:id/unlike", async (req: Request<Record<string, unknown>, Record<s
   }
 });
 
-const getAuthorPosts = async (author: string, res: Response, pagination: Pagination) => {
+router.get("/:id/likes", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
-    const posts = await postService.getAuthorPosts(author, pagination);
+    const postId = req.params.id as string;
+    const userPreviews = await postService.getPostLikes(postId);
+    res.status(status.OK).send({ likedBy: userPreviews, count: userPreviews.length });
+  } catch (e) {
+    res.status(status.BAD_REQUEST).send(e.message);
+  }
+});
+
+const getAuthorPosts = async (token: string, author: string, res: Response, pagination: Pagination) => {
+  try {
+    const posts = await postService.getAuthorPosts(token, author, pagination);
     res.status(status.OK).send(posts);
   } catch (e) {
     res.status(status.NOT_FOUND).send(e.message);
   }
 };
 
-const getPosts = async (res: Response, pagination: Pagination) => {
+const getPosts = async (token: string, res: Response, pagination: Pagination) => {
   try {
-    const postsResponse = await postService.getPosts(pagination);
+    const postsResponse = await postService.getPosts(token, pagination);
     res.status(status.OK).send(postsResponse);
   } catch (e) {
     res.status(status.BAD_REQUEST).send(e.message);

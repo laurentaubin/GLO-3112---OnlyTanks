@@ -1,4 +1,4 @@
-import User from "../domain/User";
+import User from "../domain/user/User";
 
 export const formatInputs = (values: User): User => {
   return {

@@ -1,5 +1,5 @@
 import { LoginValues } from "../components/login/LoginForm";
-import User from "../../main/domain/User";
+import User from "../../main/domain/user/User";
 import { FormikErrors, FormikTouched } from "formik";
 
 export const isFormInvalid = (

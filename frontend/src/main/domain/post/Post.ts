@@ -1,6 +1,6 @@
-import Timestamp from "./Timestamp";
-import UserPreview from "./UserPreview";
-import UserTag from "./UserTag";
+import Timestamp from "../Timestamp";
+import UserPreview from "../user/UserPreview";
+import UserTag from "../UserTag";
 
 interface Post {
   imageUrl: string;
