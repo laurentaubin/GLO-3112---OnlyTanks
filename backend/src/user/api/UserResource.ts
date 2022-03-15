@@ -54,8 +54,8 @@ router.post(
       const uploadProfilePictureRequest: UploadProfilePictureRequestBody =
         uploadProfilePictureRequestAssembler.assembleUploadProfilePictureRequestBody(req as UploadProfilePictureRequest);
 
-      await userService.uploadProfilePicture(uploadProfilePictureRequest);
-      res.status(status.OK).send();
+      const userResponse = await userService.uploadProfilePicture(uploadProfilePictureRequest);
+      res.status(status.OK).send(userResponse);
     } catch (e) {
       res.status(status.BAD_REQUEST).send(e.message);
     }

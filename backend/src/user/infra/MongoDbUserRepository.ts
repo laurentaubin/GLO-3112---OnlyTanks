@@ -47,7 +47,8 @@ export default class MongoDbUserRepository implements UserRepository {
 
     return usersDto.map(this.userAssembler.assembleUser);
   }
-  public async updateUserPicture(username: string, imageUrl: string): Promise<void> {
+
+  public async updateUserPicture(username: string, imageUrl: string): Promise<User> {
     const updatedUserDto = (await UserModel.findOneAndUpdate(
       { username: username },
       { imageUrl: imageUrl },
@@ -59,6 +60,7 @@ export default class MongoDbUserRepository implements UserRepository {
     if (!updatedUserDto) {
       throw new UserNotFoundException();
     }
+    return this.userAssembler.assembleUser(updatedUserDto);
   }
 
   public async updateUserInformation(user: User): Promise<User> {

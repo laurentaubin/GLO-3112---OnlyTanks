@@ -1,5 +1,4 @@
-import { Fragment, useEffect, useRef } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { useEffect, useRef } from "react";
 import useUpdateUserInformation from "../api/useUpdateUserInformation";
 import { Form, Formik, useFormikContext } from "formik";
 import User from "../../main/domain/user/User";
@@ -11,6 +10,7 @@ import { FormikField } from "../../main/components/FormikField";
 import { FormikPhoneNumberField } from "../../main/components/FormikPhoneNumberField";
 import { setErrors } from "../../authentication/utils/setErrors";
 import { SubmitButton } from "./SubmitButton";
+import Modal from "../../main/components/Modal";
 
 interface InternalUserInformationProps {
   updatedUser: User | undefined;
@@ -47,7 +47,7 @@ const InternalUserInformation = ({ updatedUser, state, error, onCloseModal }: In
 
       <FormikPhoneNumberField name="phoneNumber" placeholder="Phone number" isError={!!(formErrors.phoneNumber && touched.phoneNumber)} />
 
-      <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+      <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse justify-between">
         <SubmitButton label={"Save"} formErrors={formErrors} state={state} />
 
         <button
@@ -71,7 +71,6 @@ interface Props {
 }
 
 const EditProfileModal = ({ user, open, setOpen, onUserUpdated }: Props) => {
-  const cancelButtonRef = useRef(null);
   const { updateUserInformation, updatedUser, state, error } = useUpdateUserInformation();
 
   useEffect(() => {
@@ -99,58 +98,19 @@ const EditProfileModal = ({ user, open, setOpen, onUserUpdated }: Props) => {
   };
 
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={onCloseModal}>
-        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
-
-          {/*Centers the modal*/}
-          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true" />
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            enterTo="opacity-100 translate-y-0 sm:scale-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          >
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:mt-0">
-                    <Dialog.Title as="h1" className="text-2xl leading-6 font-medium text-gray">
-                      Edit profile
-                    </Dialog.Title>
-                  </div>
-                </div>
-                <div className="mt-6">
-                  <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={onSubmit}
-                    validateOnBlur={false}
-                    initialStatus={{}}
-                  >
-                    <InternalUserInformation updatedUser={updatedUser} state={state} error={error} onCloseModal={onCloseModal} />
-                  </Formik>
-                </div>
-              </div>
-            </div>
-          </Transition.Child>
-        </div>
-      </Dialog>
-    </Transition.Root>
+    <Modal open={open} setOpen={setOpen} title="Edit profile">
+      <div className="mt-6">
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+          validateOnBlur={false}
+          initialStatus={{}}
+        >
+          <InternalUserInformation updatedUser={updatedUser} state={state} error={error} onCloseModal={onCloseModal} />
+        </Formik>
+      </div>
+    </Modal>
   );
 };
 

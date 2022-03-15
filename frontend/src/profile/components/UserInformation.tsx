@@ -25,7 +25,7 @@ const UserInformation = ({ user, onUserUpdated }: Props) => {
       {editProfileModalOpen && (
         <EditProfileModal open={editProfileModalOpen} setOpen={setEditProfileModalOpen} onUserUpdated={onUserUpdated} user={user} />
       )}
-      <ProfilePicture imageUrl={user.imageUrl} size="10em" />
+      <ProfilePicture isMe={user.username === me?.username} onUserUpdated={onUserUpdated} imageUrl={user.imageUrl} size="10em" />
       <div className="flex flex-row">
         <div className="ml-5">
           <h1 className="text-2xl font-medium">@{user.username}</h1>

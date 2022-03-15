@@ -36,12 +36,14 @@ class UserService implements UserPreviewService {
     return this.userAssembler.assembleMultipleUsersResponse(users);
   }
 
-  public async uploadProfilePicture(request: UploadProfilePictureRequestBody): Promise<void> {
+  public async uploadProfilePicture(request: UploadProfilePictureRequestBody): Promise<UserResponse> {
     const file: File = this.fileAssembler.assembleFile(request.file);
 
     const storageReport = await this.fileRepository.storeImage(file);
 
-    await this.userRepository.updateUserPicture(request.username, storageReport.imageUrl);
+    const user = await this.userRepository.updateUserPicture(request.username, storageReport.imageUrl);
+
+    return this.userAssembler.assembleUserResponse(user);
   }
 
   public getUserPreviews(usernames: string[]): Promise<Awaited<UserPreview>[]> {
