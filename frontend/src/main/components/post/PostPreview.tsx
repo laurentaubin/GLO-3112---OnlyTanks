@@ -8,15 +8,16 @@ import { PostImage } from "./PostImage";
 import { useAuth } from "../../hooks/useAuth";
 import EditPostModal from "./EditPostModal";
 import usePostReaction from "../../hooks/usePostReaction";
+import useDeletePost from "../../../post/api/useDeletePost";
 import PostLikesModal from "./likes-modal/PostLikesModal";
 import PostReaction from "./PostReaction";
 
 interface Props {
   post: Post;
-  onDeletePostClick: () => void;
+  onDeletePost?: () => void;
 }
 
-const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
+const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
   const [post, setPost] = useState<Post>(postProp);
   const [editPostModalOpen, setEditPostModalOpen] = useState(false);
   const [postLikesModalOpen, setPostLikesModalOpen] = useState(false);
@@ -26,6 +27,12 @@ const PostPreview = ({ post: postProp, onDeletePostClick }: Props) => {
   const { likePost, unlikePost } = usePostReaction();
   const [isLiked, setIsLiked] = useState(postProp.isLiked);
   const [numberOfLikes, setNumberOfLikes] = useState(postProp.numberOfLikes);
+  const { deletePost } = useDeletePost();
+
+  const onDeletePostClick = async () => {
+    await deletePost(post.id);
+    onDeletePost && onDeletePost();
+  };
 
   const onShowEntireCaptionClick = () => {
     setShowEntireCaption(!showEntireCaption);

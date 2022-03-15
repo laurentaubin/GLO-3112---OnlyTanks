@@ -11,13 +11,17 @@ import { UsersList } from "../../search/users/components/UsersList";
 const SearchUsers: NextPage = () => {
   const { searchReturnUsers, state } = useSearchUsers();
 
+  const searchUsers = (username: string) => {
+    console.warn(username);
+  };
+
   return (
     <>
       <Head>
         <title>Search • Onlytanks</title>
       </Head>
       <Layout>
-        <SearchPage currentTab={TabTitle.USERS}>
+        <SearchPage currentTab={TabTitle.USERS} search={searchUsers} placeholder="Search users by username">
           {state === State.LOADING ? <SpinnerIcon size={20} /> : <UsersList users={searchReturnUsers} />}
         </SearchPage>
       </Layout>

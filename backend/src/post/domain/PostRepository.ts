@@ -14,6 +14,8 @@ interface PostRepository {
 
   update(id: string, updatedPost: Post): Promise<Post>;
 
+  findByCaption(caption: string, pagination: Pagination): Promise<Post[]>;
+
   deleteAllByUsername(username: string): Promise<void>;
 }
 

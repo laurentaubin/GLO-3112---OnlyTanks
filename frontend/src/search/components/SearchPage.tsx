@@ -23,9 +23,11 @@ const tabs: Tab[] = [
 interface Props {
   currentTab: TabTitle;
   children?: ReactNode;
+  search: (text: string) => void;
+  placeholder: string;
 }
 
-export const SearchPage = ({ currentTab, children }: Props) => {
+export const SearchPage = ({ search, currentTab, children, placeholder }: Props) => {
   const router = useRouter();
 
   const onTabChange = (tab: Tab) => {
@@ -36,7 +38,7 @@ export const SearchPage = ({ currentTab, children }: Props) => {
     <div className="mt-12">
       <SectionTabList tabs={tabs} currentTab={currentTab} onTabChange={onTabChange} />
       <div className="mt-6">
-        <SearchBar />
+        <SearchBar search={search} placeholder={placeholder} />
         {children}
       </div>
     </div>

@@ -12,7 +12,7 @@ const upload = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
-router.post("/", upload.single("image"), async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.post("/posts", upload.single("image"), async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const postRequestBody: PostRequestBody = postRequestAssembler.assemblePostRequestBody(req as PostRequest);
 
@@ -24,7 +24,7 @@ router.post("/", upload.single("image"), async (req: Request<Record<string, unkn
   }
 });
 
-router.get("/", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.get("/feed", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
   const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
   if (req.query.author) {
@@ -33,7 +33,7 @@ router.get("/", async (req: Request<Record<string, unknown>, Record<string, unkn
   return await getPosts(token, res, pagination);
 });
 
-router.delete("/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.delete("/posts/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     await postService.deletePost(req.params.id as string);
 
@@ -43,7 +43,7 @@ router.delete("/:id", async (req: Request<Record<string, unknown>, Record<string
   }
 });
 
-router.get("/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.get("/posts/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
     const postsResponse = await postService.getPost(token as string, req.params.id as string);
@@ -53,7 +53,7 @@ router.get("/:id", async (req: Request<Record<string, unknown>, Record<string, u
   }
 });
 
-router.put("/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.put("/posts/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
     const updatedPostResponse = await postService.editPost(token as string, req.params.id as string, req.body as EditPostFieldsRequest);
@@ -63,7 +63,7 @@ router.put("/:id", async (req: Request<Record<string, unknown>, Record<string, u
   }
 });
 
-router.post("/:id/like", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.post("/posts/:id/like", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
     const postId = req.params.id as string;
@@ -74,12 +74,24 @@ router.post("/:id/like", async (req: Request<Record<string, unknown>, Record<str
   }
 });
 
-router.post("/:id/unlike", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.post("/posts/:id/unlike", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
     const postId = req.params.id as string;
     await postService.unlikePost(token, postId);
     res.status(status.OK).send();
+  } catch (e) {
+    res.status(status.BAD_REQUEST).send(e.message);
+  }
+});
+
+router.get("/posts", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    const caption = req.query.caption as string;
+    const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
+    const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
+    const postsResponse = await postService.findPostsByCaption(token, caption, pagination);
+    res.status(status.OK).send(postsResponse);
   } catch (e) {
     res.status(status.BAD_REQUEST).send(e.message);
   }

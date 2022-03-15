@@ -4,12 +4,10 @@ import usePost from "./api/usePost";
 import PostPreview from "../main/components/post/PostPreview";
 import { State } from "../main/hooks/useAxios";
 import { BiArrowBack } from "react-icons/bi";
-import useDeletePost from "./api/useDeletePost";
 import { SpinnerIcon } from "../main/components/SpinnerIcon";
 import NotFoundPage from "../main/components/NotFoundPage";
 
 const PostPage = () => {
-  const { deletePost } = useDeletePost();
   const router = useRouter();
   const { id } = router.query;
   const { post, getPost, state } = usePost();
@@ -20,19 +18,14 @@ const PostPage = () => {
     }
   }, [id]);
 
-  const onBack = () => {
+  const onGoBack = () => {
     router.back();
-  };
-
-  const onDeletePost = async () => {
-    await deletePost(post.id);
-    onBack();
   };
 
   return (
     <>
       <header className="flex align-middle py-2 border border-gray-200 pl-2 text-gray-500 font-medium">
-        <div className="flex cursor-pointer" onClick={onBack}>
+        <div className="flex cursor-pointer" onClick={onGoBack}>
           <div className="flex items-center hover:text-blue-primary">
             <BiArrowBack size={20} className="flex" />
           </div>
@@ -45,7 +38,7 @@ const PostPage = () => {
           <SpinnerIcon size={32} />
         </div>
       )}
-      {state === State.SUCCESS && <PostPreview onDeletePostClick={onDeletePost} post={post} />}
+      {state === State.SUCCESS && <PostPreview onDeletePost={onGoBack} post={post} />}
     </>
   );
 };

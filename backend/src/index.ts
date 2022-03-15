@@ -32,7 +32,7 @@ app.use("/", healthResource);
 app.use("/", authResource);
 app.use("/", userResource);
 app.use("/", searchResource);
-app.use("/posts", postResource);
+app.use("/", postResource);
 
 app.listen(config.http.port, () => {
   console.log(`server started at http://localhost:${config.http.port}`);

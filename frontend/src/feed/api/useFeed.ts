@@ -18,7 +18,7 @@ const useFeed = () => {
   }, [data]);
 
   const getFeed = async () => {
-    await sendRequest({ url: "/posts", method: "GET" });
+    await sendRequest({ url: "/feed", method: "GET" });
   };
   return { posts, state, getFeed, error };
 };

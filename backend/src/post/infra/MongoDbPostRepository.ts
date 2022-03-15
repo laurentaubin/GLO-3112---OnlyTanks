@@ -58,6 +58,21 @@ class MongoDbPostRepository implements PostRepository {
     return this.mongoDBPostAssembler.assemblePost(updatedPostDto);
   }
 
+  public findByCaption(caption: string, pagination: Pagination): Promise<Post[]> {
+    if (caption) {
+      const query: MongoDbQuery = PostModel.find({
+        caption: {
+          $regex: caption,
+          $options: "i"
+        }
+      })
+        .sort("-createdAt")
+        .lean();
+      return this.fetchPosts(pagination, query);
+    }
+    return Promise.resolve([]);
+  }
+
   private async fetchPosts(pagination: Pagination, query: MongoDbQuery): Promise<Post[]> {
     query = this.paginator.addToQuery(pagination, query);
 
