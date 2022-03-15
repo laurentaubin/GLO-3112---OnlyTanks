@@ -8,9 +8,13 @@ import { useCookies } from "react-cookie";
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [cookies] = useCookies([constants.SESSION_TOKEN_COOKIE]);
   const [loaded, setLoaded] = useState(false);
-  const [isLoggedIn] = useState(!!cookies[constants.SESSION_TOKEN_COOKIE]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    setIsLoggedIn(!!cookies[constants.SESSION_TOKEN_COOKIE]);
+  }, [cookies]);
 
   useEffect(() => {
     if (!isLoggedIn && constants.RESTRICTED_PAGES.includes(router.pathname)) {
