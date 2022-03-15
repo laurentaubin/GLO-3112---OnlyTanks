@@ -31,13 +31,15 @@ const PostHeader = ({
         <PostAuthorInformation username={username} profileImageUrl={profileImageUrl} />
         <div className="flex">
           <div className="text-gray-500 text-sm whitespace-nowrap my-auto">{formatTimestamp(timestamp)}</div>
-          <PostDropdown
-            isMyPost={isMyPost}
-            onSeePostClick={onGoToPostClick}
-            onEditPostClick={onEditPostClick}
-            onDeletePostClick={onDeletePostClick}
-            isSpecificPostPage={isSpecificPostPage}
-          />
+          {isSpecificPostPage && !isMyPost ? null : (
+            <PostDropdown
+              isMyPost={isMyPost}
+              onSeePostClick={onGoToPostClick}
+              onEditPostClick={onEditPostClick}
+              onDeletePostClick={onDeletePostClick}
+              isSpecificPostPage={isSpecificPostPage}
+            />
+          )}
         </div>
       </div>
     </header>
