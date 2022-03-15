@@ -7,6 +7,8 @@ interface SessionRepository {
   exists(token: Token): Promise<boolean>;
 
   findUsernameWithToken(token: Token): Promise<string>;
+
+  delete(username: string): Promise<void>;
 }
 
 export default SessionRepository;

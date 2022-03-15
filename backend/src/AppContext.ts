@@ -92,4 +92,11 @@ export const postService = new PostService(
   sessionRepository,
   userService
 );
-export const authService = new AuthService(userAssembler, userFactory, userRepository, authProviderSelector, sessionRepository);
+export const authService = new AuthService(
+  userAssembler,
+  userFactory,
+  userRepository,
+  authProviderSelector,
+  sessionRepository,
+  postRepository
+);

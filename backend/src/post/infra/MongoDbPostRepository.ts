@@ -6,9 +6,18 @@ import Pagination from "../../utils/pagination/Pagination";
 import MongoDbQuery from "../../utils/pagination/MongoDbQuery";
 import Paginator from "../../utils/pagination/Paginator";
 import PostNotFoundException from "../domain/exceptions/PostNotFoundException";
+import UserNotFoundException from "../../user/domain/exceptions/UserNotFoundException";
 
 class MongoDbPostRepository implements PostRepository {
   constructor(private mongoDBPostAssembler: MongoDbPostAssembler, private paginator: Paginator) {}
+
+  public async deleteAllByUsername(username: string): Promise<void> {
+    try {
+      await PostModel.deleteMany({ author: username });
+    } catch (e) {
+      throw new UserNotFoundException();
+    }
+  }
 
   public async delete(id: string): Promise<void> {
     await PostModel.deleteOne({ id });

@@ -30,12 +30,12 @@ router.post(
   async (req: Request<Record<string, unknown>, Record<string, unknown>, UserRequest>, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(status.BAD_REQUEST).json({ errors: errors.array() });
+      res.status(status.BAD_REQUEST).json({ errors: errors.array() });
     }
 
     const signUpResponse = await authService.signup(req.body, req.header(constants.AUTH_PROVIDER_HEADER) as string);
 
-    return res.status(status.CREATED).setHeader("LOCATION", `/users/${signUpResponse.username}`).json(signUpResponse);
+    res.status(status.CREATED).setHeader("LOCATION", `/users/${signUpResponse.username}`).json(signUpResponse);
   }
 );
 
@@ -43,9 +43,9 @@ router.post("/login", async (req: Request<Record<string, unknown>, Record<string
   const loginRequest: LoginRequest = loginRequestAssembler.assemble(req.body);
   try {
     const loginResponse = await authService.login(loginRequest);
-    return res.status(status.OK).json(loginResponse);
+    res.status(status.OK).json(loginResponse);
   } catch (e) {
-    return handleLoginError(e, res);
+    handleLoginError(e, res);
   }
 });
 
@@ -56,9 +56,18 @@ router.get("/me", async (req: Request<Record<string, unknown>, Record<string, un
   try {
     validateHeaders(authProvider, token);
     const currentUser = await authService.getCurrentUser(authProvider as string, token as string);
-    return res.json(currentUser);
+    res.status(status.OK).json(currentUser);
   } catch (e) {
-    return handleMeError(e, res);
+    handleMeError(e, res);
+  }
+});
+
+router.delete("/:username", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    await authService.deleteUser(req.params.username as string);
+    res.status(status.OK).send();
+  } catch (e) {
+    handleDeleteAccountError(e, res);
   }
 });
 
@@ -77,6 +86,13 @@ const handleMeError = (error: { name: string; message: string }, res: Response) 
     error instanceof MissingTokenHeaderException
   ) {
     return res.status(status.NOT_FOUND).send();
+  }
+  return res.status(status.INTERNAL_SERVER_ERROR).json({ error: { name: error.name, message: error.message } });
+};
+
+const handleDeleteAccountError = (error: { name: string; message: string }, res: Response) => {
+  if (error instanceof UserNotFoundException || error instanceof SessionNotFoundException) {
+    return res.status(status.NOT_FOUND).json({ error: { name: error.name, message: error.message } });
   }
   return res.status(status.INTERNAL_SERVER_ERROR).json({ error: { name: error.name, message: error.message } });
 };

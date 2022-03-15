@@ -9,6 +9,14 @@ export default class MongoDbUserRepository implements UserRepository {
     this.userAssembler = userAssembler;
   }
 
+  public async delete(username: string): Promise<void> {
+    try {
+      await UserModel.deleteOne({ username });
+    } catch (e) {
+      throw new UserNotFoundException();
+    }
+  }
+
   public async save(user: User): Promise<User> {
     const userModel = this.userAssembler.assembleUserDto(user);
     return this.userAssembler.assembleUser(await userModel.save());

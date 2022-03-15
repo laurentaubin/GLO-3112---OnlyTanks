@@ -14,6 +14,8 @@ interface UserRepository {
   updateUserInformation(user: User): Promise<User>;
 
   verifyIfUserExists(username: string): Promise<void>;
+
+  delete(username: string): Promise<void>;
 }
 
 export default UserRepository;

@@ -13,6 +13,8 @@ interface PostRepository {
   findByAuthor(author: string, pagination: Pagination): Promise<Post[]>;
 
   update(id: string, updatedPost: Post): Promise<Post>;
+
+  deleteAllByUsername(username: string): Promise<void>;
 }
 
 export default PostRepository;

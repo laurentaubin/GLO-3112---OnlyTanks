@@ -13,6 +13,7 @@ import UserRequest from "../../user/service/UserRequest";
 import { constants } from "../../constants/constants";
 import LoginConfirmation from "../domain/LoginConfirmation";
 import UserResponse from "../../user/service/UserResponse";
+import PostRepository from "../../post/domain/PostRepository";
 
 export default class AuthService {
   constructor(
@@ -20,8 +21,15 @@ export default class AuthService {
     private userFactory: UserFactory,
     private userRepository: UserRepository,
     private authProviderSelector: AuthProviderSelector,
-    private sessionRepository: SessionRepository
+    private sessionRepository: SessionRepository,
+    private postRepository: PostRepository
   ) {}
+
+  public async deleteUser(username: string): Promise<void> {
+    await this.postRepository.deleteAllByUsername(username);
+    await this.userRepository.delete(username);
+    await this.sessionRepository.delete(username);
+  }
 
   public async signup(userRequest: UserRequest, authProviderName: string, token?: string): Promise<UserLoginResponse> {
     const user = this.userFactory.create(userRequest, constants.default.profilePicture);
