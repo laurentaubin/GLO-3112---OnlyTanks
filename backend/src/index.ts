@@ -11,8 +11,6 @@ const authResource = require("./authentication/api/AuthResource");
 const postResource = require("./post/api/PostResource");
 const searchResource = require("./search/api/SearchResource");
 
-import { limiter } from "./api/RateLimit";
-
 const app = express();
 const config = getConfigForEnvironment();
 
@@ -22,7 +20,6 @@ mongoose.connect(`${config.mongo.connectionString}/${config.mongo.databaseName}?
   useFindAndModify: false
 });
 
-app.use(limiter);
 app.use(express.json());
 app.use(cors());
 

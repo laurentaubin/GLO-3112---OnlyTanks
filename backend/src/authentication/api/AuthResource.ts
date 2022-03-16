@@ -15,6 +15,7 @@ import SessionNotFoundException from "../domain/exceptions/SessionNotFoundExcept
 import MissingAuthProviderHeaderException from "../../middleware/exceptions/MissingAuthProviderHeaderException";
 import MissingTokenHeaderException from "../../middleware/exceptions/MissingTokenHeaderException";
 import { isNotForbiddenUsername } from "./validators/isNotForbiddenUsername";
+import { writeLimiter } from "../../api/RateLimit";
 
 const loginRequestAssembler = new LoginRequestAssembler();
 
@@ -22,6 +23,7 @@ const router = express.Router();
 
 router.post(
   "/signup",
+  writeLimiter,
   body("username").exists().withMessage("The username field is required").custom(isUnusedUsername).custom(isNotForbiddenUsername),
   body("email").isEmail().withMessage("Email is not valid ").custom(isUnusedEmail),
   body("firstName").exists().withMessage("The first name field is required"),
@@ -39,15 +41,19 @@ router.post(
   }
 );
 
-router.post("/login", async (req: Request<Record<string, unknown>, Record<string, unknown>, LoginRequestDto>, res: Response) => {
-  const loginRequest: LoginRequest = loginRequestAssembler.assemble(req.body);
-  try {
-    const loginResponse = await authService.login(loginRequest);
-    res.status(status.OK).json(loginResponse);
-  } catch (e) {
-    handleLoginError(e, res);
+router.post(
+  "/login",
+  writeLimiter,
+  async (req: Request<Record<string, unknown>, Record<string, unknown>, LoginRequestDto>, res: Response) => {
+    const loginRequest: LoginRequest = loginRequestAssembler.assemble(req.body);
+    try {
+      const loginResponse = await authService.login(loginRequest);
+      res.status(status.OK).json(loginResponse);
+    } catch (e) {
+      handleLoginError(e, res);
+    }
   }
-});
+);
 
 router.get("/me", async (req: Request<Record<string, unknown>, Record<string, unknown>, unknown>, res: Response) => {
   const authProvider = req.header(constants.AUTH_PROVIDER_HEADER);

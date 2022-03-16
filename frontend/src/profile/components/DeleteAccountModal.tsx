@@ -39,16 +39,8 @@ const DeleteAccountModal = ({ open, setOpen }: Props) => {
         <p> Are you sure you want to delete your account ?</p>
         <p>This action cannot be undone</p>
         <div className="flex flex-row justify-between">
-          <Button
-            onClick={onCloseModal}
-            text="Cancel"
-            className="bg-blue-primary hover:bg-blue-500 text-white font-bold rounded"
-          />
-          <Button
-            onClick={onSubmit}
-            text="Delete Account"
-            className="bg-red-primary hover:bg-red-600 text-white font-bold rounded"
-          />
+          <Button onClick={onCloseModal} text="Cancel" className="bg-blue-primary hover:bg-blue-500 text-white font-bold rounded" />
+          <Button onClick={onSubmit} text="Delete Account" className="bg-red-primary hover:bg-red-600 text-white font-bold rounded" />
         </div>
       </div>
     </Modal>

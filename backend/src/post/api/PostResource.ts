@@ -6,23 +6,29 @@ import PostRequestBody from "./PostRequestBody";
 import Pagination from "../../utils/pagination/Pagination";
 import EditPostFieldsRequest from "./EditPostFieldsRequest";
 import { constants } from "../../constants/constants";
+import { writeLimiter } from "../../api/RateLimit";
 
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
-router.post("/posts", upload.single("image"), async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
-  try {
-    const postRequestBody: PostRequestBody = postRequestAssembler.assemblePostRequestBody(req as PostRequest);
+router.post(
+  "/posts",
+  writeLimiter,
+  upload.single("image"),
+  async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+    try {
+      const postRequestBody: PostRequestBody = postRequestAssembler.assemblePostRequestBody(req as PostRequest);
 
-    await postService.addPost(postRequestBody);
+      await postService.addPost(postRequestBody);
 
-    res.status(status.CREATED).send();
-  } catch (e) {
-    res.status(status.INTERNAL_SERVER_ERROR).send(e.message);
+      res.status(status.CREATED).send();
+    } catch (e) {
+      res.status(status.INTERNAL_SERVER_ERROR).send(e.message);
+    }
   }
-});
+);
 
 router.get("/feed", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
@@ -53,7 +59,7 @@ router.get("/posts/:id", async (req: Request<Record<string, unknown>, Record<str
   }
 });
 
-router.put("/posts/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.put("/posts/:id", writeLimiter, async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
     const updatedPostResponse = await postService.editPost(token as string, req.params.id as string, req.body as EditPostFieldsRequest);

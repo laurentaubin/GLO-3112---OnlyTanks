@@ -8,6 +8,7 @@ import UserRequest from "../service/UserRequest";
 import { handleUpdateUserInformationException } from "./ExceptionHandler";
 import UploadProfilePictureRequest from "./UploadProfilePictureRequest";
 import UploadProfilePictureRequestBody from "./UploadProfilePictureRequestBody";
+import { writeLimiter } from "../../api/RateLimit";
 
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -26,6 +27,7 @@ router.get("/user/:username", async (req: Request<Record<string, unknown>, Recor
 
 router.put(
   "/user/:username",
+  writeLimiter,
   body("email").isEmail().withMessage("Email is not valid ").custom(isUnusedEmail),
   body("firstName").exists().withMessage("The first name field is required"),
   body("lastName").exists().withMessage("The last name field is required"),
@@ -48,6 +50,7 @@ router.put(
 
 router.post(
   "/user/uploadProfilePicture",
+  writeLimiter,
   upload.single("image"),
   async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
     try {
