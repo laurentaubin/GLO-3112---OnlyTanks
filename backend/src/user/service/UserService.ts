@@ -30,8 +30,8 @@ class UserService implements UserPreviewService {
     return this.userAssembler.assembleUserResponse(updatedUser);
   }
 
-  public async findAll(): Promise<MultipleUsersResponse> {
-    const users = await this.userRepository.findAll();
+  public async findByPartialUsername(startsBy: string): Promise<MultipleUsersResponse> {
+    const users = await this.userRepository.findByPartialUsername(startsBy);
 
     return this.userAssembler.assembleMultipleUsersResponse(users);
   }

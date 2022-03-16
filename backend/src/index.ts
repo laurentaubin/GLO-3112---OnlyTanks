@@ -9,7 +9,6 @@ const healthResource = require("./api/HealthResource");
 const userResource = require("./user/api/UserResource");
 const authResource = require("./authentication/api/AuthResource");
 const postResource = require("./post/api/PostResource");
-const searchResource = require("./search/api/SearchResource");
 
 const app = express();
 const config = getConfigForEnvironment();
@@ -28,7 +27,6 @@ app.use(authMiddleware);
 app.use("/", healthResource);
 app.use("/", authResource);
 app.use("/", userResource);
-app.use("/", searchResource);
 app.use("/", postResource);
 
 app.listen(config.http.port, () => {

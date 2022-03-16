@@ -1,17 +1,22 @@
 import { useAxios } from "../../../main/hooks/useAxios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import UserAssembler from "../../../profile/api/UserAssembler";
 import MultipleUsersResponse from "../../../profile/api/MultipleUsersResponse";
+import User from "../../../main/domain/user/User";
 
 export const useSearchUsers = () => {
   const { data, sendRequest, state, error } = useAxios();
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    const searchUsers = async () => {
-      await sendRequest({ url: "search/users", method: "GET" });
-    };
-    searchUsers();
-  }, []);
+    if (data) {
+      setUsers(UserAssembler.assembleToUsers(data?.data as MultipleUsersResponse));
+    }
+  }, [data]);
 
-  return { searchReturnUsers: UserAssembler.assembleToUsers(data?.data as MultipleUsersResponse), state, error };
+  const searchUsers = async (partialUsername: string) => {
+    await sendRequest({ url: "/users", method: "GET", params: { partialUsername } });
+  };
+
+  return { users, searchUsers, state, error };
 };

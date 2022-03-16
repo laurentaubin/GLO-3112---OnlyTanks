@@ -9,11 +9,7 @@ import { useSearchUsers } from "../../search/users/api/useSearchUsers";
 import { UsersList } from "../../search/users/components/UsersList";
 
 const SearchUsers: NextPage = () => {
-  const { searchReturnUsers, state } = useSearchUsers();
-
-  const searchUsers = (username: string) => {
-    console.warn(username);
-  };
+  const { users, searchUsers, state } = useSearchUsers();
 
   return (
     <>
@@ -22,7 +18,7 @@ const SearchUsers: NextPage = () => {
       </Head>
       <Layout>
         <SearchPage currentTab={TabTitle.USERS} search={searchUsers} placeholder="Search users by username">
-          {state === State.LOADING ? <SpinnerIcon size={20} /> : <UsersList users={searchReturnUsers} />}
+          {state === State.LOADING ? <SpinnerIcon size={20} /> : <UsersList users={users} />}
         </SearchPage>
       </Layout>
     </>

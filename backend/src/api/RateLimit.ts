@@ -8,6 +8,6 @@ export const writeLimiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   handler: (_request, response) =>
     response.status(status.TOO_MANY_REQUEST).json({
-      error: "You sent too many requests. Please wait a while then try again"
+      error: "You sent too many requests. Please wait a while then try again."
     })
 });

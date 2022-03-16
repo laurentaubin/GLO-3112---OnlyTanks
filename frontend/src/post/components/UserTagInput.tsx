@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const UserTagInput = ({ modalPosition, clickPosition, onTagChosen }: Props) => {
-  const { searchReturnUsers } = useSearchUsers();
+  const { users } = useSearchUsers();
 
   return (
     <>
@@ -19,7 +19,7 @@ export const UserTagInput = ({ modalPosition, clickPosition, onTagChosen }: Prop
       >
         <h1 className="font-semibold text-xl">Tag a user</h1>
         <div className=" max-h-64 overflow-y-scroll">
-          {searchReturnUsers.map((user) => (
+          {users.map((user) => (
             <div key={user.username} className="cursor-pointer" onClick={() => onTagChosen(user.username)}>
               <UsersPreview user={user} variant="sm" />
             </div>

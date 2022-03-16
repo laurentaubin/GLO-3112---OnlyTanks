@@ -15,6 +15,16 @@ const upload = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
+router.get("/users", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    const users = await userService.findByPartialUsername(req.query.partialUsername as string);
+
+    res.status(status.OK).json(users);
+  } catch (e) {
+    res.status(status.INTERNAL_SERVER_ERROR).send(e.message);
+  }
+});
+
 router.get("/user/:username", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const username = req.params.username as string;

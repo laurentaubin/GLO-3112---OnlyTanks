@@ -27,7 +27,7 @@ interface Props {
   placeholder: string;
 }
 
-export const SearchPage = ({ search, currentTab, children, placeholder }: Props) => {
+export const SearchPage = ({ currentTab, children, search, placeholder }: Props) => {
   const router = useRouter();
 
   const onTabChange = (tab: Tab) => {

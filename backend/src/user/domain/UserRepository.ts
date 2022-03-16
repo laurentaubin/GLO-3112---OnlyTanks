@@ -9,7 +9,7 @@ interface UserRepository {
 
   findByEmail(email: string): Promise<User>;
 
-  findAll(): Promise<User[]>;
+  findByPartialUsername(partialUsername: string): Promise<User[]>;
 
   updateUserInformation(user: User): Promise<User>;
 
