@@ -1,4 +1,4 @@
-import UserTagsDto from "./UserTagsDto";
+import UserTagsDto from "./dto/UserTagsDto";
 import UserPreviewResponse from "./UserPreviewResponse";
 
 interface PostResponse {

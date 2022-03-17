@@ -1,4 +1,4 @@
-import UserTagsDto from "./UserTagsDto";
+import UserTagsDto from "./dto/UserTagsDto";
 
 interface EditPostFieldsRequest {
   caption: string;

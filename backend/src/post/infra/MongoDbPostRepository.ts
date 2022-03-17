@@ -73,6 +73,16 @@ class MongoDbPostRepository implements PostRepository {
     return Promise.resolve([]);
   }
 
+  public findByHashtags(hashtags: string[], pagination: Pagination): Promise<Post[]> {
+    if (hashtags) {
+      const query: MongoDbQuery = PostModel.find({ hashtags: { $all: hashtags } })
+        .sort("-createdAt")
+        .lean();
+      return this.fetchPosts(pagination, query);
+    }
+    return Promise.resolve([]);
+  }
+
   private async fetchPosts(pagination: Pagination, query: MongoDbQuery): Promise<Post[]> {
     query = this.paginator.addToQuery(pagination, query);
 

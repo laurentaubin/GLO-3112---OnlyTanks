@@ -4,11 +4,11 @@ import { FiSearch } from "react-icons/fi";
 import { useDebouncedCallback } from "use-debounce";
 
 interface Props {
-  search: (text: string) => void;
+  search: (input: string) => void;
   placeholder: string;
 }
 
-export const SearchBar = ({ search, placeholder }: Props) => {
+export const SingleInputSearchBar = ({ search, placeholder }: Props) => {
   const [value, setValue] = useState<string>("");
 
   const onTextChange = (event: ChangeEvent<HTMLInputElement>) => {

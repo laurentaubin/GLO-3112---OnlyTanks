@@ -16,6 +16,8 @@ interface PostRepository {
 
   findByCaption(caption: string, pagination: Pagination): Promise<Post[]>;
 
+  findByHashtags(hashtags: string[], pagination: Pagination): Promise<Post[]>;
+
   deleteAllByUsername(username: string): Promise<void>;
 }
 

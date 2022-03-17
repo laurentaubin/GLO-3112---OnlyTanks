@@ -125,6 +125,17 @@ export default class PostService {
     return postsResponse;
   }
 
+  public async findPostsByHashtags(token: string, hashtags: string[], pagination: Pagination): Promise<PostResponse[]> {
+    const posts = await this.postRepository.findByHashtags(hashtags, pagination);
+    const postsResponse: PostResponse[] = [];
+    for (const post of posts) {
+      const user = await this.userRepository.findByUsername(post.author);
+      const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
+      postsResponse.push(this.postAssembler.assemblePostResponse(post, user, requesterUsername));
+    }
+    return postsResponse;
+  }
+
   public async getPostLikes(id: string): Promise<UserPreview[]> {
     const post = await this.postRepository.findById(id);
     return await this.userPreviewService.getUserPreviews(post.likes);

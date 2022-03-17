@@ -103,6 +103,18 @@ router.get("/posts", async (req: Request<Record<string, unknown>, Record<string,
   }
 });
 
+router.get("/post/hashtags", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
+    const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
+    const posts = await postService.findPostsByHashtags(token, req.query.hashtags as string[], pagination);
+
+    res.status(status.OK).send(posts);
+  } catch (e) {
+    res.status(status.BAD_REQUEST).send(e.message);
+  }
+});
+
 router.get("/:id/likes", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const postId = req.params.id as string;

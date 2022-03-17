@@ -17,7 +17,7 @@ const SearchPosts: NextPage = () => {
         <title>Search • Onlytanks</title>
       </Head>
       <Layout>
-        <SearchPage currentTab={TabTitle.POSTS} search={searchPosts} placeholder="Search posts by caption">
+        <SearchPage currentTab={TabTitle.POSTS} singleInputSearch={searchPosts} placeholder="Search posts by caption">
           {state === State.LOADING ? <LoadingPage /> : <SearchedPosts posts={posts} />}
         </SearchPage>
       </Layout>

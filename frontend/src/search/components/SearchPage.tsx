@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
-import { SearchBar } from "./SearchBar";
+import { SingleInputSearchBar } from "./SingleInputSearchBar";
 import { Tab } from "./SectionTab";
 import { SectionTabList } from "./SectionTabList";
 import TabTitle from "../TabTitle";
+import MultipleInputsSearchBar from "./MultipleInputsSearchBar";
 
 const tabs: Tab[] = [
   {
@@ -22,12 +23,13 @@ const tabs: Tab[] = [
 
 interface Props {
   currentTab: TabTitle;
-  children?: ReactNode;
-  search: (text: string) => void;
   placeholder: string;
+  children?: ReactNode;
+  singleInputSearch?: (input: string) => void;
+  multipleInputsSearch?: (inputs: string[]) => void;
 }
 
-export const SearchPage = ({ currentTab, children, search, placeholder }: Props) => {
+export const SearchPage = ({ currentTab, placeholder, children, singleInputSearch, multipleInputsSearch }: Props) => {
   const router = useRouter();
 
   const onTabChange = (tab: Tab) => {
@@ -38,7 +40,8 @@ export const SearchPage = ({ currentTab, children, search, placeholder }: Props)
     <div className="mt-12">
       <SectionTabList tabs={tabs} currentTab={currentTab} onTabChange={onTabChange} />
       <div className="mt-6">
-        <SearchBar search={search} placeholder={placeholder} />
+        {multipleInputsSearch && <MultipleInputsSearchBar search={multipleInputsSearch} placeholder={placeholder} />}
+        {singleInputSearch && <SingleInputSearchBar search={singleInputSearch} placeholder={placeholder} />}
         {children}
       </div>
     </div>

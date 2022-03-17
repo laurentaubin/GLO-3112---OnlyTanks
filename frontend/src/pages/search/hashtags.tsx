@@ -1,13 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import LoadingPage from "../../main/components/LoadingPage";
+import { State } from "../../main/hooks/useAxios";
 import { Layout } from "../../main/layout/Layout";
 import { SearchPage } from "../../search/components/SearchPage";
+import { useSearchPostsByHashtags } from "../../search/posts/api/useSearchPostsByHashtags";
+import SearchedPosts from "../../search/posts/components/SearchedPosts";
 import TabTitle from "../../search/TabTitle";
 
 const SearchHashtags: NextPage = () => {
-  const search = () => {
-    console.log("search by hashtags");
-  };
+  const { posts, searchPostsByHashtags, state } = useSearchPostsByHashtags();
 
   return (
     <>
@@ -15,7 +17,13 @@ const SearchHashtags: NextPage = () => {
         <title>Search • Onlytanks</title>
       </Head>
       <Layout>
-        <SearchPage currentTab={TabTitle.HASHTAGS} placeholder="Search posts by hashtags" search={search}></SearchPage>
+        <SearchPage
+          currentTab={TabTitle.HASHTAGS}
+          multipleInputsSearch={searchPostsByHashtags}
+          placeholder="Press enter to confirm Hashtag"
+        >
+          {state === State.LOADING ? <LoadingPage /> : <SearchedPosts posts={posts} />}
+        </SearchPage>
       </Layout>
     </>
   );

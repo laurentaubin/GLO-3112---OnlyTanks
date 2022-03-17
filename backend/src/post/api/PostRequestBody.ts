@@ -1,5 +1,5 @@
 import FileRequest from "../../storage/types/FileRequest";
-import UserTagsDto from "./UserTagsDto";
+import UserTagsDto from "./dto/UserTagsDto";
 
 interface PostRequestBody {
   caption: string;
