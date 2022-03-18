@@ -15,7 +15,7 @@ export const useSearchPostsByHashtags = () => {
 
   const searchPostsByHashtags = async (hashtags: string[]) => {
     await sendRequest({
-      url: `/post/hashtags?${hashtags.map((hashtag, idx) => `hashtags[${idx}]=${hashtag}`).join("&")}`,
+      url: `search/posts/hashtags?${hashtags.map((hashtag, idx) => `hashtags[${idx}]=${hashtag}`).join("&")}`,
       method: "GET"
     });
   };

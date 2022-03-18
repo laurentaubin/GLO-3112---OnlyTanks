@@ -33,12 +33,14 @@ router.post(
 router.get("/feed", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
   const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
-  if (req.query.author) {
-    return await getAuthorPosts(token as string, req.query.author as string, res, pagination);
-  }
   return await getPosts(token, res, pagination);
 });
 
+router.get("/posts", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
+  const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
+  return await getAuthorPosts(token as string, req.query.author as string, res, pagination);
+});
 router.delete("/posts/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     await postService.deletePost(req.params.id as string);
@@ -91,7 +93,7 @@ router.post("/posts/:id/unlike", async (req: Request<Record<string, unknown>, Re
   }
 });
 
-router.get("/posts", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.get("/search/posts", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const caption = req.query.caption as string;
     const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
@@ -103,7 +105,7 @@ router.get("/posts", async (req: Request<Record<string, unknown>, Record<string,
   }
 });
 
-router.get("/post/hashtags", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.get("/search/posts/hashtags", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
     const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);

@@ -6,10 +6,10 @@ import TabTitle from "../../search/TabTitle";
 import SearchedPosts from "../../search/posts/components/SearchedPosts";
 import { State } from "../../main/hooks/useAxios";
 import LoadingPage from "../../main/components/LoadingPage";
-import { useSearchPosts } from "../../search/posts/api/useSearchPosts";
+import { useSearchPostsByCaption } from "../../search/posts/api/useSearchPostsByCaption";
 
 const SearchPosts: NextPage = () => {
-  const { posts, searchPosts, state } = useSearchPosts();
+  const { posts, searchPosts, state } = useSearchPostsByCaption();
 
   return (
     <>

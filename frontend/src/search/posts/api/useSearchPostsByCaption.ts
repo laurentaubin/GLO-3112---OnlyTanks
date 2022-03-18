@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import PostAssembler from "../../../main/api/post/PostAssembler";
 import Post from "../../../main/domain/post/Post";
 
-export const useSearchPosts = () => {
+export const useSearchPostsByCaption = () => {
   const { data, sendRequest, state, error } = useAxios();
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -14,7 +14,7 @@ export const useSearchPosts = () => {
   }, [data]);
 
   const searchPosts = async (caption: string) => {
-    await sendRequest({ url: "posts", method: "GET", params: { caption } });
+    await sendRequest({ url: "/search/posts", method: "GET", params: { caption } });
   };
 
   return { posts, state, searchPosts, error };

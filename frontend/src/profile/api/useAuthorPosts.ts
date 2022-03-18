@@ -8,7 +8,7 @@ export const useAuthorPosts = (username: string) => {
   useEffect(() => {
     if (username) {
       const getAuthorPosts = async () => {
-        await sendRequest({ url: "/posts/", method: "GET", params: { author: username } });
+        await sendRequest({ url: "/posts", method: "GET", params: { author: username } });
       };
 
       getAuthorPosts();

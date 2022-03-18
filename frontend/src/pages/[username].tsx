@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { SpinnerIcon } from "../main/components/SpinnerIcon";
 import { State } from "../main/hooks/useAxios";
 import { Layout } from "../main/layout/Layout";
-import { useAuthorPosts } from "../profile/api/usePost";
+import { useAuthorPosts } from "../profile/api/useAuthorPosts";
 import { useUser } from "../main/api/user/useUser";
 import UserProfile from "../profile/UserProfile";
 import NotFoundPage from "../main/components/NotFoundPage";
