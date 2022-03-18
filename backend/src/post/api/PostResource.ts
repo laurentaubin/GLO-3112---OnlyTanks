@@ -115,7 +115,7 @@ router.get("/post/hashtags", async (req: Request<Record<string, unknown>, Record
   }
 });
 
-router.get("/:id/likes", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.get("/posts/:id/likes", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     const postId = req.params.id as string;
     const userPreviews = await postService.getPostLikes(postId);
