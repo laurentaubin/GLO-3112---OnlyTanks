@@ -2,19 +2,19 @@ import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { status } from "../../api/Status";
 import { authService } from "../../AppContext";
-import { isUnusedEmail } from "./validators/isUnusedEmail";
-import { isUnusedUsername } from "./validators/isUnusedUsername";
-import LoginRequest from "../domain/LoginRequest";
-import LoginRequestAssembler from "./LoginRequestAssembler";
-import LoginRequestDto from "./dto/LoginRequestDto";
-import UserNotFoundException from "../../user/domain/exceptions/UserNotFoundException";
 import { constants } from "../../constants/constants";
-import UserRequest from "../../user/service/UserRequest";
-import InvalidTokenException from "../infra/google/exceptions/InvalidTokenException";
-import SessionNotFoundException from "../domain/exceptions/SessionNotFoundException";
 import MissingAuthProviderHeaderException from "../../middleware/exceptions/MissingAuthProviderHeaderException";
 import MissingTokenHeaderException from "../../middleware/exceptions/MissingTokenHeaderException";
+import UserNotFoundException from "../../user/domain/exceptions/UserNotFoundException";
+import SessionNotFoundException from "../domain/exceptions/SessionNotFoundException";
+import LoginRequest from "../domain/LoginRequest";
+import InvalidTokenException from "../infra/google/exceptions/InvalidTokenException";
+import LoginRequestDto from "./dto/LoginRequestDto";
+import SignupRequest from "./dto/SignupRequest";
+import LoginRequestAssembler from "./LoginRequestAssembler";
 import { isNotForbiddenUsername } from "./validators/isNotForbiddenUsername";
+import { isUnusedEmail } from "./validators/isUnusedEmail";
+import { isUnusedUsername } from "./validators/isUnusedUsername";
 import { writeLimiter } from "../../api/RateLimit";
 
 const loginRequestAssembler = new LoginRequestAssembler();
@@ -29,13 +29,13 @@ router.post(
   body("firstName").exists().withMessage("The first name field is required"),
   body("lastName").exists().withMessage("The last name field is required"),
   body("phoneNumber").isMobilePhone("any").withMessage("Phone number is not valid"),
-  async (req: Request<Record<string, unknown>, Record<string, unknown>, UserRequest>, res: Response) => {
+  async (req: Request<Record<string, unknown>, Record<string, unknown>, SignupRequest>, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(status.BAD_REQUEST).json({ errors: errors.array() });
     }
 
-    const signUpResponse = await authService.signup(req.body, req.header(constants.AUTH_PROVIDER_HEADER) as string);
+    const signUpResponse = await authService.signup(req.body);
 
     res.status(status.CREATED).setHeader("LOCATION", `/users/${signUpResponse.username}`).json(signUpResponse);
   }

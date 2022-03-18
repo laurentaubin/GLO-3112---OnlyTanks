@@ -2,15 +2,14 @@ import { isFormInvalid } from "../utils/isFormInvalid";
 import { State } from "../../main/hooks/useAxios";
 import { SpinnerIcon } from "../../main/components/SpinnerIcon";
 import * as React from "react";
-import { LoginValues } from "./login/LoginForm";
 import User from "../../main/domain/user/User";
 import { FormikErrors, FormikTouched } from "formik";
 
 interface Props {
   label: string;
-  formErrors: FormikErrors<LoginValues | User>;
-  touched: FormikTouched<LoginValues | User>;
-  initialValues: LoginValues | User;
+  formErrors: FormikErrors<User>;
+  touched: FormikTouched<User>;
+  initialValues: User;
   state: State;
 }
 

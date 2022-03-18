@@ -6,6 +6,7 @@ import MissingAuthProviderHeaderException from "./exceptions/MissingAuthProvider
 import MissingTokenHeaderException from "./exceptions/MissingTokenHeaderException";
 import { status } from "../api/Status";
 import SessionNotFoundException from "../authentication/domain/exceptions/SessionNotFoundException";
+import InvalidProviderEception from "../authentication/domain/exceptions/InvalidProviderException";
 
 export const authMiddleware = async (
   req: Request<Record<string, unknown>, Record<string, unknown>, unknown>,
@@ -32,6 +33,8 @@ export const authMiddleware = async (
       e instanceof MissingTokenHeaderException
     ) {
       res.status(status.UNAUTHORIZED).json({ name: e.name, message: e.message });
+    } else if (e instanceof InvalidProviderEception) {
+      res.status(status.BAD_REQUEST).json({ name: e.name, message: e.message });
     }
   }
 };

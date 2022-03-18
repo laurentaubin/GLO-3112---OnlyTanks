@@ -37,10 +37,11 @@ export const GoogleLoginButton = () => {
       router.push({
         pathname: "/signup",
         query: {
-          provider: AuthProvider.GOOGLE,
           firstName: profile.givenName,
           lastName: profile.familyName,
-          email: profile.email
+          email: profile.email,
+          authProvider: AuthProvider.GOOGLE,
+          token: googleData.tokenId
         }
       });
     }

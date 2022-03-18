@@ -2,36 +2,38 @@ import { AxiosError, AxiosResponse } from "axios";
 import { Form, Formik, useFormikContext } from "formik";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { useCookies } from "react-cookie";
 import * as Yup from "yup";
-import { State } from "../../../main/hooks/useAxios";
-import { useSignUp } from "../../api/useSignUp";
+import { constants } from "../../../constants/constants";
 import { FormikField } from "../../../main/components/FormikField";
 import User from "../../../main/domain/user/User";
 import { setErrors } from "../../utils/setErrors";
 import { FormikPhoneNumberField } from "../../../main/components/FormikPhoneNumberField";
-import { useCookies } from "react-cookie";
-import AuthProvider from "../../domain/AuthProvider";
-import { constants } from "../../../constants/constants";
+import { State } from "../../../main/hooks/useAxios";
 import { normalizeInputs } from "../../../main/utils/inputUtils";
+import { useSignUp } from "../../api/useSignUp";
+import AuthProvider from "../../domain/AuthProvider";
 import { NextButton } from "../NextButton";
 
 interface InternalSignUpFormProps {
   data: AxiosResponse | undefined;
   state: State;
   error: AxiosError | undefined;
-  provider: string | string[] | undefined;
+  authProvider: AuthProvider;
+  token: string;
 }
 
-const InternalSignUpForm = ({ data, state, error, provider }: InternalSignUpFormProps) => {
+const InternalSignUpForm = ({ state, error, authProvider, token }: InternalSignUpFormProps) => {
   const { values, errors: formErrors, touched, setErrors: setFormErrors, initialValues } = useFormikContext<User>();
 
-  const router = useRouter();
   const [, setCookie] = useCookies([constants.AUTH_PROVIDER_COOKIE, constants.SESSION_TOKEN_COOKIE]);
+
+  const router = useRouter();
 
   useEffect(() => {
     switch (state) {
       case State.SUCCESS:
-        setCookies(data?.data.token);
+        setCookies(authProvider, token);
         router.push({ pathname: "/signup/picture", query: { username: values.username } });
         break;
 
@@ -41,8 +43,8 @@ const InternalSignUpForm = ({ data, state, error, provider }: InternalSignUpForm
     }
   }, [router, state]);
 
-  const setCookies = (token: string) => {
-    setCookie(constants.AUTH_PROVIDER_COOKIE, provider ? provider : AuthProvider.LOCAL, { maxAge: constants.SESSION_TOKEN_TTL });
+  const setCookies = (authProvider: AuthProvider, token: string) => {
+    setCookie(constants.AUTH_PROVIDER_COOKIE, authProvider, { maxAge: constants.SESSION_TOKEN_TTL });
     setCookie(constants.SESSION_TOKEN_COOKIE, token, { maxAge: constants.SESSION_TOKEN_TTL });
   };
 
@@ -66,7 +68,7 @@ const InternalSignUpForm = ({ data, state, error, provider }: InternalSignUpForm
 export const SignUpForm = () => {
   const { data, state, signUpUser, error } = useSignUp();
   const router = useRouter();
-  const { provider, firstName, lastName, email } = router.query;
+  const { firstName, lastName, email, authProvider, token } = router.query;
 
   const initialValues: User = {
     username: "",
@@ -88,7 +90,7 @@ export const SignUpForm = () => {
 
   const onSubmit = async (values: User) => {
     const normalizedInputs = normalizeInputs(values);
-    await signUpUser(normalizedInputs);
+    await signUpUser(normalizedInputs, authProvider as AuthProvider, token as string);
   };
 
   return (
@@ -100,7 +102,7 @@ export const SignUpForm = () => {
         validateOnBlur={false}
         initialStatus={{}}
       >
-        <InternalSignUpForm data={data} state={state} error={error} provider={provider} />
+        <InternalSignUpForm data={data} state={state} error={error} authProvider={authProvider as AuthProvider} token={token as string} />
       </Formik>
     </div>
   );

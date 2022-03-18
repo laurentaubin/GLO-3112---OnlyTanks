@@ -11,7 +11,6 @@ export interface Config {
   };
 
   google: {
-    enabled: boolean;
     clientId: string;
   };
 }

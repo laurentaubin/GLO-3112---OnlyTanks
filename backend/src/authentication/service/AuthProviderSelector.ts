@@ -1,17 +1,17 @@
 import AuthProvider from "../domain/AuthProvider";
+import InvalidProviderEception from "../domain/exceptions/InvalidProviderException";
 import Provider from "../domain/Provider";
 
 export default class AuthProviderSelector {
-  constructor(private localAuthProvider: AuthProvider, private googleAuthProvider: AuthProvider) {}
+  constructor(private googleAuthProvider: AuthProvider) {}
 
   select(provider: Provider): AuthProvider {
     switch (provider) {
-      case Provider.GOOGLE: {
+      case Provider.GOOGLE:
         return this.googleAuthProvider;
-      }
-      default: {
-        return this.localAuthProvider;
-      }
+
+      default:
+        throw new InvalidProviderEception(provider);
     }
   }
 }

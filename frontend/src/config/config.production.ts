@@ -6,7 +6,6 @@ export const productionConfig: Config = {
   },
 
   google: {
-    enabled: false,
-    clientId: `${process.env.GOOGLE_CLIENT_ID}`
+    clientId: "794809492112-tgqmg3qvf8c3cq5m68103sk3veg4b08j.apps.googleusercontent.com"
   }
 };

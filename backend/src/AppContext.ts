@@ -1,34 +1,33 @@
-import AuthService from "./authentication/service/AuthService";
-import MongoDbUserAssembler from "./user/infra/MongoDbUserAssembler";
-import MongoDbUserRepository from "./user/infra/MongoDbUserRepository";
-import UserAssembler from "./user/service/UserAssembler";
-import UserService from "./user/service/UserService";
-import PostFactory from "./post/service/PostFactory";
-import PostAssembler from "./post/service/PostAssembler";
-import MongoPostAssembler from "./post/infra/MongoDbPostAssembler";
-import MongoDbPostRepository from "./post/infra/MongoDbPostRepository";
-import S3StorageConfiguration from "./storage/infra/S3StorageConfiguration";
-import GoogleAuthProvider from "./authentication/infra/google/GoogleAuthProvider";
-import LocalAuthProvider from "./authentication/infra/local/LocalAuthProvider";
-import AuthProviderSelector from "./authentication/service/AuthProviderSelector";
 import { OAuth2Client } from "google-auth-library";
-import { getConfigForEnvironment } from "./config";
+import GoogleAuthProvider from "./authentication/infra/google/GoogleAuthProvider";
 import MongoDbSessionAssembler from "./authentication/infra/MongoDbSessionAssembler";
 import MongoDbSessionRepository from "./authentication/infra/MongoDbSessionRepository";
-import S3FileRepository from "./storage/infra/S3FileRepository";
-import PostService from "./post/service/PostService";
-import StorageReportAssembler from "./storage/infra/StorageReportAssembler";
-import FileAssembler from "./storage/service/FileAssembler";
-import UserFactory from "./user/service/UserFactory";
-import UploadProfilePictureRequestAssembler from "./user/api/UploadProfilePictureRequestAssembler";
-import PaginationFactory from "./utils/pagination/PaginationFactory";
-import Paginator from "./utils/pagination/Paginator";
-import PostRequestAssembler from "./post/api/PostRequestAssembler";
-import UserRequestAssembler from "./user/api/UserRequestAssembler";
-import EditPostFieldsAssembler from "./post/service/EditPostFieldsAssembler";
+import AuthProviderSelector from "./authentication/service/AuthProviderSelector";
+import AuthService from "./authentication/service/AuthService";
+import { getConfigForEnvironment } from "./config";
 import MongoDbPostNotificationAssembler from "./notifications/infra/MongoDbPostNotificationAssembler";
 import MongoDbPostNotificationRepository from "./notifications/infra/MongoDbPostNotificationRepository";
 import NotificationService from "./notifications/service/NotificationService";
+import PostRequestAssembler from "./post/api/PostRequestAssembler";
+import MongoPostAssembler from "./post/infra/MongoDbPostAssembler";
+import MongoDbPostRepository from "./post/infra/MongoDbPostRepository";
+import EditPostFieldsAssembler from "./post/service/EditPostFieldsAssembler";
+import PostAssembler from "./post/service/PostAssembler";
+import PostFactory from "./post/service/PostFactory";
+import PostService from "./post/service/PostService";
+import S3FileRepository from "./storage/infra/S3FileRepository";
+import S3StorageConfiguration from "./storage/infra/S3StorageConfiguration";
+import StorageReportAssembler from "./storage/infra/StorageReportAssembler";
+import FileAssembler from "./storage/service/FileAssembler";
+import UploadProfilePictureRequestAssembler from "./user/api/UploadProfilePictureRequestAssembler";
+import UserRequestAssembler from "./user/api/UserRequestAssembler";
+import MongoDbUserAssembler from "./user/infra/MongoDbUserAssembler";
+import MongoDbUserRepository from "./user/infra/MongoDbUserRepository";
+import UserAssembler from "./user/service/UserAssembler";
+import UserFactory from "./user/service/UserFactory";
+import UserService from "./user/service/UserService";
+import PaginationFactory from "./utils/pagination/PaginationFactory";
+import Paginator from "./utils/pagination/Paginator";
 
 // utils
 const paginator = new Paginator();
@@ -73,8 +72,7 @@ const googleAuthProvider = new GoogleAuthProvider(
   sessionRepository
 );
 
-const localAuthProvider = new LocalAuthProvider(userRepository, userAssembler, sessionRepository);
-const authProviderSelector = new AuthProviderSelector(localAuthProvider, googleAuthProvider);
+const authProviderSelector = new AuthProviderSelector(googleAuthProvider);
 const notificationService = new NotificationService(postNotificationRepository);
 
 // service
