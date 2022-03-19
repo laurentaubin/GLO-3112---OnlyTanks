@@ -89,6 +89,15 @@ After running the app with Docker, the frontend will be served at `http://localh
 
 See [STACK.md](./STACK.md)
 
+## 🍻 Prod break counter
+
+- Laurent: 0
+- Julien: 0
+- Fran: 0
+- Phil: 1
+- Max: 1
+- Toma: 0
+
 
 ## ⭐️ Contributors
 
