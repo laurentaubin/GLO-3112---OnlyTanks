@@ -6,6 +6,6 @@ export const productionConfig: Config = {
   },
 
   google: {
-    clientId: "794809492112-tgqmg3qvf8c3cq5m68103sk3veg4b08j.apps.googleusercontent.com"
+    clientId: "794809492112-oackn6ovsc6hqeqlt7a6g9u1kg1t3trh.apps.googleusercontent.com"
   }
 };
