@@ -41,6 +41,7 @@ router.get("/posts", async (req: Request<Record<string, unknown>, Record<string,
   const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
   return await getAuthorPosts(token as string, req.query.author as string, res, pagination);
 });
+
 router.delete("/posts/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
     await postService.deletePost(req.params.id as string);

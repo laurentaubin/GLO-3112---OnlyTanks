@@ -3,6 +3,7 @@ import { useState } from "react";
 import { getConfigForEnvironment } from "../../config";
 import { useCookies } from "react-cookie";
 import { constants } from "../../constants/constants";
+import * as Sentry from "@sentry/react";
 
 const config = getConfigForEnvironment();
 
@@ -25,6 +26,7 @@ export const useAxios = () => {
   const sendRequest = async (params: AxiosRequestConfig) => {
     setState(State.LOADING);
     try {
+      Sentry.captureMessage(JSON.stringify({ url: params.url, method: params.method }));
       const result = await axios.request({
         ...params,
         // TODO Find a way to set attribute name dynamically
@@ -39,7 +41,7 @@ export const useAxios = () => {
       setData(result);
       setState(State.SUCCESS);
     } catch (err: any) {
-      setError(err);
+      Sentry.captureException(err);
       setState(State.ERROR);
     }
   };

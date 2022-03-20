@@ -4,6 +4,15 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { constants } from "../constants/constants";
 import { useCookies } from "react-cookie";
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";
+
+Sentry.init({
+  dsn: "https://ac1cb2f22baf4ef681774d36bf616ee1@o1116604.ingest.sentry.io/6150126",
+  integrations: [new BrowserTracing()],
+
+  tracesSampleRate: 1.0
+});
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [cookies] = useCookies([constants.SESSION_TOKEN_COOKIE]);
@@ -24,7 +33,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     setLoaded(true);
   }, [isLoggedIn, router, loaded, cookies]);
 
-  return loaded && <Component {...pageProps} />;
+  return (
+    loaded && (
+      <Sentry.ErrorBoundary>
+        <Component {...pageProps} />;
+      </Sentry.ErrorBoundary>
+    )
+  );
 };
 
 export default MyApp;

@@ -19,10 +19,12 @@ Below is a list of completed features for the second release. Since we had some 
 | Search other users                      | Allow users to search for other users by username                                                     | ✅           |
 | Search posts by caption                 | Allow users to search for posts by their captions                                                     | ✅           |
 | Search posts by tags                    | Allow users to search for posts containing given tags                                                 | ✅           |
+| Frontend monitoring                     | Every API call and error is logged using Sentry                                                       | ✅           |
 | **Release 3 features**                  |                                                                                                       |              |
 | Like posts                              | Allow users like posts                                                                                | ✅           |
 | Display users who liked a post          | Display a list of all users who liked a given post                                                    | ✅           |
-| Notify users when their posts are liked | Send a notification in real time to a post author when the post is liked                              | ⏳           |
+| Notify users when their posts are liked | Send a notification in real time to a post author when the post is liked                              |⏳ 
+        |
 
 ## Navigating the app
 
@@ -65,6 +67,13 @@ Search results are matched based on if the whole query is present in a post's ca
 ##### Search by tags
 
 To search posts by tags, simply click on the `Hashtags` tab in the search menu or navigate to `/search/hashtags`. To add a tag to your query, start typing and press `Enter` when done typing the tag. Posts with the given tag should then appear on the screen. Is it also possible to add multiple tags to the query. Doing so would return posts containing all tags entered in the search bar.
+
+##### Frontend monitoring
+Sentry is used for the frontend monitoring. Every API calls and errors are being logged. As you can see on the image, basic API calls are logged by display the called URL and the HTTP method used. Errors are logged by logging the entire error and context.
+
+IMPORTANT: Some ad blockers can block Sentry's API calls. If you see blocked Sentry's calls in your network tab, disable your adblock and reload the app (https://github.com/getsentry/sentry-javascript/issues/2916) 
+
+<img width="1773" alt="image" src="https://user-images.githubusercontent.com/46379340/159184015-177578c4-c22b-4bd0-b28d-0c8f22b8eda4.png">
 
 ## Unimplemented features
 
