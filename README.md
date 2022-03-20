@@ -10,7 +10,7 @@
 Below is a list of our app components with link to their live versions. To deploy a new version of a component, refer to [DEPLOYMENTS.md](./DEPLOYMENTS.md)
 
 | Component | Environment | Live URL                                                                    |
-|-----------|-------------|-----------------------------------------------------------------------------|
+| --------- | ----------- | --------------------------------------------------------------------------- |
 | Frontend  | Prod        | http://d2w3pepxe2h8ho.cloudfront.net                                        |
 | Frontend  | Lab         | http://d2x5r4wzhp2043.cloudfront.net                                        |
 | Backend   | Prod        | http://onlytanksbackend-env.eba-w3ecpqtz.us-east-1.elasticbeanstalk.com/    |
@@ -35,17 +35,15 @@ docker-compose -f docker-compose.yml up --build
 
 After running the app with Docker, the frontend will be served at `http://localhost:3000` and the backend at `http://localhost:8080`.
 
-
 ## 📆 Releases
 
 Every release will have its own documentation where we will list completed features, our design choices and any other information related to the given release.
 
 | Release   | Documentation file                  |
-|-----------|-------------------------------------|
+| --------- | ----------------------------------- |
 | Release 1 | [RELEASE_1.md](./RELEASE_1.md)      |
-| Release 2 | [RELEASE_2.md](./RELEASE_2.md) TODO |
+| Release 2 | [RELEASE_2.md](./RELEASE_2.md)      |
 | Release 3 | [RELEASE_3.md](./RELEASE_3.md) TODO |
-
 
 ## 👨‍🔬 Local development
 
@@ -59,15 +57,14 @@ A dev Docker setup is available using `docker-compose.dev.yaml` and the projects
 
 With [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed:
 
-
 ```bash
 #install frontend dependencies
 cd frontend
-yarn 
+yarn
 
 #install backend dependencies
 cd backend
-yarn 
+yarn
 
 # build the app
 docker-compose -f docker-compose.dev.yaml build
@@ -84,7 +81,6 @@ For the production docker, only building and running `docker-compose.yml` is nec
 
 After running the app with Docker, the frontend will be served at `http://localhost:3000` and the backend at `http://localhost:8080`.
 
-
 ## 🧰 Development Stack
 
 See [STACK.md](./STACK.md)
@@ -97,7 +93,6 @@ See [STACK.md](./STACK.md)
 - Phil: 1
 - Max: 1
 - Toma: 0
-
 
 ## ⭐️ Contributors
 
