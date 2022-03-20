@@ -33,7 +33,7 @@ export const SearchPage = ({ currentTab, placeholder, children, singleInputSearc
   const router = useRouter();
 
   const onTabChange = (tab: Tab) => {
-    router.push(`/${tab.href}`);
+    router.push(tab.href);
   };
 
   return (

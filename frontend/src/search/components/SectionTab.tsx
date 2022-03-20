@@ -1,6 +1,6 @@
 export interface Tab {
   title: string;
-  href?: string;
+  href: string;
 }
 
 interface SectionTabProps {
