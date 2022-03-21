@@ -1,4 +1,4 @@
-import { userRequestAssembler, uploadProfilePictureRequestAssembler, userService } from "../../AppContext";
+import { userRequestAssembler, uploadProfilePictureRequestAssembler, userService, logger } from "../../AppContext";
 import { status } from "../../api/Status";
 import express, { Response, Request } from "express";
 import { body, validationResult } from "express-validator";
@@ -17,10 +17,11 @@ const router = express.Router();
 
 router.get("/users", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
+    logger.logRouteInfo(req);
     const users = await userService.findByPartialUsername(req.query.partialUsername as string);
-
     res.status(status.OK).json(users);
   } catch (e) {
+    logger.logRouteError(req, e);
     res.status(status.INTERNAL_SERVER_ERROR).send(e.message);
   }
 });
@@ -43,6 +44,7 @@ router.put(
   body("lastName").exists().withMessage("The last name field is required"),
   body("phoneNumber").isMobilePhone("any").withMessage("Phone number is not valid"),
   async (req: Request<Record<string, unknown>, Record<string, unknown>, UserDto>, res: Response) => {
+    logger.logRouteInfo(req);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(status.BAD_REQUEST).json({ errors: errors.array() });
@@ -53,6 +55,7 @@ router.put(
       const userResponse = await userService.updateUserInformation(userRequest);
       return res.status(status.OK).json(userResponse);
     } catch (e) {
+      logger.logRouteError(req, e);
       return handleUpdateUserInformationException(e, res);
     }
   }
@@ -64,12 +67,14 @@ router.post(
   upload.single("image"),
   async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
     try {
+      logger.logRouteInfo(req);
       const uploadProfilePictureRequest: UploadProfilePictureRequestBody =
         uploadProfilePictureRequestAssembler.assembleUploadProfilePictureRequestBody(req as UploadProfilePictureRequest);
 
       const userResponse = await userService.uploadProfilePicture(uploadProfilePictureRequest);
       res.status(status.OK).send(userResponse);
     } catch (e) {
+      logger.logRouteError(req, e);
       res.status(status.BAD_REQUEST).send(e.message);
     }
   }

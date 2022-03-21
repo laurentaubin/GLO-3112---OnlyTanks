@@ -1,8 +1,10 @@
 import express, { Request, Response } from "express";
+import { logger } from "../AppContext";
 
 const router = express.Router();
 
-router.get("/", (_: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+router.get("/", (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  logger.logRouteInfo(req);
   res.send("Healthy");
 });
 

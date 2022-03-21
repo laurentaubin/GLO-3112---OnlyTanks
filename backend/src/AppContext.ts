@@ -28,6 +28,7 @@ import UserFactory from "./user/service/UserFactory";
 import UserService from "./user/service/UserService";
 import PaginationFactory from "./utils/pagination/PaginationFactory";
 import Paginator from "./utils/pagination/Paginator";
+import Logger from "./logger/Logger";
 
 // utils
 const paginator = new Paginator();
@@ -76,7 +77,6 @@ const authProviderSelector = new AuthProviderSelector(googleAuthProvider);
 const notificationService = new NotificationService(postNotificationRepository);
 
 // service
-
 export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
 export const postService = new PostService(
   postFactory,
@@ -98,3 +98,6 @@ export const authService = new AuthService(
   sessionRepository,
   postRepository
 );
+
+//logger
+export const logger = new Logger();

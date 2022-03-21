@@ -18,7 +18,7 @@ Below is a list of our app components with link to their live versions. To deplo
 | MongoDB   | Prod        | https://cloud.mongodb.com/v2/61e19a714dabab391e07e923                       |
 | MongoDB   | Lab         | https://cloud.mongodb.com/v2/62092634038ef03d77df1d69|
 
-⚠️ WARNING: Some ad blockers can block Sentry's API calls (for frontend monitoring). If you see blocked Sentry's calls in your network tab and as a temporary workaround, you can disable your adblock and reload the app (https://github.com/getsentry/sentry-javascript/issues/2916).
+⚠️ WARNING: Some ad blockers can block Sentry's API calls (for frontend monitoring). If you see blocked Sentry's calls in your network tab, you can disable your adblock, as a temporary workaround, and reload the app (https://github.com/getsentry/sentry-javascript/issues/2916).
 
 ## ⚡️ Quickstart
 

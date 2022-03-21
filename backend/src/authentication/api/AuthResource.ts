@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { status } from "../../api/Status";
-import { authService } from "../../AppContext";
+import { authService, logger } from "../../AppContext";
 import { constants } from "../../constants/constants";
 import MissingAuthProviderHeaderException from "../../middleware/exceptions/MissingAuthProviderHeaderException";
 import MissingTokenHeaderException from "../../middleware/exceptions/MissingTokenHeaderException";
@@ -30,6 +30,7 @@ router.post(
   body("lastName").exists().withMessage("The last name field is required"),
   body("phoneNumber").isMobilePhone("any").withMessage("Phone number is not valid"),
   async (req: Request<Record<string, unknown>, Record<string, unknown>, SignupRequest>, res: Response) => {
+    logger.logRouteInfo(req);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(status.BAD_REQUEST).json({ errors: errors.array() });
@@ -45,11 +46,13 @@ router.post(
   "/login",
   writeLimiter,
   async (req: Request<Record<string, unknown>, Record<string, unknown>, LoginRequestDto>, res: Response) => {
+    logger.logRouteInfo(req);
     const loginRequest: LoginRequest = loginRequestAssembler.assemble(req.body);
     try {
       const loginResponse = await authService.login(loginRequest);
       res.status(status.OK).json(loginResponse);
     } catch (e) {
+      logger.logRouteError(req, e);
       handleLoginError(e, res);
     }
   }
@@ -60,19 +63,23 @@ router.get("/me", async (req: Request<Record<string, unknown>, Record<string, un
   const token = req.header(constants.AUTH_TOKEN_HEADER);
 
   try {
+    logger.logRouteInfo(req);
     validateHeaders(authProvider, token);
     const currentUser = await authService.getCurrentUser(authProvider as string, token as string);
     res.status(status.OK).json(currentUser);
   } catch (e) {
+    logger.logRouteError(req, e);
     handleMeError(e, res);
   }
 });
 
 router.delete("/:username", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {
+    logger.logRouteInfo(req);
     await authService.deleteUser(req.params.username as string);
     res.status(status.OK).send();
   } catch (e) {
+    logger.logRouteError(req, e);
     handleDeleteAccountError(e, res);
   }
 });

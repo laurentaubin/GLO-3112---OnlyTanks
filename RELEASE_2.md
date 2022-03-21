@@ -20,6 +20,7 @@ Below is a list of completed features for the second release. Since we had some 
 | Search posts by caption                 | Allow users to search for posts by their captions                                                     | ✅           |
 | Search posts by tags                    | Allow users to search for posts containing given tags                                                 | ✅           |
 | Frontend monitoring                     | Every API call and error is logged using Sentry                                                       | ✅           |
+| Backend monitoring                      | Every API call and error is logged using CloudWatch                                                   | ✅           |
 | **Release 3 features**                  |                                                                                                       |              |
 | Like posts                              | Allow users like posts                                                                                | ✅           |
 | Display users who liked a post          | Display a list of all users who liked a given post                                                    | ✅           |
@@ -74,6 +75,10 @@ Sentry is used for the frontend monitoring. Every API calls and errors are being
 IMPORTANT: Some ad blockers can block Sentry's API calls. If you see blocked Sentry's calls in your network tab, disable your adblock and reload the app (https://github.com/getsentry/sentry-javascript/issues/2916) 
 
 <img width="1773" alt="image" src="https://user-images.githubusercontent.com/46379340/159184015-177578c4-c22b-4bd0-b28d-0c8f22b8eda4.png">
+
+##### Backend monitoring
+CloudWatch is used for the backend monitoring. Every API calls made to the backend is logged. There is a logger at every endpoint of the application, and in every `catch` if there is an error.
+
 
 ## Unimplemented features
 
