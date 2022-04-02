@@ -16,6 +16,7 @@ import EditPostFieldsAssembler from "../EditPostFieldsAssembler";
 import SessionRepository from "../../../authentication/domain/SessionRepository";
 import UserPreviewService from "../../../user/service/UserPreviewService";
 import NotificationService from "src/notifications/service/NotificationService";
+import CommentFactory from "../CommentFactory";
 
 describe("PostService", () => {
   const hashTag: string[] = [];
@@ -71,7 +72,8 @@ describe("PostService", () => {
     id: "id",
     userTags: [],
     createdAt: 45367432,
-    likes: []
+    likes: [],
+    comments: []
   };
 
   const anotherPost: Post = {
@@ -82,10 +84,14 @@ describe("PostService", () => {
     id: "ididid",
     userTags: [],
     createdAt: 534632567,
-    likes: []
+    likes: [],
+    comments: []
   };
 
   const posts: Post[] = [post, anotherPost];
+
+  const mockCommentFactory: CommentFactory = mock<CommentFactory>();
+  const commentFactory = instance(mockCommentFactory);
 
   const mockPostFactory: PostFactory = mock<PostFactory>();
   const postFactory = instance(mockPostFactory);
@@ -118,6 +124,7 @@ describe("PostService", () => {
   const notificationService = instance(mockNotificationService);
 
   const postService = new PostService(
+    commentFactory,
     postFactory,
     postAssembler,
     postRepository,

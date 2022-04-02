@@ -1,14 +1,16 @@
+import Comment from "./Comment";
 import UserTag from "./UserTag";
 
 interface Post {
-  imageUrl: string;
-  hashtags: string[];
-  userTags: UserTag[];
   author: string;
   caption: string;
+  comments: Comment[];
+  hashtags: string[];
   id: string;
-  createdAt?: number;
+  imageUrl: string;
   likes: string[];
+  userTags: UserTag[];
+  createdAt?: number;
 }
 
 export default Post;

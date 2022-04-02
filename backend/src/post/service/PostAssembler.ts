@@ -8,12 +8,14 @@ export default class PostAssembler {
       id: post.id,
       imageUrl: post.imageUrl,
       caption: post.caption,
+      comments: post.comments,
       userTags: post.userTags,
       hashtags: post.hashtags,
       author: { username: user.username, imageUrl: user.imageUrl },
       createdAt: post.createdAt!,
       isLiked: post.likes?.includes(requesterUsername),
-      numberOfLikes: post.likes?.length
+      numberOfLikes: post.likes?.length,
+      numberOfComments: post.comments?.length
     };
   }
 }

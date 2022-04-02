@@ -25,7 +25,8 @@ describe("MongoDbPostRepository", () => {
     id: "id",
     userTags: [],
     createdAt: 3214567546523456,
-    likes: []
+    likes: [],
+    comments: []
   };
 
   describe("save", () => {

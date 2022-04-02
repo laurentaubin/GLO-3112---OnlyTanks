@@ -29,6 +29,7 @@ import UserService from "./user/service/UserService";
 import PaginationFactory from "./utils/pagination/PaginationFactory";
 import Paginator from "./utils/pagination/Paginator";
 import Logger from "./logger/Logger";
+import CommentFactory from "./post/service/CommentFactory";
 
 // utils
 const paginator = new Paginator();
@@ -45,6 +46,7 @@ export const uploadProfilePictureRequestAssembler = new UploadProfilePictureRequ
 export const postRequestAssembler = new PostRequestAssembler();
 const fileAssembler = new FileAssembler();
 const postFactory = new PostFactory();
+const commentFactory = new CommentFactory();
 const postAssembler = new PostAssembler();
 const userAssembler = new UserAssembler();
 const mongoDbUserAssembler = new MongoDbUserAssembler();
@@ -79,6 +81,7 @@ const notificationService = new NotificationService(postNotificationRepository);
 // service
 export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
 export const postService = new PostService(
+  commentFactory,
   postFactory,
   postAssembler,
   postRepository,

@@ -7,6 +7,7 @@ import Pagination from "../../utils/pagination/Pagination";
 import EditPostFieldsRequest from "./EditPostFieldsRequest";
 import { constants } from "../../constants/constants";
 import { writeLimiter } from "../../api/RateLimit";
+import PostCommentRequest from "./PostCommentRequest";
 
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -91,6 +92,23 @@ router.post("/posts/:id/like", async (req: Request<Record<string, unknown>, Reco
     res.status(status.BAD_REQUEST).send(e.message);
   }
 });
+
+router.post(
+  "/posts/:id/comment",
+  async (req: Request<Record<string, unknown>, Record<string, unknown>, PostCommentRequest>, res: Response) => {
+    try {
+      logger.logRouteInfo(req);
+      const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
+      const postId = req.params.id as string;
+      const postCommentRequest = req.body;
+      const post = await postService.commentPost(token, postId, postCommentRequest);
+      res.status(status.OK).send(post);
+    } catch (e) {
+      logger.logRouteError(req, e);
+      res.status(status.BAD_REQUEST).send(e.message);
+    }
+  }
+);
 
 router.post("/posts/:id/unlike", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   try {

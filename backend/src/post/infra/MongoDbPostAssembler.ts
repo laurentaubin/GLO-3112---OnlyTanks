@@ -10,12 +10,14 @@ class MongoDbPostAssembler {
       userTags: post.userTags,
       hashtags: post.hashtags,
       id: post.id,
-      likes: post.likes ?? []
+      likes: post.likes ?? [],
+      comments: post.comments ?? []
     });
   }
 
   public assemblePost(postDto: PostDto): Post {
     const userTags = postDto.userTags ? postDto.userTags.map((tag) => ({ ...tag })) : [];
+    const comments = postDto.comments ? postDto.comments.map((comment) => ({ ...comment })) : [];
 
     return {
       imageUrl: postDto.imageUrl,
@@ -25,7 +27,8 @@ class MongoDbPostAssembler {
       userTags: userTags,
       hashtags: postDto.hashtags,
       id: postDto.id,
-      likes: postDto.likes
+      likes: postDto.likes,
+      comments: comments
     };
   }
 }

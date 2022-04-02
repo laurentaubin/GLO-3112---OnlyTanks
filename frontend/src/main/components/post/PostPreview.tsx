@@ -11,6 +11,8 @@ import usePostReaction from "../../hooks/usePostReaction";
 import useDeletePost from "../../../post/api/useDeletePost";
 import PostLikesModal from "./likes-modal/PostLikesModal";
 import PostReaction from "./PostReaction";
+import { CommentInput } from "./PostComment";
+import usePostComment from "../../hooks/usePostComment";
 
 interface Props {
   post: Post;
@@ -25,6 +27,7 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
   const { me } = useAuth();
   const [showEntireCaption, setShowEntireCaption] = useState(post.caption.length < 100);
   const { likePost, unlikePost } = usePostReaction();
+  const { commentPost, updatedPost } = usePostComment();
   const [isLiked, setIsLiked] = useState(postProp.isLiked);
   const [numberOfLikes, setNumberOfLikes] = useState(postProp.numberOfLikes);
   const { deletePost } = useDeletePost();
@@ -54,6 +57,13 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
     isLiked ? await unlikePost(post.id) : await likePost(post.id);
     setIsLiked(!isLiked);
     !isLiked ? setNumberOfLikes(numberOfLikes + 1) : setNumberOfLikes(numberOfLikes - 1);
+  };
+
+  const onPostComment = async (comment: string) => {
+    await commentPost(post.id, { comment: comment });
+    if (updatedPost) {
+      setPost(updatedPost);
+    }
   };
 
   const onSeePostLikesClick = () => {
@@ -102,6 +112,7 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
               ))}
             </div>
           </div>
+          <CommentInput postComment={onPostComment} placeholder="Add a comment..." />
         </section>
       </div>
     </>

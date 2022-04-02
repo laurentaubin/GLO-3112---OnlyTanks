@@ -18,9 +18,13 @@ import UserPreviewService from "../../user/service/UserPreviewService";
 import UserPreview from "../../user/domain/UserPreview";
 import NotificationService from "../../notifications/service/NotificationService";
 import NotificationType from "../../notifications/domain/NotificationType";
+import Comment from "../domain/Comment";
+import CommentFactory from "./CommentFactory";
+import PostCommentRequest from "../api/PostCommentRequest";
 
 export default class PostService {
   constructor(
+    private commentFactory: CommentFactory,
     private postFactory: PostFactory,
     private postAssembler: PostAssembler,
     private postRepository: PostRepository,
@@ -112,6 +116,25 @@ export default class PostService {
       const updatedPost = { ...postToUpdate, likes: updatedLikes };
       await this.postRepository.update(postId, updatedPost);
     }
+  }
+
+  public async commentPost(token: string, postId: string, postCommentRequest: PostCommentRequest): Promise<PostResponse> {
+    const requester = await this.findRequester(token);
+    const postToUpdate = await this.postRepository.findById(postId);
+    const postAuthor = await this.userRepository.findByUsername(postToUpdate.author);
+    const comment: Comment = this.commentFactory.create(requester.username, postCommentRequest);
+
+    const updatedComments = [...postToUpdate.comments, comment];
+    const updatedPost = await this.postRepository.update(postId, { ...postToUpdate, comments: updatedComments });
+
+    this.notificationService.sendPostNotification({
+      postId,
+      to: updatedPost.author,
+      from: requester.username,
+      type: NotificationType.POST_COMMENT
+    });
+
+    return this.postAssembler.assemblePostResponse(updatedPost, postAuthor, requester.username);
   }
 
   public async findPostsByCaption(token: string, caption: string, pagination: Pagination): Promise<PostResponse[]> {

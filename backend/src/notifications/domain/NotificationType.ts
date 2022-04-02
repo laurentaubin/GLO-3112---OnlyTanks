@@ -1,4 +1,5 @@
 enum NotificationType {
+  POST_COMMENT,
   POST_LIKE
 }
 

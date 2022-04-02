@@ -8,6 +8,17 @@ class UserTagDto {
   public position: [number, number];
 }
 
+class CommentDto {
+  @prop({ type: String, required: true })
+  public id: string;
+
+  @prop({ type: String, required: true })
+  public author: string;
+
+  @prop({ type: String, required: true })
+  public comment: string;
+}
+
 @modelOptions({ schemaOptions: { collection: "posts", timestamps: { createdAt: true, updatedAt: false } } })
 export class PostDto {
   @prop({ type: String, required: true })
@@ -30,6 +41,9 @@ export class PostDto {
 
   @prop({ type: [String], required: true })
   public likes: string[];
+
+  @prop({ type: () => CommentDto })
+  public comments: CommentDto[];
 
   @prop({ type: Number })
   public createdAt: number;
