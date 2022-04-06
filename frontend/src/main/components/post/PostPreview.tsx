@@ -1,6 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
-import Post from "../../domain/post/Post";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import PostCaption from "./PostCaption";
 import PostHeader from "./PostHeader";
@@ -11,8 +10,13 @@ import usePostReaction from "../../hooks/usePostReaction";
 import useDeletePost from "../../../post/api/useDeletePost";
 import PostLikesModal from "./likes-modal/PostLikesModal";
 import PostReaction from "./PostReaction";
-import { CommentInput } from "./PostComment";
-import usePostComment from "../../hooks/usePostComment";
+import { CommentInput } from "./CommentInput";
+import NumberOfComments from "./NumberOfComments";
+import useCommentOnPost from "../../hooks/useCommentOnPost";
+import Post from "../../domain/post/Post";
+import PostComments from "./PostComments";
+import usePostComments from "../../hooks/usePostComments";
+import { State } from "../../hooks/useAxios";
 
 interface Props {
   post: Post;
@@ -27,10 +31,28 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
   const { me } = useAuth();
   const [showEntireCaption, setShowEntireCaption] = useState(post.caption.length < 100);
   const { likePost, unlikePost } = usePostReaction();
-  const { commentPost, updatedPost } = usePostComment();
+  const { commentPost, state } = useCommentOnPost();
   const [isLiked, setIsLiked] = useState(postProp.isLiked);
   const [numberOfLikes, setNumberOfLikes] = useState(postProp.numberOfLikes);
   const { deletePost } = useDeletePost();
+  const [numberOfComments, setNumberOfComments] = useState(postProp.numberOfComments);
+  const { comments, getPostComments } = usePostComments(postProp.id);
+
+  const isSpecificPostPage = router.pathname.includes("/posts");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (isSpecificPostPage) {
+      getPostComments();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (state === State.SUCCESS) {
+      setNumberOfComments(numberOfComments + 1);
+      getPostComments();
+    }
+  }, [state]);
 
   const onDeletePostClick = async () => {
     await deletePost(post.id);
@@ -61,9 +83,6 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
 
   const onPostComment = async (comment: string) => {
     await commentPost(post.id, { comment: comment });
-    if (updatedPost) {
-      setPost(updatedPost);
-    }
   };
 
   const onSeePostLikesClick = () => {
@@ -83,7 +102,7 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
           onGoToPostClick={onGoToPostClick}
           onEditPostClick={onEditPostClick}
           onDeletePostClick={onDeletePostClick}
-          isSpecificPostPage={router.pathname.includes("/posts")}
+          isSpecificPostPage={isSpecificPostPage}
         />
         <div className="flex justify-center">
           <PostImage src={post.imageUrl} userTags={post.userTags} />
@@ -112,6 +131,15 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
               ))}
             </div>
           </div>
+          {!isSpecificPostPage ? (
+            <NumberOfComments numberOfComments={numberOfComments} postId={post.id} />
+          ) : (
+            <>
+              <hr />
+              <PostComments comments={comments} />
+            </>
+          )}
+
           <CommentInput postComment={onPostComment} placeholder="Add a comment..." />
         </section>
       </div>

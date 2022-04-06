@@ -16,7 +16,8 @@ import EditPostFieldsAssembler from "../EditPostFieldsAssembler";
 import SessionRepository from "../../../authentication/domain/SessionRepository";
 import UserPreviewService from "../../../user/service/UserPreviewService";
 import NotificationService from "src/notifications/service/NotificationService";
-import CommentFactory from "../CommentFactory";
+import CommentFactory from "../../domain/CommentFactory";
+import CommentService from "../../../user/service/CommentService";
 
 describe("PostService", () => {
   const hashTag: string[] = [];
@@ -123,6 +124,9 @@ describe("PostService", () => {
   const mockNotificationService: NotificationService = mock<NotificationService>();
   const notificationService = instance(mockNotificationService);
 
+  const mockCommentService: CommentService = mock<CommentService>();
+  const commentService = instance(mockCommentService);
+
   const postService = new PostService(
     commentFactory,
     postFactory,
@@ -134,7 +138,8 @@ describe("PostService", () => {
     userRepository,
     editPostFieldsAssembler,
     sessionRepository,
-    userPreviewService
+    userPreviewService,
+    commentService
   );
 
   describe("when add post", () => {

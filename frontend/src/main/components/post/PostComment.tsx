@@ -1,44 +1,28 @@
-import { ChangeEvent, KeyboardEvent } from "react";
-import { useState } from "react";
-import { FiSend } from "react-icons/fi";
+import Link from "next/link";
+import Comment from "../../domain/Comment";
+import formatTimestamp from "../../utils/formatTimestamp";
 
 interface Props {
-  postComment: (comment: string) => void;
-  placeholder: string;
+  comment: Comment;
 }
 
-export const CommentInput = ({ postComment, placeholder }: Props) => {
-  const [value, setValue] = useState<string>("");
-
-  const onTextChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
-  const onClick = () => {
-    if (value) {
-      postComment(value);
-    }
-  };
-
-  const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (value && event.key === "Enter") {
-      postComment(value);
-    }
-  };
-
+const PostComment = ({ comment }: Props) => {
   return (
-    <div className={["mb-2 mt-2 flex flex-row rounded-xl border bg-white px-2"].join(" ")}>
-      <input
-        autoFocus
-        value={value}
-        onKeyDown={onKeyDown}
-        onChange={onTextChange}
-        placeholder={placeholder}
-        className="w-full p-2 outline-none"
-      />
-      <button onClick={onClick}>
-        <FiSend className="my-auto" size={24} />
-      </button>
+    <div className="flex flex-row items-center pb-3 justify-between">
+      <div className="flex flex-row items-center">
+        <Link key={comment.author.username} href={`/${comment.author.username}`} passHref>
+          <img className="rounded-full w-12 h-12 hover:cursor-pointer border border-gray-300" src={comment.author.imageUrl} alt="" />
+        </Link>
+        <div className="flex flex-col">
+          <Link key={comment.author.username} href={`/${comment.author.username}`} passHref>
+            <span className="hover:cursor-pointer hover:underline font-bold text-sm pl-2">@{comment.author.username}</span>
+          </Link>
+          <span className="text-sm pl-2">{comment.comment}</span>
+        </div>
+      </div>
+      <span className="text-gray-500 text-sm whitespace-nowrap my-auto">{formatTimestamp(comment.timestamp)}</span>
     </div>
   );
 };
+
+export default PostComment;

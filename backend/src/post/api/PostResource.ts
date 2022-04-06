@@ -163,6 +163,18 @@ router.get("/posts/:id/likes", async (req: Request<Record<string, unknown>, Reco
   }
 });
 
+router.get("/posts/:id/comments", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    logger.logRouteInfo(req);
+    const postId = req.params.id as string;
+    const comments = await postService.getPostComments(postId);
+    res.status(status.OK).send({ comments: comments, count: comments.length });
+  } catch (e) {
+    logger.logRouteError(req, e);
+    res.status(status.BAD_REQUEST).send(e.message);
+  }
+});
+
 const getAuthorPosts = async (token: string, author: string, res: Response, pagination: Pagination) => {
   try {
     const posts = await postService.getAuthorPosts(token, author, pagination);

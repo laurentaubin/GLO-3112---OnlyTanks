@@ -17,6 +17,9 @@ class CommentDto {
 
   @prop({ type: String, required: true })
   public comment: string;
+
+  @prop({ type: Number, required: true })
+  public createdAt: number;
 }
 
 @modelOptions({ schemaOptions: { collection: "posts", timestamps: { createdAt: true, updatedAt: false } } })

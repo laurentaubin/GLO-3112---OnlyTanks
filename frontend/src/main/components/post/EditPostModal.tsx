@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { ChosenPicture } from "../../../post/components/ChosenPicture";
 import HashtagInput from "../../../post/components/HashtagInput";
-import Post from "../../domain/post/Post";
 import UserTag from "../../domain/UserTag";
 import useUpdatePost from "../../hooks/useUpdatePost";
 import HashtagsFormatter from "../../utils/HashtagsFormatter";
 import InputWithLabel from "../InputWithLabel";
 import Modal from "../Modal";
+import Post from "../../domain/post/Post";
 
 interface Props {
   originalPost: Post;

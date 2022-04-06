@@ -17,7 +17,7 @@ class PostAssembler {
       imageUrl: postResponse.imageUrl,
       userTags: userTags,
       hashtags: HashtagsFormatter.addHashtagSymbol(postResponse.hashtags),
-      comments: postResponse.comments,
+      numberOfComments: postResponse.numberOfComments,
       isLiked: postResponse.isLiked,
       numberOfLikes: postResponse.numberOfLikes
     };

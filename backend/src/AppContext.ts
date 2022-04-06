@@ -29,7 +29,8 @@ import UserService from "./user/service/UserService";
 import PaginationFactory from "./utils/pagination/PaginationFactory";
 import Paginator from "./utils/pagination/Paginator";
 import Logger from "./logger/Logger";
-import CommentFactory from "./post/service/CommentFactory";
+import CommentFactory from "./post/domain/CommentFactory";
+import CommentService from "./user/service/CommentService";
 
 // utils
 const paginator = new Paginator();
@@ -80,6 +81,8 @@ const notificationService = new NotificationService(postNotificationRepository);
 
 // service
 export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
+export const commentService = new CommentService(userRepository);
+
 export const postService = new PostService(
   commentFactory,
   postFactory,
@@ -91,7 +94,8 @@ export const postService = new PostService(
   userRepository,
   editPostFieldsAssembler,
   sessionRepository,
-  userService
+  userService,
+  commentService
 );
 export const authService = new AuthService(
   userAssembler,

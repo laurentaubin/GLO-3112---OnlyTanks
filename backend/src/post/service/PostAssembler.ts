@@ -8,7 +8,6 @@ export default class PostAssembler {
       id: post.id,
       imageUrl: post.imageUrl,
       caption: post.caption,
-      comments: post.comments,
       userTags: post.userTags,
       hashtags: post.hashtags,
       author: { username: user.username, imageUrl: user.imageUrl },

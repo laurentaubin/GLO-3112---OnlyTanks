@@ -1,26 +1,21 @@
+import UserPreviewResponse from "../user/UserPreviewResponse";
+
 interface UserTag {
   username: string;
   position: [number, number];
-}
-
-interface Comment {
-  id: string;
-  postId: string;
-  author: string;
-  comment: string;
 }
 
 interface PostResponse {
   imageUrl: string;
   id: string;
   caption: string;
-  comments: Comment[];
   hashtags: string[];
   userTags?: UserTag[];
-  author: { username: string; imageUrl: string };
+  author: UserPreviewResponse;
   createdAt: number;
   isLiked: boolean;
   numberOfLikes: number;
+  numberOfComments: number;
 }
 
 export default PostResponse;

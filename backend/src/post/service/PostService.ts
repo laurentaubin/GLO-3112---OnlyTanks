@@ -6,7 +6,6 @@ import FileAssembler from "../../storage/service/FileAssembler";
 import FileRepository from "../../storage/domain/FileRepository";
 import UserRepository from "../../user/domain/UserRepository";
 import Pagination from "../../utils/pagination/Pagination";
-import PostResponse from "../api/PostResponse";
 import PostAssembler from "./PostAssembler";
 import User from "../../user/domain/User";
 import EditPostFieldsRequest from "../api/EditPostFieldsRequest";
@@ -19,8 +18,11 @@ import UserPreview from "../../user/domain/UserPreview";
 import NotificationService from "../../notifications/service/NotificationService";
 import NotificationType from "../../notifications/domain/NotificationType";
 import Comment from "../domain/Comment";
-import CommentFactory from "./CommentFactory";
+import CommentFactory from "../domain/CommentFactory";
 import PostCommentRequest from "../api/PostCommentRequest";
+import PostResponse from "../api/PostResponse";
+import CommentResponse from "../api/CommentResponse";
+import CommentService from "../../user/service/CommentService";
 
 export default class PostService {
   constructor(
@@ -34,16 +36,14 @@ export default class PostService {
     private userRepository: UserRepository,
     private editPostFieldsAssembler: EditPostFieldsAssembler,
     private sessionRepository: SessionRepository,
-    private userPreviewService: UserPreviewService
+    private userPreviewService: UserPreviewService,
+    private commentService: CommentService
   ) {}
 
   public async addPost(postRequest: PostRequestBody) {
     const file = this.fileAssembler.assembleFile(postRequest.file);
-
     const storageReport = await this.fileRepository.storeImage(file);
-
     const post: Post = this.postFactory.create(postRequest, storageReport.imageUrl);
-
     await this.postRepository.save(post);
   }
 
@@ -161,7 +161,12 @@ export default class PostService {
 
   public async getPostLikes(id: string): Promise<UserPreview[]> {
     const post = await this.postRepository.findById(id);
-    return await this.userPreviewService.getUserPreviews(post.likes);
+    return this.userPreviewService.getUserPreviews(post.likes);
+  }
+
+  public async getPostComments(id: string): Promise<CommentResponse[]> {
+    const post = await this.postRepository.findById(id);
+    return this.commentService.getCommentsAuthorPreviews(post.comments);
   }
 
   private findRequester = async (token: string): Promise<User> => {
