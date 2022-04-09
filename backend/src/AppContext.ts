@@ -1,14 +1,22 @@
 import { OAuth2Client } from "google-auth-library";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import GoogleAuthProvider from "./authentication/infra/google/GoogleAuthProvider";
 import MongoDbSessionAssembler from "./authentication/infra/MongoDbSessionAssembler";
 import MongoDbSessionRepository from "./authentication/infra/MongoDbSessionRepository";
 import AuthProviderSelector from "./authentication/service/AuthProviderSelector";
 import AuthService from "./authentication/service/AuthService";
 import { getConfigForEnvironment } from "./config";
+import Logger from "./logger/Logger";
 import MongoDbPostNotificationAssembler from "./notifications/infra/MongoDbPostNotificationAssembler";
 import MongoDbPostNotificationRepository from "./notifications/infra/MongoDbPostNotificationRepository";
 import NotificationService from "./notifications/service/NotificationService";
+import PostNotificationMessageAssembler from "./notifications/ws/PostNotificationMessageAssembler";
+import ServerToClientEvents from "./notifications/ws/ServerToClientEvents";
+import WebsocketNotificationIssuer from "./notifications/ws/WebsocketNotificationIssuer";
 import PostRequestAssembler from "./post/api/PostRequestAssembler";
+import CommentFactory from "./post/domain/CommentFactory";
 import MongoPostAssembler from "./post/infra/MongoDbPostAssembler";
 import MongoDbPostRepository from "./post/infra/MongoDbPostRepository";
 import EditPostFieldsAssembler from "./post/service/EditPostFieldsAssembler";
@@ -23,15 +31,16 @@ import UploadProfilePictureRequestAssembler from "./user/api/UploadProfilePictur
 import UserRequestAssembler from "./user/api/UserRequestAssembler";
 import MongoDbUserAssembler from "./user/infra/MongoDbUserAssembler";
 import MongoDbUserRepository from "./user/infra/MongoDbUserRepository";
+import CommentService from "./user/service/CommentService";
 import UserAssembler from "./user/service/UserAssembler";
 import UserFactory from "./user/service/UserFactory";
 import UserService from "./user/service/UserService";
 import PaginationFactory from "./utils/pagination/PaginationFactory";
 import Paginator from "./utils/pagination/Paginator";
-import Logger from "./logger/Logger";
-import CommentFactory from "./post/domain/CommentFactory";
-import CommentService from "./user/service/CommentService";
 
+const express = require("express");
+
+const config = getConfigForEnvironment();
 // utils
 const paginator = new Paginator();
 
@@ -56,6 +65,7 @@ const mongoDbPostAssembler = new MongoPostAssembler();
 const storageReportAssembler = new StorageReportAssembler();
 const editPostFieldsAssembler = new EditPostFieldsAssembler();
 const postNotificationAssembler = new MongoDbPostNotificationAssembler();
+const postNotificationMessageAssembler = new PostNotificationMessageAssembler();
 
 // repository
 const postRepository = new MongoDbPostRepository(mongoDbPostAssembler, paginator);
@@ -66,7 +76,7 @@ const postNotificationRepository = new MongoDbPostNotificationRepository(postNot
 
 //provider
 const googleClient = new OAuth2Client({
-  clientId: `${getConfigForEnvironment().google.clientId}`
+  clientId: `${config.google.clientId}`
 });
 
 const googleAuthProvider = new GoogleAuthProvider(
@@ -77,9 +87,28 @@ const googleAuthProvider = new GoogleAuthProvider(
 );
 
 const authProviderSelector = new AuthProviderSelector(googleAuthProvider);
-const notificationService = new NotificationService(postNotificationRepository);
+
+// http server
+export const app = express();
+
+const httpServer = createServer(app);
+httpServer.listen(config.http.port, () => {
+  console.log(`server started at http://localhost:${config.http.port}`);
+});
+
+// websockets
+const io = new Server<DefaultEventsMap, ServerToClientEvents, DefaultEventsMap, unknown>(httpServer, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+// notifications
+export const notificationIssuer = new WebsocketNotificationIssuer(io, postNotificationMessageAssembler);
 
 // service
+const notificationService = new NotificationService(postNotificationRepository, notificationIssuer);
 export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
 export const commentService = new CommentService(userRepository);
 

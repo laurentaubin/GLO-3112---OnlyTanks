@@ -1,12 +1,15 @@
 import PostNotificationRepository from "../domain/PostNotificationRepository";
 import PostNotification from "../domain/PostNotification";
+import NotificationIssuer from "../domain/NotificationIssuer";
 
 class NotificationService {
-  constructor(private notificationRepository: PostNotificationRepository) {}
+  constructor(private notificationRepository: PostNotificationRepository, private notificationIssuer: NotificationIssuer) {}
 
   public sendPostNotification(notification: PostNotification): void {
+    if (notification.from === notification.to) return;
+
     this.notificationRepository.save(notification);
-    // TODO notifIssuer.issue
+    this.notificationIssuer.issue(notification);
   }
 }
 

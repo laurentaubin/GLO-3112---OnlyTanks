@@ -1,5 +1,6 @@
 import { getConfigForEnvironment } from "./config";
 import { authMiddleware } from "./middleware/AuthMiddleware";
+import { app, notificationIssuer } from "./AppContext";
 
 const express = require("express");
 const cors = require("cors");
@@ -10,7 +11,6 @@ const userResource = require("./user/api/UserResource");
 const authResource = require("./authentication/api/AuthResource");
 const postResource = require("./post/api/PostResource");
 
-const app = express();
 const config = getConfigForEnvironment();
 
 mongoose.connect(`${config.mongo.connectionString}/${config.mongo.databaseName}?retryWrites=true&w=majority`, {
@@ -29,6 +29,4 @@ app.use("/", authResource);
 app.use("/", userResource);
 app.use("/", postResource);
 
-app.listen(config.http.port, () => {
-  console.log(`server started at http://localhost:${config.http.port}`);
-});
+notificationIssuer.listen();

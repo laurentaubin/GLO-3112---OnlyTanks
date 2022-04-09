@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { constants } from "../constants/constants";
 import { useCookies } from "react-cookie";
+import { NotificationProvider } from "../notifications/components/NotificationProvider";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 
@@ -36,7 +37,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     loaded && (
       <Sentry.ErrorBoundary>
-        <Component {...pageProps} />;
+        <NotificationProvider>
+          <Component {...pageProps} />
+        </NotificationProvider>
       </Sentry.ErrorBoundary>
     )
   );
