@@ -1,10 +1,11 @@
-import UserPreview from "../../user/domain/UserPreview";
+import Timestamp from "./Timestamp";
+import UserPreview from "./user/UserPreview";
 
 interface CommentWithAuthorPreview {
   id: string;
   author: UserPreview;
   comment: string;
-  createdAt: number;
+  timestamp: Timestamp;
 }
 
 export default CommentWithAuthorPreview;

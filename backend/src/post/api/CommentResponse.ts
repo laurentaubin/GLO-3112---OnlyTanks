@@ -2,7 +2,7 @@ import UserPreviewResponse from "./UserPreviewResponse";
 
 interface CommentResponse {
   id: string;
-  author: UserPreviewResponse;
+  author: UserPreviewResponse | string;
   comment: string;
 }
 

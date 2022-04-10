@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Comment from "../../domain/Comment";
+import CommentWithAuthorPreview from "../../domain/CommentWithAuthorPreview";
 import formatTimestamp from "../../utils/formatTimestamp";
 
 interface Props {
-  comment: Comment;
+  comment: CommentWithAuthorPreview;
 }
 
 const PostComment = ({ comment }: Props) => {

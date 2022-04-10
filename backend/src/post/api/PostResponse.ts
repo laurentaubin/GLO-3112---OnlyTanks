@@ -1,3 +1,4 @@
+import CommentResponse from "./CommentResponse";
 import UserTagsDto from "./dto/UserTagsDto";
 import UserPreviewResponse from "./UserPreviewResponse";
 
@@ -8,10 +9,11 @@ interface PostResponse {
   hashtags: string[];
   userTags: UserTagsDto[];
   author: UserPreviewResponse;
+  commentsPreview: CommentResponse[];
+  numberOfComments: number;
   createdAt: number;
   isLiked: boolean;
   numberOfLikes: number;
-  numberOfComments: number;
 }
 
 export default PostResponse;

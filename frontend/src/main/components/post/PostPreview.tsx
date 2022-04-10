@@ -10,13 +10,13 @@ import usePostReaction from "../../hooks/usePostReaction";
 import useDeletePost from "../../../post/api/useDeletePost";
 import PostLikesModal from "./likes-modal/PostLikesModal";
 import PostReaction from "./PostReaction";
-import { CommentInput } from "./CommentInput";
-import NumberOfComments from "./NumberOfComments";
+import { CommentInput } from "./PostInput";
 import useCommentOnPost from "../../hooks/useCommentOnPost";
 import Post from "../../domain/post/Post";
-import PostComments from "./PostComments";
+import PostCommentList from "./PostCommentList";
 import usePostComments from "../../hooks/usePostComments";
 import { State } from "../../hooks/useAxios";
+import PostCommentPreviewList from "./PostCommentPreviewList";
 
 interface Props {
   post: Post;
@@ -83,6 +83,13 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
 
   const onPostComment = async (comment: string) => {
     await commentPost(post.id, { comment: comment });
+    setPost((post) => ({
+      ...post,
+      commentsPreview: [
+        ...post.commentsPreview,
+        { author: me?.username ?? "", comment, id: post.commentsPreview.length.toString(), timestamp: { datetime: new Date() } }
+      ]
+    }));
   };
 
   const onSeePostLikesClick = () => {
@@ -131,13 +138,14 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
               ))}
             </div>
           </div>
-          {!isSpecificPostPage ? (
-            <NumberOfComments numberOfComments={numberOfComments} postId={post.id} />
-          ) : (
+
+          {isSpecificPostPage ? (
             <>
               <hr />
-              <PostComments comments={comments} />
+              <PostCommentList comments={comments} />
             </>
+          ) : (
+            <PostCommentPreviewList comments={post.commentsPreview} numberOfComments={numberOfComments} postId={post.id} />
           )}
 
           <CommentInput postComment={onPostComment} placeholder="Add a comment..." />

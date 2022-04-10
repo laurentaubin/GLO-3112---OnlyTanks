@@ -17,7 +17,7 @@ const NumberOfComments = ({ numberOfComments, postId }: Props) => {
   }
 
   return (
-    <div className="flex flex-row hover:cursor-pointer" onClick={onViewCommentsClick}>
+    <div className="flex flex-row hover:cursor-pointer mt-1 text-gray-500" onClick={onViewCommentsClick}>
       View {numberOfComments} {numberOfComments > 1 ? "comments" : "comment"}
     </div>
   );

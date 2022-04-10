@@ -1,11 +1,11 @@
 import PostComment from "./PostComment";
-import Comment from "../../domain/Comment";
+import CommentWithAuthorPreview from "../../domain/CommentWithAuthorPreview";
 
 interface Props {
-  comments: Comment[];
+  comments: CommentWithAuthorPreview[];
 }
 
-const PostComments = ({ comments }: Props) => {
+const PostCommentList = ({ comments }: Props) => {
   return (
     <div>
       <h2 className="text-center font-bold">Comments ({comments.length})</h2>
@@ -18,4 +18,4 @@ const PostComments = ({ comments }: Props) => {
   );
 };
 
-export default PostComments;
+export default PostCommentList;

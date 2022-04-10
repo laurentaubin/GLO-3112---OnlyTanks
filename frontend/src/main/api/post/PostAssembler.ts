@@ -2,6 +2,7 @@ import Post from "../../domain/post/Post";
 import PostResponse from "./PostResponse";
 import dayjs from "dayjs";
 import HashtagsFormatter from "../../utils/HashtagsFormatter";
+import CommentAssembler from "../../../post/api/CommentAssembler";
 
 class PostAssembler {
   public assemblePost(postResponse: PostResponse): Post {
@@ -17,6 +18,7 @@ class PostAssembler {
       imageUrl: postResponse.imageUrl,
       userTags: userTags,
       hashtags: HashtagsFormatter.addHashtagSymbol(postResponse.hashtags),
+      commentsPreview: CommentAssembler.assembleToComments(postResponse.commentsPreview),
       numberOfComments: postResponse.numberOfComments,
       isLiked: postResponse.isLiked,
       numberOfLikes: postResponse.numberOfLikes
