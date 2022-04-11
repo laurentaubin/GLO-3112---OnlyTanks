@@ -83,6 +83,28 @@ class MongoDbPostRepository implements PostRepository {
     return Promise.resolve([]);
   }
 
+  public async deleteAllCommentsByUsername(username: string): Promise<void> {
+    await PostModel.updateMany(
+      {},
+      {
+        $pull: {
+          comments: { author: username }
+        }
+      }
+    );
+  }
+
+  public async deleteAllLikesByUsername(username: string): Promise<void> {
+    await PostModel.updateMany(
+      {},
+      {
+        $pull: {
+          likes: username
+        }
+      }
+    );
+  }
+
   private async fetchPosts(pagination: Pagination, query: MongoDbQuery): Promise<Post[]> {
     query = this.paginator.addToQuery(pagination, query);
 

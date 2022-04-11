@@ -16,7 +16,6 @@ import PostNotificationMessageAssembler from "./notifications/ws/PostNotificatio
 import ServerToClientEvents from "./notifications/ws/ServerToClientEvents";
 import WebsocketNotificationIssuer from "./notifications/ws/WebsocketNotificationIssuer";
 import PostRequestAssembler from "./post/api/PostRequestAssembler";
-import CommentFactory from "./post/domain/CommentFactory";
 import MongoPostAssembler from "./post/infra/MongoDbPostAssembler";
 import MongoDbPostRepository from "./post/infra/MongoDbPostRepository";
 import EditPostFieldsAssembler from "./post/service/EditPostFieldsAssembler";
@@ -37,6 +36,7 @@ import UserFactory from "./user/service/UserFactory";
 import UserService from "./user/service/UserService";
 import PaginationFactory from "./utils/pagination/PaginationFactory";
 import Paginator from "./utils/pagination/Paginator";
+import CommentFactory from "./post/domain/CommentFactory";
 
 const express = require("express");
 

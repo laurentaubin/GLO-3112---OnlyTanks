@@ -27,6 +27,8 @@ export default class AuthService {
 
   public async deleteUser(username: string): Promise<void> {
     await this.postRepository.deleteAllByUsername(username);
+    await this.postRepository.deleteAllCommentsByUsername(username);
+    await this.postRepository.deleteAllLikesByUsername(username);
     await this.userRepository.delete(username);
     await this.sessionRepository.delete(username);
   }

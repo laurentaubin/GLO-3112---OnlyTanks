@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import UserPreview from "../../../domain/user/UserPreview";
 import usePostLikes from "../../../hooks/usePostLikes";
 import PostLikesModalHeader from "./PostLikesModalHeader";
 import PostLikes from "./PostLikes";
@@ -12,17 +10,12 @@ interface Props {
 }
 
 const PostLikesModal = ({ postId, open, setOpen }: Props) => {
-  const [userPreviews, setUserPreviews] = useState<UserPreview[]>([]);
   const { postLikes } = usePostLikes(postId);
-
-  useEffect(() => {
-    setUserPreviews(postLikes);
-  }, [postLikes]);
 
   return (
     <Modal open={open} setOpen={setOpen}>
       <PostLikesModalHeader setOpen={setOpen} />
-      <PostLikes userPreviews={userPreviews} />
+      <PostLikes userPreviews={postLikes} />
     </Modal>
   );
 };

@@ -6,14 +6,15 @@ interface PostResponse {
   imageUrl: string;
   id: string;
   caption: string;
+  comments: CommentResponse[];
   hashtags: string[];
   userTags: UserTagsDto[];
   author: UserPreviewResponse;
   commentsPreview: CommentResponse[];
-  numberOfComments: number;
   createdAt: number;
   isLiked: boolean;
   numberOfLikes: number;
+  numberOfComments: number;
 }
 
 export default PostResponse;

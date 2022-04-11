@@ -10,6 +10,7 @@ class CommentService {
       const user = await this.userRepository.findByUsername(comment.author);
       return { ...comment, author: { imageUrl: user.imageUrl, username: comment.author } };
     });
+
     return Promise.all(commentsWithAuthorPreview);
   }
 }

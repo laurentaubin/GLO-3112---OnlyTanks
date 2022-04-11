@@ -6,6 +6,7 @@ interface Props {
 }
 
 const PostCommentList = ({ comments }: Props) => {
+  console.warn(comments);
   return (
     <div>
       <h2 className="text-center font-bold">Comments ({comments.length})</h2>

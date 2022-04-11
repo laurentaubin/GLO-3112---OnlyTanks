@@ -19,6 +19,10 @@ interface PostRepository {
   findByHashtags(hashtags: string[], pagination: Pagination): Promise<Post[]>;
 
   deleteAllByUsername(username: string): Promise<void>;
+
+  deleteAllLikesByUsername(username: string): Promise<void>;
+
+  deleteAllCommentsByUsername(username: string): Promise<void>;
 }
 
 export default PostRepository;

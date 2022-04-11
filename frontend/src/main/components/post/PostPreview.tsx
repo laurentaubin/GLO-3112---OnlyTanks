@@ -10,13 +10,13 @@ import usePostReaction from "../../hooks/usePostReaction";
 import useDeletePost from "../../../post/api/useDeletePost";
 import PostLikesModal from "./likes-modal/PostLikesModal";
 import PostReaction from "./PostReaction";
-import { CommentInput } from "./PostInput";
 import useCommentOnPost from "../../hooks/useCommentOnPost";
 import Post from "../../domain/post/Post";
 import PostCommentList from "./PostCommentList";
 import usePostComments from "../../hooks/usePostComments";
 import { State } from "../../hooks/useAxios";
 import PostCommentPreviewList from "./PostCommentPreviewList";
+import { CommentInput } from "./CommentInput";
 
 interface Props {
   post: Post;
