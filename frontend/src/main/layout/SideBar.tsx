@@ -1,4 +1,4 @@
-import SuggestionSideBar from "../../suggestion/SuggestionSideBar";
+import SuggestionSideBar from "../../suggestion/components/SuggestionSideBar";
 
 export const SideBar = () => {
   return (

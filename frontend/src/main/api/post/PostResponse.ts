@@ -21,11 +21,11 @@ interface PostResponse {
   hashtags: string[];
   userTags?: UserTag[];
   commentsPreview: CommentResponse[];
-  numberOfComments: number;
   author: UserPreviewResponse;
   createdAt: number;
   isLiked: boolean;
   numberOfLikes: number;
+  numberOfComments: number;
 }
 
 export default PostResponse;

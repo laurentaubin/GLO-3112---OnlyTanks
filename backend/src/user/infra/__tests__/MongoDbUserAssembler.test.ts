@@ -11,6 +11,7 @@ describe("MongoDbUserAssembler", () => {
   const aPhoneNumber = "418-123-4567";
   const anImageUrl = "123.com";
   const aCreationDate = 342567854321;
+  const aTotalNumberOfLikes = 432;
 
   describe("given a UserDto", () => {
     const aUserDto: UserDto = {
@@ -20,7 +21,8 @@ describe("MongoDbUserAssembler", () => {
       email: anEmail,
       phoneNumber: aPhoneNumber,
       imageUrl: anImageUrl,
-      createdAt: aCreationDate
+      createdAt: aCreationDate,
+      totalNumberOfLikes: aTotalNumberOfLikes
     };
 
     describe("when assembling to types", () => {
@@ -34,7 +36,8 @@ describe("MongoDbUserAssembler", () => {
           email: anEmail,
           phoneNumber: aPhoneNumber,
           imageUrl: anImageUrl,
-          createdAt: aCreationDate
+          createdAt: aCreationDate,
+          totalNumberOfLikes: aTotalNumberOfLikes
         };
 
         expect(actual).toEqual(expected);

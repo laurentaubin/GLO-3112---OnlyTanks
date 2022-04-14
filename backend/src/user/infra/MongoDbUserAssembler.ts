@@ -10,7 +10,8 @@ export default class MongoDbUserAssembler {
       lastName: user.lastName,
       phoneNumber: user.phoneNumber,
       imageUrl: user.imageUrl,
-      createdAt: user.createdAt
+      createdAt: user.createdAt,
+      totalNumberOfLikes: user.totalNumberOfLikes ?? 0
     });
   }
 
@@ -22,7 +23,8 @@ export default class MongoDbUserAssembler {
       email: userDto.email,
       phoneNumber: userDto.phoneNumber,
       imageUrl: userDto.imageUrl,
-      createdAt: userDto.createdAt
+      createdAt: userDto.createdAt,
+      totalNumberOfLikes: userDto.totalNumberOfLikes
     };
   }
 }

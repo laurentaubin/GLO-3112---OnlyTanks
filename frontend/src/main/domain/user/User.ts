@@ -6,6 +6,7 @@ class User {
   public phoneNumber: string;
   public imageUrl?: string;
   public createdAt?: number;
+  public totalNumberOfLikes?: number;
 
   constructor(
     username: string,
@@ -14,7 +15,8 @@ class User {
     email: string,
     phoneNumber: string,
     imageUrl?: string,
-    createdAt?: number
+    createdAt?: number,
+    totalNumberOfLikes?: number
   ) {
     this.username = username;
     this.firstName = firstName;
@@ -23,6 +25,7 @@ class User {
     this.phoneNumber = phoneNumber;
     this.imageUrl = imageUrl;
     this.createdAt = createdAt;
+    this.totalNumberOfLikes = totalNumberOfLikes;
   }
 }
 

@@ -26,7 +26,8 @@ export default class UserAssembler {
       email: user.email,
       phoneNumber: user.phoneNumber,
       imageUrl: user.imageUrl,
-      createdAt: user.createdAt
+      createdAt: user.createdAt,
+      totalNumberOfLikes: user.totalNumberOfLikes
     };
   }
 

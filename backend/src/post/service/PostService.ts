@@ -4,10 +4,8 @@ import PostRepository from "../domain/PostRepository";
 import PostFactory from "./PostFactory";
 import FileAssembler from "../../storage/service/FileAssembler";
 import FileRepository from "../../storage/domain/FileRepository";
-import UserRepository from "../../user/domain/UserRepository";
 import Pagination from "../../utils/pagination/Pagination";
 import PostAssembler from "./PostAssembler";
-import User from "../../user/domain/User";
 import EditPostFieldsRequest from "../api/EditPostFieldsRequest";
 import EditPostFields from "../domain/EditPostFields";
 import EditPostFieldsAssembler from "./EditPostFieldsAssembler";
@@ -33,7 +31,6 @@ export default class PostService {
     private fileRepository: FileRepository,
     private fileAssembler: FileAssembler,
     private notificationService: NotificationService,
-    private userRepository: UserRepository,
     private editPostFieldsAssembler: EditPostFieldsAssembler,
     private sessionRepository: SessionRepository,
     private userPreviewService: UserPreviewService,
@@ -48,21 +45,18 @@ export default class PostService {
   }
 
   public async getAuthorPosts(token: string, author: string, pagination: Pagination): Promise<PostResponse[]> {
-    await this.userRepository.verifyIfUserExists(author);
-
-    const posts = await this.postRepository.findByAuthor(author, pagination);
-    const user = await this.userRepository.findByUsername(author);
+    const user = await this.userPreviewService.getUserPreview(author);
+    const posts = await this.getPostsByUsername(author, pagination);
     const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
-
     return posts.map((post) => this.postAssembler.assemblePostResponse(post, user, requesterUsername));
   }
 
   public async getPosts(token: string, pagination: Pagination): Promise<Awaited<PostResponse>[]> {
     const posts = await this.postRepository.find(pagination);
     const postResponse = posts.map(async (post) => {
-      const user = await this.userRepository.findByUsername(post.author);
+      const user = await this.userPreviewService.getUserPreview(post.author);
       const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
-      return this.postAssembler.assemblePostResponse(post, user as User, requesterUsername);
+      return this.postAssembler.assemblePostResponse(post, user, requesterUsername);
     });
     return Promise.all(postResponse);
   }
@@ -73,7 +67,7 @@ export default class PostService {
 
   public async getPost(token: string, id: string): Promise<PostResponse> {
     const post = await this.postRepository.findById(id);
-    const user = await this.userRepository.findByUsername(post.author);
+    const user = await this.userPreviewService.getUserPreview(post.author);
     const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
     return this.postAssembler.assemblePostResponse(post, user, requesterUsername);
   }
@@ -84,7 +78,7 @@ export default class PostService {
     const updatedPost: Post = { ...postToUpdate, ...editPostFields };
     await this.postRepository.update(id, updatedPost);
 
-    const user = await this.userRepository.findByUsername(updatedPost.author);
+    const user = await this.userPreviewService.getUserPreview(updatedPost.author);
     const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
 
     return this.postAssembler.assemblePostResponse(updatedPost, user, requesterUsername);
@@ -98,6 +92,7 @@ export default class PostService {
       const updatedLikes = postToUpdate.likes ? [...postToUpdate.likes, requester.username] : [requester.username];
       const updatedPost = { ...postToUpdate, likes: updatedLikes };
       await this.postRepository.update(postId, updatedPost);
+      await this.incrementAuthorTotalNumberOfLikes(await this.userPreviewService.getUserPreview(updatedPost.author));
       this.notificationService.sendPostNotification({
         postId,
         to: updatedPost.author,
@@ -115,13 +110,14 @@ export default class PostService {
       const updatedLikes = postToUpdate.likes?.filter((username) => username !== requester.username);
       const updatedPost = { ...postToUpdate, likes: updatedLikes };
       await this.postRepository.update(postId, updatedPost);
+      await this.decrementAuthorTotalNumberOfLikes(await this.userPreviewService.getUserPreview(updatedPost.author));
     }
   }
 
   public async commentPost(token: string, postId: string, postCommentRequest: PostCommentRequest): Promise<PostResponse> {
     const requester = await this.findRequester(token);
     const postToUpdate = await this.postRepository.findById(postId);
-    const postAuthor = await this.userRepository.findByUsername(postToUpdate.author);
+    const postAuthor = await this.userPreviewService.getUserPreview(postToUpdate.author);
     const comment: Comment = this.commentFactory.create(requester.username, postCommentRequest);
 
     const updatedComments = [...postToUpdate.comments, comment];
@@ -141,7 +137,7 @@ export default class PostService {
     const posts = await this.postRepository.findByCaption(caption, pagination);
     const postsResponse: PostResponse[] = [];
     for (const post of posts) {
-      const user = await this.userRepository.findByUsername(post.author);
+      const user = await this.userPreviewService.getUserPreview(post.author);
       const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
       postsResponse.push(this.postAssembler.assemblePostResponse(post, user, requesterUsername));
     }
@@ -152,7 +148,7 @@ export default class PostService {
     const posts = await this.postRepository.findByHashtags(hashtags, pagination);
     const postsResponse: PostResponse[] = [];
     for (const post of posts) {
-      const user = await this.userRepository.findByUsername(post.author);
+      const user = await this.userPreviewService.getUserPreview(post.author);
       const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
       postsResponse.push(this.postAssembler.assemblePostResponse(post, user, requesterUsername));
     }
@@ -169,9 +165,47 @@ export default class PostService {
     return this.commentService.getCommentsAuthorPreviews(post.comments);
   }
 
-  private findRequester = async (token: string): Promise<User> => {
+  private findRequester = async (token: string): Promise<UserPreview> => {
     const sessionToken: Token = { value: token };
     const requesterUsername = await this.sessionRepository.findUsernameWithToken(sessionToken);
-    return this.userRepository.findByUsername(requesterUsername);
+    return this.userPreviewService.getUserPreview(requesterUsername);
+  };
+
+  private incrementAuthorTotalNumberOfLikes = async (userPreview: UserPreview | undefined): Promise<void> => {
+    if (userPreview) {
+      if (userPreview.totalNumberOfLikes) {
+        await this.userPreviewService.updateTotalNumberOfLikes(userPreview.username, userPreview.totalNumberOfLikes + 1);
+      } else {
+        await this.computeAndUpdateUserTotalNumberOfLikes(userPreview.username);
+      }
+    }
+  };
+
+  private decrementAuthorTotalNumberOfLikes = async (userPreview: UserPreview | undefined): Promise<void> => {
+    if (userPreview) {
+      if (userPreview.totalNumberOfLikes) {
+        await this.userPreviewService.updateTotalNumberOfLikes(userPreview.username, userPreview.totalNumberOfLikes - 1);
+      } else {
+        await this.computeAndUpdateUserTotalNumberOfLikes(userPreview.username);
+      }
+    }
+  };
+
+  private getPostsByUsername = async (username: string, pagination: Pagination): Promise<Post[]> => {
+    return await this.postRepository.findByAuthor(username, pagination);
+  };
+
+  private computeAndUpdateUserTotalNumberOfLikes = async (username: string): Promise<void> => {
+    const totalNumberOfLikes = await this.computeTotalNumberOfLikes(username);
+    await this.userPreviewService.updateTotalNumberOfLikes(username, totalNumberOfLikes);
+  };
+
+  private computeTotalNumberOfLikes = async (username: string): Promise<number> => {
+    let totalNumberOfLikes = 0;
+    const authorPosts = await this.getPostsByUsername(username, {});
+    authorPosts.forEach((post) => {
+      totalNumberOfLikes += post.likes.length;
+    });
+    return totalNumberOfLikes;
   };
 }

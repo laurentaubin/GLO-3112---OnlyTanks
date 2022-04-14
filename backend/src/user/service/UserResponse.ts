@@ -6,6 +6,7 @@ interface UserResponse {
   phoneNumber: string;
   imageUrl: string;
   createdAt: number;
+  totalNumberOfLikes?: number;
 }
 
 export default UserResponse;

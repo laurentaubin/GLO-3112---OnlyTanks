@@ -1,4 +1,5 @@
 import User from "./User";
+import Pagination from "../../utils/pagination/Pagination";
 
 interface UserRepository {
   save(user: User): Promise<User>;
@@ -16,6 +17,8 @@ interface UserRepository {
   verifyIfUserExists(username: string): Promise<void>;
 
   delete(username: string): Promise<void>;
+
+  findOrderedByTotalNumberOfLikes(pagination: Pagination): Promise<User[]>;
 }
 
 export default UserRepository;

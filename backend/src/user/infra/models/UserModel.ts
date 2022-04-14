@@ -20,6 +20,9 @@ export class UserDto {
   @prop({ type: String, required: true })
   public imageUrl: string;
 
+  @prop({ type: Number, required: true })
+  public totalNumberOfLikes: number;
+
   @prop({ type: Number })
   public createdAt: number;
 

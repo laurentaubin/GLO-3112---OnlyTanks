@@ -1,12 +1,16 @@
+import Pagination from "src/utils/pagination/Pagination";
 import UserNotFoundException from "../domain/exceptions/UserNotFoundException";
 import User from "../domain/User";
 import UserRepository from "../domain/UserRepository";
 import UserModel, { UserDto } from "./models/UserModel";
 import MongoDbUserAssembler from "./MongoDbUserAssembler";
+import MongoDbQuery from "../../utils/pagination/MongoDbQuery";
+import Paginator from "../../utils/pagination/Paginator";
 
 export default class MongoDbUserRepository implements UserRepository {
-  constructor(private userAssembler: MongoDbUserAssembler) {
+  constructor(private userAssembler: MongoDbUserAssembler, private paginator: Paginator) {
     this.userAssembler = userAssembler;
+    this.paginator = paginator;
   }
 
   public async delete(username: string): Promise<void> {
@@ -90,5 +94,14 @@ export default class MongoDbUserRepository implements UserRepository {
     }
 
     return this.userAssembler.assembleUser(updatedUserDto);
+  }
+
+  public async findOrderedByTotalNumberOfLikes(pagination: Pagination): Promise<User[]> {
+    let query: MongoDbQuery = UserModel.find().sort("-totalNumberOfLikes").lean();
+    query = this.paginator.addToQuery(pagination, query);
+
+    const usersQuery = (await query.find()) as unknown as UserDto[];
+
+    return usersQuery.map(this.userAssembler.assembleUser);
   }
 }

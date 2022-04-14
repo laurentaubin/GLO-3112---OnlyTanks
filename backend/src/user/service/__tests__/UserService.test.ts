@@ -5,6 +5,7 @@ import UserService from "../UserService";
 import UserAssembler from "../UserAssembler";
 import FileAssembler from "../../../storage/service/FileAssembler";
 import FileRepository from "../../../storage/domain/FileRepository";
+import UserPreviewAssembler from "../UserPreviewResponseAssembler";
 
 describe("UserService", () => {
   const mockedUserRepository: UserRepository = mock<UserRepository>();
@@ -15,7 +16,8 @@ describe("UserService", () => {
 
   const userAssembler = new UserAssembler();
   const fileAssembler = new FileAssembler();
-  const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
+  const userPreviewAssembler = new UserPreviewAssembler();
+  const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository, userPreviewAssembler);
 
   describe("given a username", () => {
     const aUsername = "pablo";

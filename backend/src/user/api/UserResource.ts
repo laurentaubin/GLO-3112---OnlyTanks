@@ -1,6 +1,6 @@
-import { userRequestAssembler, uploadProfilePictureRequestAssembler, userService, logger } from "../../AppContext";
+import { logger, paginationFactory, uploadProfilePictureRequestAssembler, userRequestAssembler, userService } from "../../AppContext";
 import { status } from "../../api/Status";
-import express, { Response, Request } from "express";
+import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { isUnusedEmail } from "./validators/isUnusedEmail";
 import UserDto from "./dto/UserDto";
@@ -9,6 +9,7 @@ import { handleUpdateUserInformationException } from "./ExceptionHandler";
 import UploadProfilePictureRequest from "./UploadProfilePictureRequest";
 import UploadProfilePictureRequestBody from "./UploadProfilePictureRequestBody";
 import { writeLimiter } from "../../api/RateLimit";
+import Pagination from "../../utils/pagination/Pagination";
 
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -79,5 +80,17 @@ router.post(
     }
   }
 );
+
+router.get("/users/suggestions", writeLimiter, async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
+  try {
+    logger.logRouteInfo(req);
+    const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
+    const popularUsers = await userService.getPopularUserPreviews(pagination);
+    return res.status(status.OK).send(popularUsers);
+  } catch (e) {
+    logger.logRouteError(req, e);
+    return handleUpdateUserInformationException(e, res);
+  }
+});
 
 module.exports = router;

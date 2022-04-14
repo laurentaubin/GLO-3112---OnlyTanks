@@ -1,9 +1,9 @@
 import PostResponse from "../api/PostResponse";
 import Post from "../domain/Post";
-import User from "../../user/domain/User";
+import UserPreview from "../../user/domain/UserPreview";
 
 export default class PostAssembler {
-  public assemblePostResponse(post: Post, user: User, requesterUsername: string): PostResponse {
+  public assemblePostResponse(post: Post, userPreview: UserPreview, requesterUsername: string): PostResponse {
     return {
       id: post.id,
       imageUrl: post.imageUrl,
@@ -11,7 +11,7 @@ export default class PostAssembler {
       comments: post.comments,
       userTags: post.userTags,
       hashtags: post.hashtags,
-      author: { username: user.username, imageUrl: user.imageUrl },
+      author: { username: userPreview.username, imageUrl: userPreview.imageUrl },
       commentsPreview: post.comments.slice(-2),
       createdAt: post.createdAt!,
       isLiked: post.likes?.includes(requesterUsername),

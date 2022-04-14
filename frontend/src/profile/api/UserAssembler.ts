@@ -3,6 +3,7 @@ import UserResponse from "./UserResponse";
 import MultipleUsersResponse from "./MultipleUsersResponse";
 import UserPreviewsResponse from "../../main/api/user/UserPreviewsResponse";
 import UserPreview from "../../main/domain/user/UserPreview";
+import UserPreviewResponse from "../../main/api/user/UserPreviewResponse";
 
 class UserAssembler {
   public assembleToUser(userResponse: UserResponse): User | undefined {
@@ -14,7 +15,8 @@ class UserAssembler {
         userResponse.email,
         userResponse.phoneNumber,
         userResponse.imageUrl,
-        userResponse.createdAt
+        userResponse.createdAt,
+        userResponse.totalNumberOfLikes
       );
     }
   }
@@ -30,7 +32,8 @@ class UserAssembler {
             userResponse.email,
             userResponse.phoneNumber,
             userResponse.imageUrl,
-            userResponse.createdAt
+            userResponse.createdAt,
+            userResponse.totalNumberOfLikes
           )
       );
     } else {

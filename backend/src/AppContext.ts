@@ -37,6 +37,7 @@ import UserService from "./user/service/UserService";
 import PaginationFactory from "./utils/pagination/PaginationFactory";
 import Paginator from "./utils/pagination/Paginator";
 import CommentFactory from "./post/domain/CommentFactory";
+import UserPreviewAssembler from "./user/service/UserPreviewResponseAssembler";
 
 const express = require("express");
 
@@ -69,7 +70,7 @@ const postNotificationMessageAssembler = new PostNotificationMessageAssembler();
 
 // repository
 const postRepository = new MongoDbPostRepository(mongoDbPostAssembler, paginator);
-const userRepository = new MongoDbUserRepository(mongoDbUserAssembler);
+const userRepository = new MongoDbUserRepository(mongoDbUserAssembler, paginator);
 const sessionRepository = new MongoDbSessionRepository(mongoDbSessionAssembler);
 export const fileRepository = new S3FileRepository(storageInformation, storageReportAssembler);
 const postNotificationRepository = new MongoDbPostNotificationRepository(postNotificationAssembler);
@@ -109,7 +110,7 @@ export const notificationIssuer = new WebsocketNotificationIssuer(io, postNotifi
 
 // service
 const notificationService = new NotificationService(postNotificationRepository, notificationIssuer);
-export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository);
+export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository, new UserPreviewAssembler());
 export const commentService = new CommentService(userRepository);
 
 export const postService = new PostService(
@@ -120,7 +121,6 @@ export const postService = new PostService(
   fileRepository,
   fileAssembler,
   notificationService,
-  userRepository,
   editPostFieldsAssembler,
   sessionRepository,
   userService,

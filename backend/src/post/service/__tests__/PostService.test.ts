@@ -10,7 +10,6 @@ import FileRepository from "../../../storage/domain/FileRepository";
 import FileRequest from "../../../storage/types/FileRequest";
 import PostRequestBody from "../../api/PostRequestBody";
 import Pagination from "../../../utils/pagination/Pagination";
-import UserRepository from "../../../user/domain/UserRepository";
 import PostAssembler from "../PostAssembler";
 import EditPostFieldsAssembler from "../EditPostFieldsAssembler";
 import SessionRepository from "../../../authentication/domain/SessionRepository";
@@ -106,9 +105,6 @@ describe("PostService", () => {
   const mockFileRepository: FileRepository = mock<FileRepository>();
   const fileRepository = instance(mockFileRepository);
 
-  const mockUserRepository: UserRepository = mock<UserRepository>();
-  const userRepository = instance(mockUserRepository);
-
   const mockFileAssembler: FileAssembler = mock<FileAssembler>();
   const fileAssembler = instance(mockFileAssembler);
 
@@ -135,7 +131,6 @@ describe("PostService", () => {
     fileRepository,
     fileAssembler,
     notificationService,
-    userRepository,
     editPostFieldsAssembler,
     sessionRepository,
     userPreviewService,
