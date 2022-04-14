@@ -22,10 +22,14 @@
     ]
   },
   "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
     "@headlessui/react": "^1.4.3",
+    "@mui/material": "^5.5.3",
     "@pathofdev/react-tag-input": "^1.0.7",
     "@sentry/react": "^6.18.2",
     "@sentry/tracing": "^6.18.2",
+    "add": "^2.0.6",
     "axios": "^0.24.0",
     "dayjs": "^1.10.7",
     "formik": "^2.2.9",

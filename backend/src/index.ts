@@ -10,6 +10,7 @@ const healthResource = require("./api/HealthResource");
 const userResource = require("./user/api/UserResource");
 const authResource = require("./authentication/api/AuthResource");
 const postResource = require("./post/api/PostResource");
+const googlePhotoResource = require("./google-photos/api/GooglePhotoResource");
 
 const config = getConfigForEnvironment();
 
@@ -28,5 +29,6 @@ app.use("/", healthResource);
 app.use("/", authResource);
 app.use("/", userResource);
 app.use("/", postResource);
+app.use("/", googlePhotoResource);
 
 notificationIssuer.listen();

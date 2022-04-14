@@ -1,8 +1,8 @@
-import dayjs from "dayjs";
 import CommentResponse from "../../main/api/comment/CommentResponse";
 import CommentsWithAuthorPreviewResponse from "../../main/api/comment/CommentsWithAuthorPreview";
 import Comment from "../../main/domain/Comment";
 import CommentWithAuthorPreview from "../../main/domain/CommentWithAuthorPreview";
+import dayjs from "dayjs";
 
 class CommentAssembler {
   public assembleToComment(commentResponse: CommentResponse): Comment {

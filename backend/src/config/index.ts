@@ -16,6 +16,11 @@ export interface Config {
 
   google: {
     clientId: string;
+    clientSecret: string;
+    redirectUrl: string;
+    frontendBaseUrl: string;
+    googlePhotosApiUrl: string;
+    authTokenUrl: string;
   };
 }
 

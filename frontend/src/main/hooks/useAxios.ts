@@ -33,10 +33,11 @@ export const useAxios = () => {
         headers:
           cookies[constants.SESSION_TOKEN_COOKIE] && cookies[constants.AUTH_PROVIDER_COOKIE]
             ? {
+                ...params.headers,
                 "x-onlytanks-token": cookies[constants.SESSION_TOKEN_COOKIE],
                 "x-auth-provider": cookies[constants.AUTH_PROVIDER_COOKIE]
               }
-            : {}
+            : { ...params.headers }
       });
       setData(result);
       setState(State.SUCCESS);

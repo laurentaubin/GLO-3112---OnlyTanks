@@ -27,7 +27,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   }, [cookies]);
 
   useEffect(() => {
-    if (!isLoggedIn && constants.RESTRICTED_PAGES.includes(router.pathname)) {
+    const query = new URLSearchParams(window.location.search);
+    const accessToken = query.get("accessToken");
+    if (!isLoggedIn && constants.RESTRICTED_PAGES.includes(router.pathname) && !accessToken) {
       router.push("/");
       return;
     }
