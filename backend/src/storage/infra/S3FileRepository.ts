@@ -8,36 +8,76 @@ import { getS3Config } from "../../config";
 import StorageReportAssembler from "./StorageReportAssembler";
 import StorageReport from "../domain/StorageReport";
 import File from "../domain/File";
+import ImageUrlVerificator from "../service/ImageUrlVerificator";
+import ImageResizer from "../service/ImageResizer";
 
 export default class S3FileRepository implements FileRepository {
-  private storageInformation: S3StorageConfiguration;
-  private storageReportAssembler: StorageReportAssembler;
+  private readonly storageInformation: S3StorageConfiguration;
+  private readonly storageReportAssembler: StorageReportAssembler;
+  private readonly imageResizer: ImageResizer;
+  private readonly imageUrlVerifcator: ImageUrlVerificator;
 
   private readonly bucketName: string = getS3Config().AWS_BUCKET_NAME;
   private s3: S3;
 
-  constructor(storageInformation: S3StorageConfiguration, storageReportAssembler: StorageReportAssembler) {
+  constructor(
+    storageInformation: S3StorageConfiguration,
+    storageReportAssembler: StorageReportAssembler,
+    imageResizer: ImageResizer,
+    imageUrlVerificator: ImageUrlVerificator
+  ) {
     this.storageInformation = storageInformation;
     this.storageReportAssembler = storageReportAssembler;
-    const S3Constructor = this.storageInformation.getS3StorageConfig();
-    this.s3 = new S3(S3Constructor);
+    this.imageResizer = imageResizer;
+    this.s3 = new S3(this.storageInformation.getS3StorageConfig());
+    this.imageUrlVerifcator = imageUrlVerificator;
   }
 
-  public async storeImage(file: File): Promise<StorageReport> {
-    const fileStream = fs.createReadStream(file.path);
+  public async storeImage(file: File, thumbnail?: boolean, preview?: boolean): Promise<StorageReport> {
+    if (thumbnail) {
+      await this.uploadThumbnailImage(file);
+    }
 
-    const uploadParams = {
-      Bucket: this.bucketName,
-      Body: fileStream,
-      Key: file.fileName,
-      ContentType: "image/jpeg"
-    };
+    if (preview) {
+      await this.uploadPreviewImage(file);
+    }
 
-    const result: S3StorageReportResponse = await this.s3.upload(uploadParams).promise();
+    const storageResponse: S3StorageReportResponse = await this.uploadNormalImage(file);
 
     await this.removeServerImage(file);
 
-    return this.storageReportAssembler.assembleStorageReport(result);
+    return this.storageReportAssembler.assembleStorageReport(storageResponse);
+  }
+
+  private async uploadNormalImage(file: File): Promise<S3StorageReportResponse> {
+    const buffer = await this.imageResizer.resizeToNormal(file.path);
+
+    return this.uploadImageToS3(buffer, file.fileName);
+  }
+
+  private async uploadThumbnailImage(file: File): Promise<void> {
+    const thumbnailBuffer = await this.imageResizer.resizeToThumbnail(file.path);
+    const thumbNailFileName = this.imageUrlVerifcator.getThumbnailUrl(file.fileName);
+
+    await this.uploadImageToS3(thumbnailBuffer, thumbNailFileName);
+  }
+
+  private async uploadPreviewImage(file: File): Promise<void> {
+    const previewBuffer = await this.imageResizer.resizeToPreview(file.path);
+    const previewFilename = this.imageUrlVerifcator.getPreviewUrl(file.fileName);
+
+    await this.uploadImageToS3(previewBuffer, previewFilename);
+  }
+
+  private async uploadImageToS3(buffer: Buffer, filename: string) {
+    const uploadParams = {
+      Bucket: this.bucketName,
+      Body: buffer,
+      Key: filename,
+      ContentType: "image/jpeg"
+    };
+
+    return this.s3.upload(uploadParams).promise();
   }
 
   public async removeServerImage(file: File) {

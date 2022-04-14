@@ -37,6 +37,8 @@ import UserService from "./user/service/UserService";
 import PaginationFactory from "./utils/pagination/PaginationFactory";
 import Paginator from "./utils/pagination/Paginator";
 import CommentFactory from "./post/domain/CommentFactory";
+import ImageResizer from "./storage/service/ImageResizer";
+import ImageUrlVerificator from "./storage/service/ImageUrlVerificator";
 import UserPreviewAssembler from "./user/service/UserPreviewResponseAssembler";
 
 const express = require("express");
@@ -45,12 +47,17 @@ const config = getConfigForEnvironment();
 // utils
 const paginator = new Paginator();
 
+// storage
+const imageResizer = new ImageResizer();
+const imageUrlVerifcator = new ImageUrlVerificator();
+
 // information
 const storageInformation = new S3StorageConfiguration();
 
 //factory
 const userFactory = new UserFactory();
 export const paginationFactory = new PaginationFactory();
+
 // assembler
 export const userRequestAssembler = new UserRequestAssembler();
 export const uploadProfilePictureRequestAssembler = new UploadProfilePictureRequestAssembler();
@@ -58,7 +65,7 @@ export const postRequestAssembler = new PostRequestAssembler();
 const fileAssembler = new FileAssembler();
 const postFactory = new PostFactory();
 const commentFactory = new CommentFactory();
-const postAssembler = new PostAssembler();
+const postAssembler = new PostAssembler(imageUrlVerifcator);
 const userAssembler = new UserAssembler();
 const mongoDbUserAssembler = new MongoDbUserAssembler();
 const mongoDbSessionAssembler = new MongoDbSessionAssembler();
@@ -72,7 +79,7 @@ const postNotificationMessageAssembler = new PostNotificationMessageAssembler();
 const postRepository = new MongoDbPostRepository(mongoDbPostAssembler, paginator);
 const userRepository = new MongoDbUserRepository(mongoDbUserAssembler, paginator);
 const sessionRepository = new MongoDbSessionRepository(mongoDbSessionAssembler);
-export const fileRepository = new S3FileRepository(storageInformation, storageReportAssembler);
+export const fileRepository = new S3FileRepository(storageInformation, storageReportAssembler, imageResizer, imageUrlVerifcator);
 const postNotificationRepository = new MongoDbPostNotificationRepository(postNotificationAssembler);
 
 //provider

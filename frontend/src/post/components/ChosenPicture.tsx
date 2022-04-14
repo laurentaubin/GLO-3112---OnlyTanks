@@ -45,7 +45,7 @@ export const ChosenPicture = ({ src, userTags, onTagDelete, onUserTagged }: Prop
     <div className="mb-3 cursor-crosshair relative">
       <div onClick={onImageClick}>
         {showPopOverHelper && <PopOverHelperText text={"Click picture to tag users"} />}
-        <img src={src} alt="Image" className="md:w-[30vw] mx-auto" />
+        <img src={src} alt="Image" className="md:w-[30vw] mx-auto max-h-70 max-w-xs" />
         {showTagInput && (
           <UserTagInput modalPosition={computeTagInputPosition()} clickPosition={mouseClickPosition} onTagChosen={onTagChosen} />
         )}

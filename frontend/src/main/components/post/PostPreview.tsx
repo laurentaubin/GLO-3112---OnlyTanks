@@ -112,7 +112,7 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
           isSpecificPostPage={isSpecificPostPage}
         />
         <div className="flex justify-center">
-          <PostImage src={post.imageUrl} userTags={post.userTags} />
+          <PostImage className="w-96 h-96" src={post.imageUrl} userTags={post.userTags} />
         </div>
         <section className="my-3 px-3">
           <PostReaction

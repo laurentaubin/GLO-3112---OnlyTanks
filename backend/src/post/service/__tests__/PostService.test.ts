@@ -140,14 +140,14 @@ describe("PostService", () => {
   describe("when add post", () => {
     beforeEach(async () => {
       when(mockFileAssembler.assembleFile(fileRequest)).thenReturn(file);
-      when(mockFileRepository.storeImage(file)).thenReturn(Promise.resolve(storageReport));
+      when(mockFileRepository.storeImage(file, false, true)).thenReturn(Promise.resolve(storageReport));
       when(mockPostFactory.create(postRequest, storageReport.imageUrl)).thenReturn(post);
       await postService.addPost(postRequest);
     });
 
     describe("given a postRequest", () => {
       it("should call the picture storage to store picture", () => {
-        verify(mockFileRepository.storeImage(file)).called();
+        verify(mockFileRepository.storeImage(file, false, true)).called();
       });
 
       it("should call the post assembler to get Post types objet", () => {

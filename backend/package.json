@@ -6,6 +6,7 @@
   "dependencies": {
     "@typegoose/typegoose": "8.3.0",
     "aws-sdk": "^2.1066.0",
+    "axios": "^0.26.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
@@ -14,6 +15,7 @@
     "google-auth-library": "^7.11.0",
     "mongoose": "5.13.13",
     "multer": "^1.4.4",
+    "sharp": "^0.30.3",
     "socket.io": "^4.4.1",
     "winston": "^3.6.0",
     "winston-aws-cloudwatch": "^3.0.0"

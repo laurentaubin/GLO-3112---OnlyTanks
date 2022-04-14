@@ -6,7 +6,7 @@ import MultipleUsersResponse from "./MultipleUsersResponse";
 import UserLoginResponse from "./UserLoginResponse";
 
 export default class UserAssembler {
-  assembleUser(userRequest: UserRequest): User {
+  public assembleUser(userRequest: UserRequest): User {
     return {
       username: userRequest.username,
       firstName: userRequest.firstName,
@@ -18,7 +18,7 @@ export default class UserAssembler {
     };
   }
 
-  assembleUserResponse(user: User): UserResponse {
+  public assembleUserResponse(user: User): UserResponse {
     return {
       username: user.username,
       firstName: user.firstName,
@@ -31,13 +31,13 @@ export default class UserAssembler {
     };
   }
 
-  assembleMultipleUsersResponse(users: User[]): MultipleUsersResponse {
+  public assembleMultipleUsersResponse(users: User[]): MultipleUsersResponse {
     const assembledUsers = users.map(this.assembleUserResponse);
 
     return { users: assembledUsers, count: assembledUsers.length };
   }
 
-  assembleUserLoginResponse(loginResponse: LoginResponse): UserLoginResponse {
+  public assembleUserLoginResponse(loginResponse: LoginResponse): UserLoginResponse {
     return {
       username: loginResponse.username,
       firstName: loginResponse.firstName,

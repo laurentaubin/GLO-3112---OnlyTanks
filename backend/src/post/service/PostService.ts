@@ -39,8 +39,9 @@ export default class PostService {
 
   public async addPost(postRequest: PostRequestBody) {
     const file = this.fileAssembler.assembleFile(postRequest.file);
-    const storageReport = await this.fileRepository.storeImage(file);
+    const storageReport = await this.fileRepository.storeImage(file, false, true);
     const post: Post = this.postFactory.create(postRequest, storageReport.imageUrl);
+
     await this.postRepository.save(post);
   }
 
@@ -48,16 +49,21 @@ export default class PostService {
     const user = await this.userPreviewService.getUserPreview(author);
     const posts = await this.getPostsByUsername(author, pagination);
     const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
-    return posts.map((post) => this.postAssembler.assemblePostResponse(post, user, requesterUsername));
+
+    const postResponses = posts.map((post) => this.postAssembler.assemblePostResponse(post, user, requesterUsername, true));
+
+    return Promise.all(postResponses);
   }
 
   public async getPosts(token: string, pagination: Pagination): Promise<Awaited<PostResponse>[]> {
     const posts = await this.postRepository.find(pagination);
+
     const postResponse = posts.map(async (post) => {
       const user = await this.userPreviewService.getUserPreview(post.author);
       const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
       return this.postAssembler.assemblePostResponse(post, user, requesterUsername);
     });
+
     return Promise.all(postResponse);
   }
 
@@ -139,7 +145,8 @@ export default class PostService {
     for (const post of posts) {
       const user = await this.userPreviewService.getUserPreview(post.author);
       const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
-      postsResponse.push(this.postAssembler.assemblePostResponse(post, user, requesterUsername));
+      const postResponse = await this.postAssembler.assemblePostResponse(post, user, requesterUsername);
+      postsResponse.push(postResponse);
     }
     return postsResponse;
   }
@@ -147,10 +154,12 @@ export default class PostService {
   public async findPostsByHashtags(token: string, hashtags: string[], pagination: Pagination): Promise<PostResponse[]> {
     const posts = await this.postRepository.findByHashtags(hashtags, pagination);
     const postsResponse: PostResponse[] = [];
+
     for (const post of posts) {
       const user = await this.userPreviewService.getUserPreview(post.author);
       const requesterUsername = await this.sessionRepository.findUsernameWithToken({ value: token });
-      postsResponse.push(this.postAssembler.assemblePostResponse(post, user, requesterUsername));
+      const postResponse = await this.postAssembler.assemblePostResponse(post, user, requesterUsername);
+      postsResponse.push(postResponse);
     }
     return postsResponse;
   }

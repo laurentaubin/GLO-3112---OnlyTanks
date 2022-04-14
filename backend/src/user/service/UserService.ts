@@ -43,7 +43,7 @@ class UserService implements UserPreviewService {
   public async uploadProfilePicture(request: UploadProfilePictureRequestBody): Promise<UserResponse> {
     const file: File = this.fileAssembler.assembleFile(request.file);
 
-    const storageReport = await this.fileRepository.storeImage(file);
+    const storageReport = await this.fileRepository.storeImage(file, true);
 
     const user = await this.userRepository.updateUserPicture(request.username, storageReport.imageUrl);
 

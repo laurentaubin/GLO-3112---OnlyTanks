@@ -35,14 +35,14 @@ router.get("/feed", async (req: Request<Record<string, unknown>, Record<string, 
   logger.logRouteInfo(req);
   const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
   const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
-  return await getPosts(token, res, pagination);
+  getPosts(token, res, pagination);
 });
 
 router.get("/posts", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
   logger.logRouteInfo(req);
   const pagination: Pagination = paginationFactory.create(req.query.limit as string, req.query.skip as string);
   const token = req.header(constants.AUTH_TOKEN_HEADER) as string;
-  return await getAuthorPosts(token as string, req.query.author as string, res, pagination);
+  getAuthorPosts(token as string, req.query.author as string, res, pagination);
 });
 
 router.delete("/posts/:id", async (req: Request<Record<string, unknown>, Record<string, unknown>>, res: Response) => {
@@ -178,6 +178,7 @@ router.get("/posts/:id/comments", async (req: Request<Record<string, unknown>, R
 const getAuthorPosts = async (token: string, author: string, res: Response, pagination: Pagination) => {
   try {
     const posts = await postService.getAuthorPosts(token, author, pagination);
+
     res.status(status.OK).send(posts);
   } catch (e) {
     res.status(status.NOT_FOUND).send(e.message);

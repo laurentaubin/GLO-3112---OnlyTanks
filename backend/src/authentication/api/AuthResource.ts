@@ -32,8 +32,10 @@ router.post(
   async (req: Request<Record<string, unknown>, Record<string, unknown>, SignupRequest>, res: Response) => {
     logger.logRouteInfo(req);
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       res.status(status.BAD_REQUEST).json({ errors: errors.array() });
+      return;
     }
 
     const signUpResponse = await authService.signup(req.body);
