@@ -1,16 +1,19 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { UnderConstruction } from "../main/components/UnderConstruction";
 import { Layout } from "../main/layout/Layout";
+import { useNotifications } from "../notifications/api/useNotifications";
+import NotificationList from "../notifications/components/NotificationList";
 
 const Notifications: NextPage = () => {
+  const { notifications } = useNotifications();
+
   return (
     <>
       <Head>
         <title>Notifications • Onlytanks</title>
       </Head>
       <Layout>
-        <UnderConstruction />
+        <NotificationList notifications={notifications ?? []} />
       </Layout>
     </>
   );

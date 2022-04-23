@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { constants } from "../constants/constants";
 import { useCookies } from "react-cookie";
-import { NotificationProvider } from "../notifications/components/NotificationProvider";
+import { NotificationProvider } from "../notifications/components/popup/NotificationProvider";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 

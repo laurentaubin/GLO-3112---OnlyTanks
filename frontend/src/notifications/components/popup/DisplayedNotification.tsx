@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import PostNotification from "../../main/domain/notifications/Notification";
+import PostNotification from "../../../main/domain/notifications/Notification";
 import { NotificationCard } from "./NotificationCard";
 
 interface Props {

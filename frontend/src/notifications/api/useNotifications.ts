@@ -1,13 +1,17 @@
-import { useCallback } from "react";
-import { useWebsockets } from "../../main/hooks/useWebsockets";
+import { useEffect } from "react";
+import { useAxios } from "../../main/hooks/useAxios";
 import NotificationAssembler from "./NotificationAssembler";
 
 export const useNotifications = () => {
-  const { data, connect } = useWebsockets("notification");
+  const { data, sendRequest, state, error } = useAxios();
 
-  const assembledNotification = useCallback(() => {
-    return data ? NotificationAssembler.assembleNotification(data) : null;
-  }, [data]);
+  useEffect(() => {
+    const getNotifications = () => {
+      sendRequest({ url: "/notifications", method: "GET" });
+    };
 
-  return { notification: assembledNotification(), connect };
+    getNotifications();
+  }, []);
+
+  return { notifications: data?.data.map(NotificationAssembler.assembleNotification), state, error };
 };

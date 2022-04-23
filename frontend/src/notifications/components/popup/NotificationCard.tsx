@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { FiX } from "react-icons/fi";
-import PostNotification from "../../main/domain/notifications/Notification";
-import { NotificationCardContent } from "./NotificationCardContent";
+import PostNotification from "../../../main/domain/notifications/Notification";
+import NotificationCardContent from "./NotificationCardContent";
 
 const CLOSING_DELAY_IN_MS = 5000;
 

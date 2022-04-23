@@ -37,6 +37,7 @@ import UserService from "./user/service/UserService";
 import PaginationFactory from "./utils/pagination/PaginationFactory";
 import Paginator from "./utils/pagination/Paginator";
 import CommentFactory from "./post/domain/CommentFactory";
+import NotificationFactory from "./notifications/service/NotificationFactory";
 import ImageResizer from "./storage/service/ImageResizer";
 import ImageUrlVerificator from "./storage/service/ImageUrlVerificator";
 import UserPreviewAssembler from "./user/service/UserPreviewResponseAssembler";
@@ -55,6 +56,8 @@ const imageUrlVerifcator = new ImageUrlVerificator();
 const storageInformation = new S3StorageConfiguration();
 
 //factory
+const commentFactory = new CommentFactory();
+const notificationFactory = new NotificationFactory();
 const userFactory = new UserFactory();
 export const paginationFactory = new PaginationFactory();
 
@@ -64,7 +67,6 @@ export const uploadProfilePictureRequestAssembler = new UploadProfilePictureRequ
 export const postRequestAssembler = new PostRequestAssembler();
 const fileAssembler = new FileAssembler();
 const postFactory = new PostFactory();
-const commentFactory = new CommentFactory();
 const postAssembler = new PostAssembler(imageUrlVerifcator);
 const userAssembler = new UserAssembler();
 const mongoDbUserAssembler = new MongoDbUserAssembler();
@@ -116,7 +118,7 @@ const io = new Server<DefaultEventsMap, ServerToClientEvents, DefaultEventsMap, 
 export const notificationIssuer = new WebsocketNotificationIssuer(io, postNotificationMessageAssembler);
 
 // service
-const notificationService = new NotificationService(postNotificationRepository, notificationIssuer);
+export const notificationService = new NotificationService(postNotificationRepository, notificationIssuer, sessionRepository);
 export const userService = new UserService(userAssembler, userRepository, fileAssembler, fileRepository, new UserPreviewAssembler());
 export const commentService = new CommentService(userRepository);
 
@@ -128,6 +130,7 @@ export const postService = new PostService(
   fileRepository,
   fileAssembler,
   notificationService,
+  notificationFactory,
   editPostFieldsAssembler,
   sessionRepository,
   userService,

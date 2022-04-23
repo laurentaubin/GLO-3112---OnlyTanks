@@ -1,4 +1,5 @@
 interface PostNotificationMessage {
+  id: string;
   postId: string;
   to: string;
   from: string;

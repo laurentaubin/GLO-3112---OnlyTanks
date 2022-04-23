@@ -6,6 +6,7 @@ import PostNotificationMessage from "../../main/domain/notifications/PostNotific
 class NotificationAssembler {
   public assembleNotification(notification: PostNotificationMessage): PostNotification {
     return {
+      id: notification.id,
       postId: notification.postId,
       from: notification.from,
       to: notification.to,

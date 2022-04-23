@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from "react";
-import { useAuth } from "../../main/hooks/useAuth";
-import { useNotifications } from "../api/useNotifications";
+import { useAuth } from "../../../main/hooks/useAuth";
+import { useRealTimeNotifications } from "../../api/useRealTimeNotifications";
 import { DisplayedNotification } from "./DisplayedNotification";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 export const NotificationProvider = ({ children }: Props) => {
   const { me } = useAuth();
-  const { notification, connect } = useNotifications();
+  const { notification, connect } = useRealTimeNotifications();
 
   useEffect(() => {
     connect(me?.username);

@@ -21,6 +21,8 @@ import PostCommentRequest from "../api/PostCommentRequest";
 import PostResponse from "../api/PostResponse";
 import CommentResponse from "../api/CommentResponse";
 import CommentService from "../../user/service/CommentService";
+import NotificationFactory from "src/notifications/service/NotificationFactory";
+import PostNotification from "src/notifications/domain/PostNotification";
 
 export default class PostService {
   constructor(
@@ -31,6 +33,7 @@ export default class PostService {
     private fileRepository: FileRepository,
     private fileAssembler: FileAssembler,
     private notificationService: NotificationService,
+    private notificationFactory: NotificationFactory,
     private editPostFieldsAssembler: EditPostFieldsAssembler,
     private sessionRepository: SessionRepository,
     private userPreviewService: UserPreviewService,
@@ -98,13 +101,14 @@ export default class PostService {
       const updatedLikes = postToUpdate.likes ? [...postToUpdate.likes, requester.username] : [requester.username];
       const updatedPost = { ...postToUpdate, likes: updatedLikes };
       await this.postRepository.update(postId, updatedPost);
-      await this.incrementAuthorTotalNumberOfLikes(await this.userPreviewService.getUserPreview(updatedPost.author));
-      this.notificationService.sendPostNotification({
+      const postNotification: PostNotification = this.notificationFactory.create(
         postId,
-        to: updatedPost.author,
-        from: requester.username,
-        type: NotificationType.POST_LIKE
-      });
+        updatedPost.author,
+        requester.username,
+        NotificationType.POST_LIKE
+      );
+      this.notificationService.sendPostNotification(postNotification);
+      await this.incrementAuthorTotalNumberOfLikes(await this.userPreviewService.getUserPreview(updatedPost.author));
     }
   }
 
@@ -128,13 +132,13 @@ export default class PostService {
 
     const updatedComments = [...postToUpdate.comments, comment];
     const updatedPost = await this.postRepository.update(postId, { ...postToUpdate, comments: updatedComments });
-
-    this.notificationService.sendPostNotification({
+    const postNotification: PostNotification = this.notificationFactory.create(
       postId,
-      to: updatedPost.author,
-      from: requester.username,
-      type: NotificationType.POST_COMMENT
-    });
+      updatedPost.author,
+      requester.username,
+      NotificationType.POST_COMMENT
+    );
+    this.notificationService.sendPostNotification(postNotification);
 
     return this.postAssembler.assemblePostResponse(updatedPost, postAuthor, requester.username);
   }

@@ -17,6 +17,7 @@ import UserPreviewService from "../../../user/service/UserPreviewService";
 import NotificationService from "src/notifications/service/NotificationService";
 import CommentFactory from "../../domain/CommentFactory";
 import CommentService from "../../../user/service/CommentService";
+import NotificationFactory from "src/notifications/service/NotificationFactory";
 
 describe("PostService", () => {
   const hashTag: string[] = [];
@@ -90,6 +91,9 @@ describe("PostService", () => {
 
   const posts: Post[] = [post, anotherPost];
 
+  const mockNotificationFactory: NotificationFactory = mock<NotificationFactory>();
+  const notificatioFactory = instance(mockNotificationFactory);
+
   const mockCommentFactory: CommentFactory = mock<CommentFactory>();
   const commentFactory = instance(mockCommentFactory);
 
@@ -131,6 +135,7 @@ describe("PostService", () => {
     fileRepository,
     fileAssembler,
     notificationService,
+    notificatioFactory,
     editPostFieldsAssembler,
     sessionRepository,
     userPreviewService,
