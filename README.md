@@ -89,8 +89,8 @@ See [STACK.md](./STACK.md)
 - Laurent: 0
 - Julien: 0
 - Fran: 0
-- Phil: 1
-- Max: 2
+- Phil: 3
+- Max: 1
 - Toma: 0
 
 ## ⭐️ Contributors

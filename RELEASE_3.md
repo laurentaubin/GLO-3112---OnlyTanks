@@ -22,6 +22,7 @@ Below is a list of completed features for the second release. Since we had some 
 | Security                                | The application is protected against DDoS attacks and SQL injection                                          | ✅           |
 | Frontend logging                        | Every API call and error is logged using Sentry                                                              | ✅           |
 | Backend logging                         | Every API call and error is logged using CloudWatch                                                          | ✅           |
+| Dynamic documentation                   | Generate API documentation                                                                                   | ❌           |
 | **Advanced Feature**                    |                                                                                                              |              |
 | Upload image from Google Photos         | Allow users to upload images from Google Photos                                                              | ✅           |
 | Recommend popular accounts              | Users are recommends the most popular account                                                                | ✅           |
