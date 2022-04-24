@@ -125,11 +125,6 @@ The popular profiles are selected based on the total number of likes the users h
 The total number of likes is updated when a user receive a like or when someone unlikes a post. However, the recommendations are not updated in real time. To see the effect of a like/unlike, reload the application by refreshing the page.
 
 
-## API Documentation
-
-You can find the api documentation at `/backend/doc/ApiDocumentation.html`. The api documentation contains a list of all the routes and 
-it is generated automatically once the application is launched. We have use the express-api-doc library to help us generate a documentation for our API.
-
 ## Unimplemented features
 
 All throughout the app, you will find partial or unimplemented features. We decided to include them in this release because they all made sense either style-wise or because they are going to be included in a further release and are closely related to an existing feature. Here is a list of said unimplemented features
