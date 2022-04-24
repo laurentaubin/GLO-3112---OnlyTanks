@@ -1,4 +1,3 @@
-import { FcGoogle } from "react-icons/fc";
 import { GoogleButton } from "./GoogleButton";
 
 interface Props {

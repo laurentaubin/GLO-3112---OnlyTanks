@@ -7,9 +7,15 @@ import SearchedPosts from "../../search/posts/components/SearchedPosts";
 import { State } from "../../main/hooks/useAxios";
 import LoadingPage from "../../main/components/LoadingPage";
 import { useSearchPostsByCaption } from "../../search/posts/api/useSearchPostsByCaption";
+import analyticsService, { AnalyticEvent } from "../../services/analytics";
 
 const SearchPosts: NextPage = () => {
   const { posts, searchPosts, state } = useSearchPostsByCaption();
+
+  const search = (caption: string) => {
+    analyticsService.logEvent(AnalyticEvent.SEARCH_POST_BY_CAPTION);
+    searchPosts(caption);
+  };
 
   return (
     <>
@@ -17,7 +23,7 @@ const SearchPosts: NextPage = () => {
         <title>Search • Onlytanks</title>
       </Head>
       <Layout>
-        <SearchPage currentTab={TabTitle.POSTS} singleInputSearch={searchPosts} placeholder="Search posts by caption">
+        <SearchPage currentTab={TabTitle.POSTS} singleInputSearch={search} placeholder="Search posts by caption">
           {state === State.LOADING ? <LoadingPage /> : <SearchedPosts posts={posts} />}
         </SearchPage>
       </Layout>

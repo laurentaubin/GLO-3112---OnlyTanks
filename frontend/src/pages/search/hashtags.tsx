@@ -7,9 +7,15 @@ import { SearchPage } from "../../search/components/SearchPage";
 import { useSearchPostsByHashtags } from "../../search/posts/api/useSearchPostsByHashtags";
 import SearchedPosts from "../../search/posts/components/SearchedPosts";
 import TabTitle from "../../search/TabTitle";
+import analyticsService, { AnalyticEvent } from "../../services/analytics";
 
 const SearchHashtags: NextPage = () => {
   const { posts, searchPostsByHashtags, state } = useSearchPostsByHashtags();
+
+  const search = (hashtags: string[]) => {
+    analyticsService.logEvent(AnalyticEvent.SEARCH_POST_BY_HASHTAGS);
+    searchPostsByHashtags(hashtags);
+  };
 
   return (
     <>
@@ -17,11 +23,7 @@ const SearchHashtags: NextPage = () => {
         <title>Search • Onlytanks</title>
       </Head>
       <Layout>
-        <SearchPage
-          currentTab={TabTitle.HASHTAGS}
-          multipleInputsSearch={searchPostsByHashtags}
-          placeholder="Press enter to confirm Hashtag"
-        >
+        <SearchPage currentTab={TabTitle.HASHTAGS} multipleInputsSearch={search} placeholder="Press enter to confirm Hashtag">
           {state === State.LOADING ? <LoadingPage /> : <SearchedPosts posts={posts} />}
         </SearchPage>
       </Layout>

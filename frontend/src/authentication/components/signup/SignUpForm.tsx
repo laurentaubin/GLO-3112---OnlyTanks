@@ -14,6 +14,7 @@ import { normalizeInputs } from "../../../main/utils/inputUtils";
 import { useSignUp } from "../../api/useSignUp";
 import AuthProvider from "../../domain/AuthProvider";
 import { NextButton } from "../NextButton";
+import analyticsService, { AnalyticEvent } from "../../../services/analytics";
 
 interface InternalSignUpFormProps {
   data: AxiosResponse | undefined;
@@ -89,6 +90,7 @@ export const SignUpForm = () => {
   });
 
   const onSubmit = async (values: User) => {
+    analyticsService.logEvent(AnalyticEvent.SIGN_UP);
     const normalizedInputs = normalizeInputs(values);
     await signUpUser(normalizedInputs, authProvider as AuthProvider, token as string);
   };

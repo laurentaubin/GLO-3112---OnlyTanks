@@ -14,13 +14,16 @@ export const useAuth = () => {
 
   useEffect(() => {
     cookies[constants.SESSION_TOKEN_COOKIE] ? setIsLoggedIn(true) : setIsLoggedIn(false);
+  }, [cookies]);
 
+  useEffect(() => {
     const getMe = async () => {
       await sendRequest({ url: "/me", method: "GET" });
     };
-
-    getMe();
-  }, [cookies]);
+    if (isLoggedIn) {
+      getMe();
+    }
+  }, [isLoggedIn]);
 
   return { isLoggedIn, me: UserAssembler.assembleToUser(data?.data as UserResponse) };
 };

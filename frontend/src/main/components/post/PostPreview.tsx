@@ -17,6 +17,7 @@ import usePostComments from "../../hooks/usePostComments";
 import { State } from "../../hooks/useAxios";
 import PostCommentPreviewList from "./PostCommentPreviewList";
 import { CommentInput } from "./CommentInput";
+import analyticsService, { AnalyticEvent } from "../../../services/analytics";
 
 interface Props {
   post: Post;
@@ -55,6 +56,7 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
   }, [state]);
 
   const onDeletePostClick = async () => {
+    analyticsService.logEvent(AnalyticEvent.DELETE_POST);
     await deletePost(post.id);
     onDeletePost && onDeletePost();
   };
@@ -64,6 +66,7 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
   };
 
   const onGoToPostClick = () => {
+    analyticsService.logEvent(AnalyticEvent.NAVIGATE_TO_POST_PAGE);
     router.push({ pathname: "posts/[id]", query: { id: post.id } });
   };
 
@@ -76,12 +79,19 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
   };
 
   const onPostReaction = async () => {
-    isLiked ? await unlikePost(post.id) : await likePost(post.id);
+    if (isLiked) {
+      analyticsService.logEvent(AnalyticEvent.UNLIKE_POST);
+      await unlikePost(post.id);
+    } else {
+      analyticsService.logEvent(AnalyticEvent.LIKE_POST);
+      await likePost(post.id);
+    }
     setIsLiked(!isLiked);
     !isLiked ? setNumberOfLikes(numberOfLikes + 1) : setNumberOfLikes(numberOfLikes - 1);
   };
 
   const onPostComment = async (comment: string) => {
+    analyticsService.logEvent(AnalyticEvent.COMMENT_POST);
     await commentPost(post.id, { comment: comment });
     setPost((post) => ({
       ...post,
@@ -93,6 +103,7 @@ const PostPreview = ({ post: postProp, onDeletePost }: Props) => {
   };
 
   const onSeePostLikesClick = () => {
+    analyticsService.logEvent(AnalyticEvent.SEE_POST_LIKES);
     setPostLikesModalOpen(true);
   };
 

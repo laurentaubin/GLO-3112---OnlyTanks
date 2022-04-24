@@ -13,6 +13,15 @@ export interface Config {
   google: {
     clientId: string;
   };
+  firebase: {
+    apiKey: string;
+    authDomain: string;
+    projectId: string;
+    storageBucket: string;
+    messagingSenderId: string;
+    appId: string;
+    measurementId: string;
+  };
 }
 
 export const getConfigForEnvironment = () => {

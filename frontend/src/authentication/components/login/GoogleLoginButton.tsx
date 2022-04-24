@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import AuthProvider from "../../domain/AuthProvider";
 import { useCookies } from "react-cookie";
 import { constants } from "../../../constants/constants";
+import analyticsService, { AnalyticEvent } from "../../../services/analytics";
 
 export const GoogleLoginButton = () => {
   const { data, state, loginUser } = useLogin();
@@ -54,6 +55,7 @@ export const GoogleLoginButton = () => {
 
   const handleLogin = async (googleData: GoogleLoginResponse | GoogleLoginResponseOffline): Promise<void> => {
     if ("tokenId" in googleData) {
+      analyticsService.logEvent(AnalyticEvent.LOGIN_WITH_GOOGLE);
       const token = googleData.tokenId;
       loginUser(AuthProvider.GOOGLE, token);
       setGoogleData(googleData);

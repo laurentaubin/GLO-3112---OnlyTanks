@@ -16,6 +16,7 @@ import { useFetchGoogleImageFile } from "./api/useFetchGoogleImageFile";
 import { useCreateGoogleAuthLink } from "../googlephoto/api/useCreateGoogleAuthLink";
 import { GooglePhotosButton } from "../googlephoto/components/GooglePhotosButton";
 import { constants } from "../constants/constants";
+import analyticsService, { AnalyticEvent } from "../services/analytics";
 
 export default function PostCreation() {
   const [imageSource, setImageSource] = useState("");
@@ -82,6 +83,7 @@ export default function PostCreation() {
   };
 
   const submit = async () => {
+    analyticsService.logEvent(AnalyticEvent.CREATE_POST);
     const postImageContent: PostImageContent = {
       image: file!,
       caption: caption,
@@ -122,6 +124,7 @@ export default function PostCreation() {
   };
 
   const handleGoogleImageSelected = async (googlePhoto: GooglePhoto) => {
+    analyticsService.logEvent(AnalyticEvent.SELECT_IMAGE_FROM_GOOGLE_IMAGE);
     await fetchImageFile(googlePhoto);
     setImageSource(googlePhoto.src);
     setOpenGooglePhotosModal(false);

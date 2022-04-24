@@ -7,6 +7,8 @@ import { useCookies } from "react-cookie";
 import { NotificationProvider } from "../notifications/components/popup/NotificationProvider";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
+import { useAuth } from "../main/hooks/useAuth";
+import analyticsService from "../services/analytics";
 
 Sentry.init({
   dsn: "https://ac1cb2f22baf4ef681774d36bf616ee1@o1116604.ingest.sentry.io/6150126",
@@ -19,12 +21,19 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const [cookies] = useCookies([constants.SESSION_TOKEN_COOKIE]);
   const [loaded, setLoaded] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { me } = useAuth();
 
   const router = useRouter();
 
   useEffect(() => {
     setIsLoggedIn(!!cookies[constants.SESSION_TOKEN_COOKIE]);
   }, [cookies]);
+
+  useEffect(() => {
+    if (me && isLoggedIn) {
+      analyticsService.setUser(me.username);
+    }
+  }, [me, isLoggedIn]);
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
