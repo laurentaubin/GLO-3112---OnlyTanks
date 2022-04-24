@@ -5,6 +5,8 @@ import { app, notificationIssuer } from "./AppContext";
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const Docs = require("express-api-doc");
+const apiDocumentation = new Docs(app);
 
 const healthResource = require("./api/HealthResource");
 const userResource = require("./user/api/UserResource");
@@ -32,5 +34,9 @@ app.use("/", userResource);
 app.use("/", postResource);
 app.use("/", googlePhotoResource);
 app.use("/notifications", notificationResource);
+
+apiDocumentation.generate({
+  path: "./ApiDocumentation.html"
+});
 
 notificationIssuer.listen();
