@@ -1,6 +1,6 @@
 import { getConfigForEnvironment } from "./config";
 import { authMiddleware } from "./middleware/AuthMiddleware";
-import { app, notificationIssuer } from "./AppContext";
+import { ApiDocumentationPath, app, notificationIssuer } from "./AppContext";
 
 const express = require("express");
 const cors = require("cors");
@@ -36,7 +36,7 @@ app.use("/", googlePhotoResource);
 app.use("/notifications", notificationResource);
 
 apiDocumentation.generate({
-  path: "./ApiDocumentation.html"
+  path: ApiDocumentationPath
 });
 
 notificationIssuer.listen();

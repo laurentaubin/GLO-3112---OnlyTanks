@@ -44,6 +44,9 @@ import UserPreviewAssembler from "./user/service/UserPreviewResponseAssembler";
 
 const express = require("express");
 
+// apiDocumentationPath
+export const ApiDocumentationPath = "./doc/ApiDocumentation.html";
+
 const config = getConfigForEnvironment();
 // utils
 const paginator = new Paginator();

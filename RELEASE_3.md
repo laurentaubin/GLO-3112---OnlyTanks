@@ -127,7 +127,8 @@ The total number of likes is updated when a user receive a like or when someone 
 
 ## API Documentation
 
-You can find the documentation of the API at `/backend/ApiDocumentation.html` once you built the backend once.
+You can find the api documentation at `/backend/doc/ApiDocumentation.html`. The api documentation contains a list of all the routes and 
+it is generated automatically once the application is launched. We have use the express-api-doc library to help us generate a documentation for our API.
 
 ## Unimplemented features
 
